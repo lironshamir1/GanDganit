@@ -55,12 +55,12 @@
   border-radius: 12px;
   background: #ddd;
   position: relative;
-  transition: background 0.2s;
+  transition: background var(--transition);
   flex-shrink: 0;
 }
 
 .rem-toggle.active {
-  background: var(--secondary);
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
 }
 
 .rem-toggle-dot {
@@ -71,7 +71,7 @@
   position: absolute;
   top: 2px;
   right: 2px;
-  transition: right 0.2s;
+  transition: right var(--transition);
   box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 }
 
@@ -84,7 +84,7 @@
   font-size: 1.1rem;
   padding: 4px;
   opacity: 0.4;
-  transition: opacity 0.2s;
+  transition: opacity var(--transition);
 }
 
 .rem-delete:hover {

@@ -12,12 +12,13 @@
   font-size: 0.95rem;
   font-weight: 600;
   color: var(--text-light);
-  transition: all 0.2s;
+  transition: all var(--transition);
 }
 
 .bnd-tab.active {
-  background: var(--primary);
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
   color: white;
+  box-shadow: 0 4px 12px rgba(126, 200, 200, 0.3);
 }
 
 .bnd-section-title {
@@ -54,7 +55,7 @@
 }
 
 .bnd-do {
-  border-right-color: var(--secondary);
+  border-right-color: var(--primary);
 }
 
 .bnd-dont {
@@ -85,8 +86,8 @@
 }
 
 .bnd-key-point {
-  background: #E8F4FD;
-  padding: 12px 16px;
+  background: linear-gradient(135deg, #E0F4F4, #EDE7F6);
+  padding: 14px 18px;
   border-radius: var(--radius-sm);
   font-size: 0.9rem;
   line-height: 1.6;

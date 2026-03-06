@@ -36,7 +36,7 @@
 .ind-progress-fill {
   height: 100%;
   border-radius: 4px;
-  transition: width 0.3s ease;
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .ind-progress-text {
@@ -57,11 +57,11 @@
   gap: 14px;
   cursor: pointer;
   padding: 16px 20px;
-  transition: all 0.2s;
+  transition: all var(--transition);
 }
 
 .ind-step-done {
-  background: #E8F5E9 !important;
+  background: linear-gradient(135deg, #E0F4F4, #E8F5E9) !important;
 }
 
 .ind-checkbox {
@@ -74,12 +74,12 @@
   justify-content: center;
   flex-shrink: 0;
   font-size: 0.9rem;
-  transition: all 0.2s;
+  transition: all var(--transition);
 }
 
 .ind-checkbox.checked {
-  background: var(--secondary);
-  border-color: var(--secondary);
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  border-color: var(--primary);
   color: white;
 }
 
@@ -94,6 +94,6 @@
 }
 
 .ind-tip {
-  background: #FFF8E1;
+  background: linear-gradient(135deg, #FFF8E1, #FFF3E8);
   line-height: 1.7;
 }

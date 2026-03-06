@@ -13,7 +13,7 @@
 .star {
   font-size: 2rem;
   opacity: 0.2;
-  transition: all 0.3s;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .star.earned {
@@ -28,8 +28,8 @@
 
 .reward-banner {
   margin-top: 12px;
-  padding: 16px;
-  background: linear-gradient(135deg, #FFF8E1, #F0E6F6);
+  padding: 18px;
+  background: linear-gradient(135deg, #FFF3E8, #EDE7F6);
   border-radius: var(--radius-sm);
   font-size: 1rem;
   line-height: 1.6;
@@ -54,11 +54,11 @@
   gap: 12px;
   cursor: pointer;
   padding: 14px 18px;
-  transition: all 0.2s;
+  transition: all var(--transition);
 }
 
 .task-done {
-  background: #E8F5E9 !important;
+  background: linear-gradient(135deg, #E0F4F4, #E8F5E9) !important;
 }
 
 .task-icon {
