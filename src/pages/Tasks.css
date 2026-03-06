@@ -1,0 +1,107 @@
+.tasks-stars {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.stars-display {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.star {
+  font-size: 2rem;
+  opacity: 0.2;
+  transition: all 0.3s;
+}
+
+.star.earned {
+  opacity: 1;
+  transform: scale(1.2);
+}
+
+.stars-text {
+  font-size: 0.9rem;
+  color: var(--text-light);
+}
+
+.reward-banner {
+  margin-top: 12px;
+  padding: 16px;
+  background: linear-gradient(135deg, #FFF8E1, #F0E6F6);
+  border-radius: var(--radius-sm);
+  font-size: 1rem;
+  line-height: 1.6;
+  animation: pop 0.5s ease;
+}
+
+@keyframes pop {
+  0% { transform: scale(0.8); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  padding: 14px 18px;
+  transition: all 0.2s;
+}
+
+.task-done {
+  background: #E8F5E9 !important;
+}
+
+.task-icon {
+  font-size: 1.4rem;
+}
+
+.task-text {
+  flex: 1;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.task-text.done {
+  text-decoration: line-through;
+  color: var(--text-light);
+}
+
+.task-check {
+  font-size: 1.2rem;
+  animation: pop 0.3s ease;
+}
+
+.tasks-add {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.tasks-add .input-field {
+  flex: 1;
+}
+
+.tasks-reward {
+  margin-top: 12px;
+}
+
+.reward-label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.tasks-reset {
+  margin-top: 16px;
+  width: 100%;
+}

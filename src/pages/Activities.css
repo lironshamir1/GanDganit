@@ -1,0 +1,89 @@
+.act-categories {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.act-cat-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 24px 16px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  transition: all 0.2s;
+}
+
+.act-cat-card:hover {
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-2px);
+}
+
+.act-cat-name {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.act-cat-count {
+  font-size: 0.8rem;
+  color: var(--text-light);
+}
+
+.act-card {
+  cursor: pointer;
+}
+
+.act-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.act-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.act-details {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.act-materials {
+  margin-bottom: 12px;
+}
+
+.act-materials ul {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.act-materials li {
+  background: #f5f5f5;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+}
+
+.act-instructions {
+  margin-bottom: 12px;
+  line-height: 1.7;
+}
+
+.act-instructions p,
+.act-adaptation p {
+  margin-top: 4px;
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+
+.act-adaptation {
+  background: #FFF8E1;
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+}

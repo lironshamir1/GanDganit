@@ -1,0 +1,93 @@
+.bnd-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.bnd-tab {
+  flex: 1;
+  padding: 12px;
+  border-radius: var(--radius-sm);
+  background: #f0f0f0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-light);
+  transition: all 0.2s;
+}
+
+.bnd-tab.active {
+  background: var(--primary);
+  color: white;
+}
+
+.bnd-section-title {
+  font-size: 1.2rem;
+  margin-bottom: 16px;
+}
+
+.bnd-points {
+  list-style: none;
+}
+
+.bnd-points li {
+  padding: 10px 0;
+  border-bottom: 1px solid #f0f0f0;
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+.bnd-points li:last-child {
+  border-bottom: none;
+}
+
+.bnd-points li::before {
+  content: '💚 ';
+}
+
+.bnd-sub-title {
+  font-size: 1.1rem;
+  margin-bottom: 12px;
+}
+
+.bnd-phrase {
+  border-right: 4px solid;
+}
+
+.bnd-do {
+  border-right-color: var(--secondary);
+}
+
+.bnd-dont {
+  border-right-color: #E57373;
+}
+
+.bnd-phrase-text {
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.6;
+  margin-bottom: 6px;
+}
+
+.bnd-phrase-context {
+  font-size: 0.85rem;
+  color: var(--text-light);
+}
+
+.bnd-scenario-title {
+  font-size: 1.05rem;
+  margin-bottom: 10px;
+}
+
+.bnd-scenario-response {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  margin-bottom: 12px;
+}
+
+.bnd-key-point {
+  background: #E8F4FD;
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}

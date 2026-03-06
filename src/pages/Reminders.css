@@ -1,0 +1,111 @@
+.rem-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.rem-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 16px;
+}
+
+.rem-inactive {
+  opacity: 0.5;
+}
+
+.rem-main {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex: 1;
+  cursor: pointer;
+}
+
+.rem-emoji {
+  font-size: 1.6rem;
+}
+
+.rem-info {
+  flex: 1;
+}
+
+.rem-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.rem-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.rem-time {
+  font-size: 0.85rem;
+  color: var(--text-light);
+}
+
+.rem-toggle {
+  width: 44px;
+  height: 24px;
+  border-radius: 12px;
+  background: #ddd;
+  position: relative;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+
+.rem-toggle.active {
+  background: var(--secondary);
+}
+
+.rem-toggle-dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: white;
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  transition: right 0.2s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.rem-toggle.active .rem-toggle-dot {
+  right: 22px;
+}
+
+.rem-delete {
+  background: none;
+  font-size: 1.1rem;
+  padding: 4px;
+  opacity: 0.4;
+  transition: opacity 0.2s;
+}
+
+.rem-delete:hover {
+  opacity: 1;
+}
+
+.rem-add-btn {
+  width: 100%;
+}
+
+.rem-add-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.rem-add-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.rem-add-actions .btn {
+  flex: 1;
+}

@@ -1,0 +1,99 @@
+.insp-quote-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.insp-quote-card {
+  background: linear-gradient(135deg, #E8F4FD, #F0E6F6);
+  border-radius: var(--radius);
+  padding: 32px 24px;
+  text-align: center;
+}
+
+.insp-quote-text {
+  font-size: 1.2rem;
+  line-height: 1.8;
+  font-weight: 500;
+}
+
+.insp-selfcare h3 {
+  margin-bottom: 8px;
+}
+
+.insp-selfcare p {
+  line-height: 1.7;
+  color: var(--text-light);
+}
+
+.insp-breathe-start {
+  text-align: center;
+}
+
+.insp-breathe-start h2 {
+  margin-bottom: 8px;
+}
+
+.insp-breathe-start p {
+  margin-bottom: 20px;
+  color: var(--text-light);
+}
+
+.insp-breathe-active {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: 20px;
+}
+
+.breathe-circle {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), #B8A9C9);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: transform 3s ease-in-out;
+  color: white;
+}
+
+.breathe-action {
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.breathe-timer {
+  font-size: 2.5rem;
+  font-weight: 300;
+}
+
+.breathe-instruction {
+  font-size: 1.1rem;
+  color: var(--text-light);
+  text-align: center;
+}
+
+.insp-stories-title {
+  font-size: 1.2rem;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.insp-story {
+  border-right: 4px solid var(--secondary);
+}
+
+.insp-story-text {
+  font-size: 0.95rem;
+  line-height: 1.8;
+  margin-bottom: 8px;
+}
+
+.insp-story-sig {
+  font-size: 0.85rem;
+  color: var(--text-light);
+  text-align: left;
+}

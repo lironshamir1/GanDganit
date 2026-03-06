@@ -1,0 +1,99 @@
+.ind-skills {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ind-skill-card {
+  text-align: right;
+  width: 100%;
+}
+
+.ind-skill-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 12px;
+}
+
+.ind-skill-info h3 {
+  font-size: 1.1rem;
+}
+
+.ind-step-count {
+  font-size: 0.8rem;
+  color: var(--text-light);
+}
+
+.ind-progress-bar {
+  height: 8px;
+  background: #f0f0f0;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 4px;
+}
+
+.ind-progress-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.ind-progress-text {
+  font-size: 0.8rem;
+  color: var(--text-light);
+}
+
+.ind-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.ind-step {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  cursor: pointer;
+  padding: 16px 20px;
+  transition: all 0.2s;
+}
+
+.ind-step-done {
+  background: #E8F5E9 !important;
+}
+
+.ind-checkbox {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+
+.ind-checkbox.checked {
+  background: var(--secondary);
+  border-color: var(--secondary);
+  color: white;
+}
+
+.ind-step-text {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.ind-step-text.done {
+  text-decoration: line-through;
+  color: var(--text-light);
+}
+
+.ind-tip {
+  background: #FFF8E1;
+  line-height: 1.7;
+}
