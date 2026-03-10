@@ -1,3 +1,185 @@
+/* Welcome screen */
+.sched-welcome {
+  text-align: center;
+  padding: 32px 20px;
+  margin-bottom: 24px;
+}
+
+.sched-welcome-emoji {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.sched-welcome-title {
+  font-size: 1.3rem;
+  margin-bottom: 6px;
+}
+
+.sched-welcome-desc {
+  font-size: 0.9rem;
+  color: var(--text-light);
+}
+
+/* Templates */
+.sched-templates-title {
+  font-size: 1.05rem;
+  margin-bottom: 12px;
+}
+
+.sched-templates {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.sched-template-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 18px 10px;
+  cursor: pointer;
+  text-align: center;
+  transition: all var(--transition);
+}
+
+.sched-template-card:hover {
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-3px);
+}
+
+.sched-template-card:active {
+  transform: scale(0.97);
+}
+
+.sched-template-icon {
+  font-size: 2rem;
+}
+
+.sched-template-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.sched-template-count {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.sched-or {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 16px;
+}
+
+.sched-create-btn {
+  width: 100%;
+}
+
+/* New schedule form */
+.sched-new-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sched-new-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.sched-new-actions .btn {
+  flex: 1;
+}
+
+.sched-new-overlay {
+  margin-top: 16px;
+}
+
+.sched-templates-mini {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.sched-template-mini-btn {
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  background: #f5f5f5;
+  transition: all var(--transition);
+}
+
+.sched-template-mini-btn:hover {
+  background: linear-gradient(135deg, #E0F4F4, #EDE7F6);
+}
+
+/* Schedule tabs */
+.sched-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.sched-tab {
+  padding: 10px 18px;
+  border-radius: var(--radius-sm);
+  background: #f0f0f0;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-light);
+  white-space: nowrap;
+  transition: all var(--transition);
+}
+
+.sched-tab.active {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: white;
+  box-shadow: 0 4px 12px rgba(126, 200, 200, 0.3);
+}
+
+/* Header row */
+.sched-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.sched-name {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.sched-header-actions {
+  display: flex;
+  gap: 4px;
+}
+
+/* Empty state */
+.sched-empty {
+  text-align: center;
+  padding: 32px 20px;
+  margin-bottom: 16px;
+}
+
+.sched-empty-text {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.sched-empty-desc {
+  font-size: 0.85rem;
+  color: var(--text-light);
+}
+
 /* View toggle */
 .sched-view-toggle {
   margin-bottom: 16px;

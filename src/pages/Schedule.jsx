@@ -12,49 +12,113 @@ const typeConfig = {
   learning: { label: 'למידה', color: '#F2A07B', emoji: '📚' },
 }
 
-const defaultEvents = [
-  { time: '07:00', title: 'קימה והתלבשות', type: 'routine', emoji: '👕', done: false },
-  { time: '07:30', title: 'ארוחת בוקר', type: 'food', emoji: '🥣', done: false },
-  { time: '08:00', title: 'צחצוח שיניים', type: 'hygiene', emoji: '🪥', done: false },
-  { time: '09:00', title: 'קלינאית תקשורת', type: 'therapy', emoji: '🗣️', done: false },
-  { time: '10:00', title: 'ציור ויצירה', type: 'play', emoji: '🖍️', done: false },
-  { time: '11:00', title: 'משחק בחוץ', type: 'outside', emoji: '🌞', done: false },
-  { time: '12:00', title: 'ארוחת צהריים', type: 'food', emoji: '🍝', done: false },
-  { time: '13:00', title: 'מנוחה', type: 'sleep', emoji: '😴', done: false },
-  { time: '15:00', title: 'פיזיותרפיה', type: 'therapy', emoji: '🤸', done: false },
-  { time: '16:00', title: 'חוג / פעילות', type: 'learning', emoji: '🎵', done: false },
-  { time: '17:30', title: 'אמבטיה', type: 'hygiene', emoji: '🛁', done: false },
-  { time: '18:00', title: 'ארוחת ערב', type: 'food', emoji: '🍲', done: false },
-  { time: '19:00', title: 'סיפור לפני השינה', type: 'sleep', emoji: '📖', done: false },
-  { time: '19:30', title: 'שינה', type: 'sleep', emoji: '🌙', done: false },
-]
+const templateSchedules = {
+  weekday: {
+    name: 'יום רגיל בגן',
+    events: [
+      { time: '07:00', title: 'קימה והתלבשות', type: 'routine', emoji: '👕' },
+      { time: '07:30', title: 'ארוחת בוקר', type: 'food', emoji: '🥣' },
+      { time: '08:00', title: 'צחצוח שיניים', type: 'hygiene', emoji: '🪥' },
+      { time: '08:30', title: 'יציאה לגן', type: 'routine', emoji: '🎒' },
+      { time: '12:30', title: 'ארוחת צהריים', type: 'food', emoji: '🍝' },
+      { time: '13:00', title: 'מנוחה', type: 'sleep', emoji: '😴' },
+      { time: '15:00', title: 'חזרה מהגן', type: 'routine', emoji: '🏠' },
+      { time: '16:00', title: 'משחק חופשי', type: 'play', emoji: '🎨' },
+      { time: '17:30', title: 'אמבטיה', type: 'hygiene', emoji: '🛁' },
+      { time: '18:00', title: 'ארוחת ערב', type: 'food', emoji: '🍲' },
+      { time: '19:00', title: 'סיפור לפני השינה', type: 'sleep', emoji: '📖' },
+      { time: '19:30', title: 'שינה', type: 'sleep', emoji: '🌙' },
+    ]
+  },
+  therapy: {
+    name: 'יום עם טיפולים',
+    events: [
+      { time: '07:00', title: 'קימה והתלבשות', type: 'routine', emoji: '👕' },
+      { time: '07:30', title: 'ארוחת בוקר', type: 'food', emoji: '🥣' },
+      { time: '09:00', title: 'קלינאית תקשורת', type: 'therapy', emoji: '🗣️' },
+      { time: '10:00', title: 'הפסקה ומשחק', type: 'play', emoji: '🧩' },
+      { time: '11:00', title: 'ריפוי בעיסוק', type: 'therapy', emoji: '✋' },
+      { time: '12:00', title: 'ארוחת צהריים', type: 'food', emoji: '🍝' },
+      { time: '13:00', title: 'מנוחה', type: 'sleep', emoji: '😴' },
+      { time: '15:00', title: 'פיזיותרפיה', type: 'therapy', emoji: '🤸' },
+      { time: '16:00', title: 'משחק בחוץ', type: 'outside', emoji: '🌞' },
+      { time: '18:00', title: 'ארוחת ערב', type: 'food', emoji: '🍲' },
+      { time: '19:30', title: 'שינה', type: 'sleep', emoji: '🌙' },
+    ]
+  },
+  friday: {
+    name: 'יום שישי',
+    events: [
+      { time: '07:30', title: 'קימה והתלבשות', type: 'routine', emoji: '👕' },
+      { time: '08:00', title: 'ארוחת בוקר', type: 'food', emoji: '🥣' },
+      { time: '09:00', title: 'גן (יום קצר)', type: 'routine', emoji: '🎒' },
+      { time: '12:00', title: 'חזרה מהגן', type: 'routine', emoji: '🏠' },
+      { time: '12:30', title: 'ארוחת צהריים', type: 'food', emoji: '🍝' },
+      { time: '13:30', title: 'משחק חופשי', type: 'play', emoji: '🎨' },
+      { time: '15:00', title: 'יציאה לפארק', type: 'outside', emoji: '🌳' },
+      { time: '17:00', title: 'אמבטיה', type: 'hygiene', emoji: '🛁' },
+      { time: '18:00', title: 'ארוחת שבת', type: 'food', emoji: '🕯️' },
+      { time: '19:30', title: 'שינה', type: 'sleep', emoji: '🌙' },
+    ]
+  },
+}
 
 const emojiOptions = [
   '👕', '🥣', '🪥', '🗣️', '🖍️', '🌞', '🍝', '😴', '🤸', '🎵',
   '🛁', '🍲', '📖', '🌙', '🎨', '⚽', '🧩', '🎶', '🚗', '🐕',
-  '🍎', '🥤', '💊', '🏊', '📚', '🎭', '🧸', '👨‍👩‍👧', '🏡', '✨'
+  '🍎', '🥤', '💊', '🏊', '📚', '🎭', '🧸', '👨‍👩‍👧', '🏡', '✨',
+  '🎒', '🕯️', '✋', '🧹', '🎪', '🛝'
 ]
 
-const STORAGE_KEY = 'gandganit-schedule'
+const SCHEDULES_KEY = 'gandganit-schedules'
+const ACTIVE_KEY = 'gandganit-active-schedule'
 
-function loadEvents() {
+function loadSchedules() {
   try {
-    const saved = localStorage.getItem(STORAGE_KEY)
+    const saved = localStorage.getItem(SCHEDULES_KEY)
     if (saved) return JSON.parse(saved)
   } catch {}
-  return defaultEvents
+  return null
+}
+
+function loadActiveId() {
+  try {
+    return localStorage.getItem(ACTIVE_KEY) || null
+  } catch {}
+  return null
 }
 
 export default function Schedule() {
-  const [events, setEvents] = useState(loadEvents)
+  const [schedules, setSchedules] = useState(loadSchedules)
+  const [activeId, setActiveId] = useState(loadActiveId)
   const [showAdd, setShowAdd] = useState(false)
   const [editIdx, setEditIdx] = useState(null)
   const [showKidView, setShowKidView] = useState(false)
+  const [showNewSchedule, setShowNewSchedule] = useState(false)
+  const [newScheduleName, setNewScheduleName] = useState('')
   const [newEvent, setNewEvent] = useState({ time: '', title: '', type: 'routine', emoji: '🏠' })
 
+  const activeSchedule = schedules && activeId ? schedules[activeId] : null
+  const events = activeSchedule?.events || []
+
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(events))
-  }, [events])
+    if (schedules) localStorage.setItem(SCHEDULES_KEY, JSON.stringify(schedules))
+  }, [schedules])
+
+  useEffect(() => {
+    if (activeId) localStorage.setItem(ACTIVE_KEY, activeId)
+  }, [activeId])
+
+  const setEvents = (updater) => {
+    setSchedules(prev => {
+      const updated = { ...prev }
+      updated[activeId] = {
+        ...updated[activeId],
+        events: typeof updater === 'function' ? updater(updated[activeId].events) : updater,
+      }
+      return updated
+    })
+  }
 
   const toggleDone = (idx) => {
     setEvents(prev => {
@@ -67,16 +131,17 @@ export default function Schedule() {
   const addEvent = () => {
     if (!newEvent.time || !newEvent.title.trim()) return
     const event = { ...newEvent, done: false }
-    let updated
-    if (editIdx !== null) {
-      updated = [...events]
-      updated[editIdx] = { ...updated[editIdx], ...event }
-      setEditIdx(null)
-    } else {
-      updated = [...events, event]
-    }
-    updated.sort((a, b) => a.time.localeCompare(b.time))
-    setEvents(updated)
+    setEvents(prev => {
+      let updated
+      if (editIdx !== null) {
+        updated = [...prev]
+        updated[editIdx] = { ...updated[editIdx], ...event }
+      } else {
+        updated = [...prev, event]
+      }
+      return updated.sort((a, b) => a.time.localeCompare(b.time))
+    })
+    setEditIdx(null)
     setNewEvent({ time: '', title: '', type: 'routine', emoji: '🏠' })
     setShowAdd(false)
   }
@@ -96,12 +161,90 @@ export default function Schedule() {
     setEvents(prev => prev.map(e => ({ ...e, done: false })))
   }
 
-  const resetToDefault = () => {
-    setEvents(defaultEvents)
+  const createFromTemplate = (templateKey) => {
+    const template = templateSchedules[templateKey]
+    const id = Date.now().toString()
+    const newSchedules = { ...(schedules || {}), [id]: { name: template.name, events: template.events.map(e => ({ ...e, done: false })) } }
+    setSchedules(newSchedules)
+    setActiveId(id)
+  }
+
+  const createEmpty = (name) => {
+    if (!name.trim()) return
+    const id = Date.now().toString()
+    const newSchedules = { ...(schedules || {}), [id]: { name: name.trim(), events: [] } }
+    setSchedules(newSchedules)
+    setActiveId(id)
+    setShowNewSchedule(false)
+    setNewScheduleName('')
+  }
+
+  const deleteSchedule = (id) => {
+    const updated = { ...schedules }
+    delete updated[id]
+    setSchedules(Object.keys(updated).length > 0 ? updated : null)
+    if (activeId === id) {
+      const remaining = Object.keys(updated)
+      setActiveId(remaining.length > 0 ? remaining[0] : null)
+    }
   }
 
   const doneCount = events.filter(e => e.done).length
 
+  // Welcome screen - no schedules yet
+  if (!schedules || Object.keys(schedules).length === 0) {
+    return (
+      <div className="page">
+        <h1 className="page-title">📅 היום שלנו</h1>
+        <div className="sched-welcome card">
+          <span className="sched-welcome-emoji">📅</span>
+          <h2 className="sched-welcome-title">צרו את סדר היום שלכם</h2>
+          <p className="sched-welcome-desc">בחרו תבנית מוכנה או צרו סדר יום מאפס</p>
+        </div>
+
+        <h3 className="sched-templates-title">תבניות מוכנות</h3>
+        <div className="sched-templates">
+          {Object.entries(templateSchedules).map(([key, template]) => (
+            <button
+              key={key}
+              className="card sched-template-card"
+              onClick={() => createFromTemplate(key)}
+            >
+              <span className="sched-template-icon">
+                {key === 'weekday' ? '🏫' : key === 'therapy' ? '💆' : '🕯️'}
+              </span>
+              <h4 className="sched-template-name">{template.name}</h4>
+              <p className="sched-template-count">{template.events.length} פעילויות</p>
+            </button>
+          ))}
+        </div>
+
+        <div className="sched-or">או</div>
+
+        {!showNewSchedule ? (
+          <button className="btn btn-primary sched-create-btn" onClick={() => setShowNewSchedule(true)}>
+            + צרו סדר יום חדש מאפס
+          </button>
+        ) : (
+          <div className="card sched-new-form">
+            <input
+              className="input-field"
+              placeholder="שם סדר היום (למשל: יום רגיל)"
+              value={newScheduleName}
+              onChange={(e) => setNewScheduleName(e.target.value)}
+              autoFocus
+            />
+            <div className="sched-new-actions">
+              <button className="btn btn-primary" onClick={() => createEmpty(newScheduleName)}>צור</button>
+              <button className="btn btn-secondary" onClick={() => setShowNewSchedule(false)}>ביטול</button>
+            </div>
+          </div>
+        )}
+      </div>
+    )
+  }
+
+  // Kid view
   if (showKidView) {
     return (
       <div className="page">
@@ -118,7 +261,7 @@ export default function Schedule() {
               <span key={i} className={`kid-star ${i < doneCount ? 'earned' : ''}`}>⭐</span>
             ))}
           </div>
-          {doneCount === events.length && (
+          {events.length > 0 && doneCount === events.length && (
             <div className="kid-complete-msg">כל הכבוד! סיימת את כל היום! 🎉</div>
           )}
         </div>
@@ -142,25 +285,59 @@ export default function Schedule() {
     )
   }
 
+  // Main parent view
+  const scheduleIds = Object.keys(schedules)
+
   return (
     <div className="page">
       <h1 className="page-title">📅 היום שלנו</h1>
 
+      {/* Schedule tabs */}
+      {scheduleIds.length > 1 && (
+        <div className="sched-tabs">
+          {scheduleIds.map(id => (
+            <button
+              key={id}
+              className={`sched-tab ${id === activeId ? 'active' : ''}`}
+              onClick={() => setActiveId(id)}
+            >
+              {schedules[id].name}
+            </button>
+          ))}
+        </div>
+      )}
+
+      <div className="sched-header-row">
+        <h2 className="sched-name">{activeSchedule?.name}</h2>
+        <div className="sched-header-actions">
+          <button className="sched-action-btn" onClick={() => {
+            const name = activeSchedule?.name
+            if (name) deleteSchedule(activeId)
+          }}>🗑️</button>
+        </div>
+      </div>
+
       <div className="sched-view-toggle">
-        <button
-          className="btn btn-warm sched-kid-btn"
-          onClick={() => setShowKidView(true)}
-        >
+        <button className="btn btn-warm sched-kid-btn" onClick={() => setShowKidView(true)}>
           🧒 תצוגת ילד
         </button>
       </div>
 
-      <div className="sched-progress card">
-        <div className="sched-progress-bar">
-          <div className="sched-progress-fill" style={{ width: `${events.length ? (doneCount / events.length) * 100 : 0}%` }} />
+      {events.length > 0 && (
+        <div className="sched-progress card">
+          <div className="sched-progress-bar">
+            <div className="sched-progress-fill" style={{ width: `${(doneCount / events.length) * 100}%` }} />
+          </div>
+          <p className="sched-progress-text">{doneCount}/{events.length} פעילויות הושלמו</p>
         </div>
-        <p className="sched-progress-text">{doneCount}/{events.length} פעילויות הושלמו</p>
-      </div>
+      )}
+
+      {events.length === 0 && (
+        <div className="sched-empty card">
+          <p className="sched-empty-text">סדר היום ריק</p>
+          <p className="sched-empty-desc">הוסיפו פעילויות כדי לבנות את היום</p>
+        </div>
+      )}
 
       <div className="sched-timeline">
         {events.map((event, idx) => (
@@ -195,7 +372,9 @@ export default function Schedule() {
           </button>
           <div className="sched-reset-row">
             <button className="btn btn-secondary sched-reset-btn" onClick={resetDay}>איפוס סימונים</button>
-            <button className="btn btn-secondary sched-reset-btn" onClick={resetToDefault}>איפוס לברירת מחדל</button>
+            <button className="btn btn-secondary sched-reset-btn" onClick={() => setShowNewSchedule(true)}>
+              + סדר יום נוסף
+            </button>
           </div>
         </div>
       ) : (
@@ -241,6 +420,34 @@ export default function Schedule() {
           <div className="sched-add-actions">
             <button className="btn btn-primary" onClick={addEvent}>{editIdx !== null ? 'שמירה' : 'הוסף'}</button>
             <button className="btn btn-secondary" onClick={() => { setShowAdd(false); setEditIdx(null) }}>ביטול</button>
+          </div>
+        </div>
+      )}
+
+      {showNewSchedule && (
+        <div className="card sched-new-form sched-new-overlay">
+          <h3 className="sched-form-title">📅 סדר יום חדש</h3>
+          <input
+            className="input-field"
+            placeholder="שם סדר היום (למשל: יום שישי)"
+            value={newScheduleName}
+            onChange={(e) => setNewScheduleName(e.target.value)}
+            autoFocus
+          />
+          <div className="sched-templates-mini">
+            {Object.entries(templateSchedules).map(([key, template]) => (
+              <button
+                key={key}
+                className="sched-template-mini-btn"
+                onClick={() => { createFromTemplate(key); setShowNewSchedule(false) }}
+              >
+                {key === 'weekday' ? '🏫' : key === 'therapy' ? '💆' : '🕯️'} {template.name}
+              </button>
+            ))}
+          </div>
+          <div className="sched-new-actions">
+            <button className="btn btn-primary" onClick={() => { createEmpty(newScheduleName); }}>צור ריק</button>
+            <button className="btn btn-secondary" onClick={() => { setShowNewSchedule(false); setNewScheduleName('') }}>ביטול</button>
           </div>
         </div>
       )}
