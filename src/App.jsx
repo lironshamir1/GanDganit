@@ -1,6 +1,7 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useLocation } from 'react-router-dom'
 import './App.css'
 import Navbar from './components/Navbar'
+import Landing from './pages/Landing'
 import Home from './pages/Home'
 import QandA from './pages/QandA'
 import Activities from './pages/Activities'
@@ -14,10 +15,14 @@ import SpeechTraining from './pages/SpeechTraining'
 import GanUpdates from './pages/GanUpdates'
 
 function App() {
+  const location = useLocation()
+  const isLanding = location.pathname === '/'
+
   return (
     <>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Landing />} />
+        <Route path="/home" element={<Home />} />
         <Route path="/qa" element={<QandA />} />
         <Route path="/activities" element={<Activities />} />
         <Route path="/independence" element={<Independence />} />
@@ -29,7 +34,7 @@ function App() {
         <Route path="/speech" element={<SpeechTraining />} />
         <Route path="/gan-updates" element={<GanUpdates />} />
       </Routes>
-      <Navbar />
+      {!isLanding && <Navbar />}
     </>
   )
 }
