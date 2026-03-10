@@ -6,8 +6,10 @@ import './Home.css'
 const modules = [
   { path: '/qa', title: 'שאלו אותנו', icon: '💬', desc: 'שאלות ותשובות מותאמות', color: '#7EC8C8', bg: 'linear-gradient(135deg, #E0F4F4, #B5E0E0)' },
   { path: '/activities', title: 'בואו נשחק', icon: '🎨', desc: 'רעיונות לפעילויות', color: '#B8A9D4', bg: 'linear-gradient(135deg, #EDE7F6, #D4C9E8)' },
+  { path: '/speech', title: 'מתאמנים בשפה', icon: '🗣️', desc: 'תרגילי שפה ודיבור', color: '#7EC8C8', bg: 'linear-gradient(135deg, #E0F4F4, #D4F5F5)' },
   { path: '/independence', title: 'אני יכול לבד!', icon: '⭐', desc: 'בניית עצמאות', color: '#F8C8A4', bg: 'linear-gradient(135deg, #FFF3E8, #F8C8A4)' },
   { path: '/boundaries', title: 'הגבולות שלנו', icon: '🛡️', desc: 'הצבת גבולות באהבה', color: '#F2A07B', bg: 'linear-gradient(135deg, #FDEBD0, #F2A07B)' },
+  { path: '/gan-updates', title: 'עדכונים מהגן', icon: '📋', desc: 'הודעות ועדכונים שוטפים', color: '#A8D5BA', bg: 'linear-gradient(135deg, #E8F5E9, #A8D5BA)' },
   { path: '/tasks', title: 'המשימה שלי', icon: '🏆', desc: 'משימות ותגמולים', color: '#F5C6D0', bg: 'linear-gradient(135deg, #FCE4EC, #F5C6D0)' },
   { path: '/inspiration', title: 'רגע בשבילך', icon: '✨', desc: 'השראה ונשימה', color: '#B8A9D4', bg: 'linear-gradient(135deg, #F3E5F5, #D4C9E8)' },
   { path: '/schedule', title: 'היום שלנו', icon: '📅', desc: 'יומן סדר יום', color: '#7EC8C8', bg: 'linear-gradient(135deg, #E0F7FA, #B5E0E0)' },

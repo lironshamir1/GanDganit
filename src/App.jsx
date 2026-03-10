@@ -10,6 +10,8 @@ import Tasks from './pages/Tasks'
 import Inspiration from './pages/Inspiration'
 import Schedule from './pages/Schedule'
 import Reminders from './pages/Reminders'
+import SpeechTraining from './pages/SpeechTraining'
+import GanUpdates from './pages/GanUpdates'
 
 function App() {
   return (
@@ -24,6 +26,8 @@ function App() {
         <Route path="/inspiration" element={<Inspiration />} />
         <Route path="/schedule" element={<Schedule />} />
         <Route path="/reminders" element={<Reminders />} />
+        <Route path="/speech" element={<SpeechTraining />} />
+        <Route path="/gan-updates" element={<GanUpdates />} />
       </Routes>
       <Navbar />
     </>
