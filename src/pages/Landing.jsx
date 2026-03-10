@@ -21,8 +21,6 @@ export default function Landing() {
       <div className={`landing-content ${visible ? 'visible' : ''}`}>
         <div className="landing-logo">🌸</div>
         <h1 className="landing-title">גן דגנית</h1>
-        <p className="landing-subtitle">האפליקציה שלי כהורה</p>
-
         <div className={`landing-quote ${visible ? 'visible' : ''}`}>
           <span className="landing-quote-icon">💜</span>
           <p className="landing-quote-text">"{quote}"</p>

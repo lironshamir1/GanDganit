@@ -62,8 +62,7 @@ export default function Home() {
   return (
     <div className="page home-page">
       <div className={`home-header ${visible ? 'visible' : ''}`}>
-        <div className="home-greeting">{greeting} !</div>
-        <h1 className="home-title">גן דגנית</h1>
+        <h1 className="home-title">{greeting}, גן דגנית</h1>
       </div>
 
       <div className={`quote-card ${visible ? 'visible' : ''}`}>
