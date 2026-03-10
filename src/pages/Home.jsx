@@ -14,9 +14,8 @@ const modules = [
   { path: '/reminders', title: 'אל תשכחו!', icon: '🔔', desc: 'תזכורות והתראות', color: '#DDA0DD', bg: 'linear-gradient(135deg, #F8E8F8, #E8D0E8)' },
 ]
 
-function getDailyQuote() {
-  const dayOfYear = Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 0)) / 86400000)
-  return dailyQuotes[dayOfYear % dailyQuotes.length]
+function getRandomQuote() {
+  return dailyQuotes[Math.floor(Math.random() * dailyQuotes.length)]
 }
 
 function getGreeting() {
@@ -28,7 +27,7 @@ function getGreeting() {
 }
 
 export default function Home() {
-  const quote = getDailyQuote()
+  const [quote] = useState(getRandomQuote)
   const greeting = getGreeting()
   const [visible, setVisible] = useState(false)
 
@@ -41,7 +40,6 @@ export default function Home() {
       <div className={`home-header ${visible ? 'visible' : ''}`}>
         <div className="home-greeting">{greeting} !</div>
         <h1 className="home-title">גן דגנית</h1>
-        <p className="home-subtitle">ביחד גדלים באהבה</p>
       </div>
 
       <div className={`quote-card ${visible ? 'visible' : ''}`}>
