@@ -41,7 +41,7 @@ export default function Tasks() {
 
   return (
     <div className="page">
-      <h1 className="page-title">🏆 המשימה שלי</h1>
+      <h1 className="page-title">🏆 לוח משימות</h1>
 
       <div className="tasks-stars card">
         <div className="stars-display">
@@ -52,9 +52,9 @@ export default function Tasks() {
         <p className="stars-text">{stars}/5 כוכבים</p>
         {showReward && (
           <div className="reward-banner">
-            🎉 כל הכבוד! הגעת ל-5 כוכבים!
+            🎉 כל הכבוד! הילד הגיע ל-5 כוכבים!
             <br />
-            התגמול שלך: <strong>{reward}</strong>
+            התגמול: <strong>{reward}</strong>
           </div>
         )}
       </div>
@@ -85,7 +85,7 @@ export default function Tasks() {
       </div>
 
       <div className="tasks-reward card">
-        <label className="reward-label">🎁 התגמול אחרי 5 כוכבים:</label>
+        <label className="reward-label">🎁 הגדירו תגמול לילד אחרי 5 כוכבים:</label>
         <input
           className="input-field"
           value={reward}

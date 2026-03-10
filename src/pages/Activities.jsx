@@ -10,7 +10,7 @@ export default function Activities() {
 
   return (
     <div className="page">
-      <h1 className="page-title">🎨 בואו נשחק</h1>
+      <h1 className="page-title">🎨 רעיונות לפעילויות</h1>
 
       {!selectedCat ? (
         <div className="act-categories">

@@ -93,7 +93,6 @@ export default function Schedule() {
   const [activeId, setActiveId] = useState(loadActiveId)
   const [showAdd, setShowAdd] = useState(false)
   const [editIdx, setEditIdx] = useState(null)
-  const [showKidView, setShowKidView] = useState(false)
   const [showNewSchedule, setShowNewSchedule] = useState(false)
   const [newScheduleName, setNewScheduleName] = useState('')
   const [newEvent, setNewEvent] = useState({ time: '', title: '', type: 'routine', emoji: '🏠' })
@@ -195,7 +194,7 @@ export default function Schedule() {
   if (!schedules || Object.keys(schedules).length === 0) {
     return (
       <div className="page">
-        <h1 className="page-title">📅 היום שלנו</h1>
+        <h1 className="page-title">📅 סדר יום</h1>
         <div className="sched-welcome card">
           <span className="sched-welcome-emoji">📅</span>
           <h2 className="sched-welcome-title">צרו את סדר היום שלכם</h2>
@@ -244,47 +243,6 @@ export default function Schedule() {
     )
   }
 
-  // Kid view
-  if (showKidView) {
-    return (
-      <div className="page">
-        <div className="kid-view-header">
-          <button className="btn btn-secondary kid-back-btn" onClick={() => setShowKidView(false)}>
-            חזרה לתצוגת הורה
-          </button>
-          <h1 className="kid-view-title">היום שלי</h1>
-        </div>
-
-        <div className="kid-progress">
-          <div className="kid-progress-stars">
-            {events.map((_, i) => (
-              <span key={i} className={`kid-star ${i < doneCount ? 'earned' : ''}`}>⭐</span>
-            ))}
-          </div>
-          {events.length > 0 && doneCount === events.length && (
-            <div className="kid-complete-msg">כל הכבוד! סיימת את כל היום! 🎉</div>
-          )}
-        </div>
-
-        <div className="kid-timeline">
-          {events.map((event, idx) => (
-            <div
-              key={idx}
-              className={`kid-event ${event.done ? 'kid-event-done' : ''}`}
-              onClick={() => toggleDone(idx)}
-            >
-              <div className={`kid-event-emoji ${event.done ? 'done' : ''}`}>
-                {event.done ? '✅' : (event.emoji || typeConfig[event.type]?.emoji || '📌')}
-              </div>
-              <div className="kid-event-title">{event.title}</div>
-              <div className="kid-event-time">{event.time}</div>
-            </div>
-          ))}
-        </div>
-      </div>
-    )
-  }
-
   // Main parent view
   const scheduleIds = Object.keys(schedules)
 
@@ -315,12 +273,6 @@ export default function Schedule() {
             if (name) deleteSchedule(activeId)
           }}>🗑️</button>
         </div>
-      </div>
-
-      <div className="sched-view-toggle">
-        <button className="btn btn-warm sched-kid-btn" onClick={() => setShowKidView(true)}>
-          🧒 תצוגת ילד
-        </button>
       </div>
 
       {events.length > 0 && (

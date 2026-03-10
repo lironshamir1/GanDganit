@@ -32,7 +32,7 @@ export default function SpeechTraining() {
 
   return (
     <div className="page">
-      <h1 className="page-title">🗣️ מתאמנים בשפה</h1>
+      <h1 className="page-title">🗣️ אימוני שפה</h1>
 
       <div className="speech-intro card">
         <p className="speech-intro-text">

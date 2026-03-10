@@ -8,7 +8,7 @@ export default function Boundaries() {
 
   return (
     <div className="page">
-      <h1 className="page-title">🛡️ הגבולות שלנו</h1>
+      <h1 className="page-title">🛡️ הצבת גבולות</h1>
 
       <div className="bnd-tabs">
         <button className={`bnd-tab ${activeTab === 'why' ? 'active' : ''}`} onClick={() => setActiveTab('why')}>

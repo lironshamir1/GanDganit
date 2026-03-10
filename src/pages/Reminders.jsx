@@ -52,7 +52,7 @@ export default function Reminders() {
 
   return (
     <div className="page">
-      <h1 className="page-title">🔔 אל תשכחו!</h1>
+      <h1 className="page-title">🔔 תזכורות</h1>
 
       <div className="rem-list">
         {reminders.map((rem) => (

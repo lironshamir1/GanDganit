@@ -38,7 +38,7 @@ export default function QandA() {
 
   return (
     <div className="page">
-      <h1 className="page-title">💬 שאלו אותנו</h1>
+      <h1 className="page-title">💬 שאלות ותשובות</h1>
 
       {!selectedCategory ? (
         <>

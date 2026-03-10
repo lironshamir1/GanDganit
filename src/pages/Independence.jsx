@@ -20,7 +20,7 @@ export default function Independence() {
 
   return (
     <div className="page">
-      <h1 className="page-title">⭐ אני יכול לבד!</h1>
+      <h1 className="page-title">⭐ בניית עצמאות</h1>
 
       {!selectedSkill ? (
         <div className="ind-skills">
