@@ -48,9 +48,12 @@ export default function Landing() {
             {/* Heart in left hand */}
             <path d="M 20,44 Q 16,38 20,35 Q 24,32 28,35 L 20,44 L 12,35 Q 16,32 20,35" fill="#e8907a" opacity="0.5" stroke="#e8907a" strokeWidth="1.5"/>
 
-            {/* Right arm - down */}
-            <path d="M 78,72 Q 92,82 96,95" fill="none" stroke="#e8907a" strokeWidth="2.5" strokeLinecap="round"/>
-            <circle cx="97" cy="97" r="4" fill="#FFF5EE" stroke="#e8907a" strokeWidth="2"/>
+            {/* Right arm - holding balloon string up */}
+            <path d="M 78,72 Q 88,68 92,60" fill="none" stroke="#e8907a" strokeWidth="2.5" strokeLinecap="round"/>
+            {/* Balloon string */}
+            <path d="M 92,60 Q 94,45 90,30" fill="none" stroke="#e8907a" strokeWidth="1.5" strokeLinecap="round"/>
+            {/* Heart balloon */}
+            <path d="M 90,24 Q 82,16 82,10 Q 82,2 90,2 Q 94,2 96,6 L 90,24 L 84,6 Q 86,2 90,2" fill="#e8907a" opacity="0.4" stroke="#e8907a" strokeWidth="1.5"/>
 
             {/* Left leg */}
             <path d="M 48,105 L 45,145" fill="none" stroke="#e8907a" strokeWidth="2.5" strokeLinecap="round"/>
