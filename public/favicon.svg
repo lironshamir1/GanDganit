@@ -1,38 +1,32 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="64" height="64">
-  <!-- Cartwheel child favicon -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 180" width="64" height="64">
+  <!-- Hair -->
+  <path d="M 42,28 Q 38,18 44,10 Q 52,2 64,4 Q 76,6 80,16 Q 82,22 78,28" fill="#e8907a" opacity="0.3" stroke="#e8907a" stroke-width="2" stroke-linecap="round"/>
+  <path d="M 42,22 Q 32,16 34,8" fill="none" stroke="#e8907a" stroke-width="2.5" stroke-linecap="round"/>
+  <circle cx="34" cy="6" r="3" fill="#e8907a" opacity="0.4"/>
+  <path d="M 78,22 Q 88,16 86,8" fill="none" stroke="#e8907a" stroke-width="2.5" stroke-linecap="round"/>
+  <circle cx="86" cy="6" r="3" fill="#e8907a" opacity="0.4"/>
   <!-- Head -->
-  <circle cx="145" cy="105" r="38" fill="none" stroke="#e8907a" stroke-width="3.5" stroke-linecap="round"/>
-  <!-- Hair bangs -->
-  <line x1="120" y1="82" x2="112" y2="72" stroke="#e8907a" stroke-width="3" stroke-linecap="round"/>
-  <line x1="127" y1="78" x2="121" y2="67" stroke="#e8907a" stroke-width="3" stroke-linecap="round"/>
-  <line x1="135" y1="76" x2="131" y2="64" stroke="#e8907a" stroke-width="3" stroke-linecap="round"/>
-  <line x1="143" y1="75" x2="141" y2="63" stroke="#e8907a" stroke-width="3" stroke-linecap="round"/>
-  <line x1="151" y1="76" x2="151" y2="64" stroke="#e8907a" stroke-width="3" stroke-linecap="round"/>
-  <!-- Closed happy eyes -->
-  <path d="M 133,100 Q 136,96 139,100" fill="none" stroke="#e8907a" stroke-width="2.5" stroke-linecap="round"/>
-  <path d="M 150,98 Q 153,94 156,98" fill="none" stroke="#e8907a" stroke-width="2.5" stroke-linecap="round"/>
+  <circle cx="60" cy="36" r="22" fill="#FFF5EE" stroke="#e8907a" stroke-width="2.5"/>
+  <!-- Eyes -->
+  <circle cx="52" cy="34" r="2.5" fill="#e8907a"/>
+  <circle cx="68" cy="34" r="2.5" fill="#e8907a"/>
+  <!-- Cheeks -->
+  <circle cx="46" cy="40" r="4" fill="#f4a89a" opacity="0.35"/>
+  <circle cx="74" cy="40" r="4" fill="#f4a89a" opacity="0.35"/>
   <!-- Smile -->
-  <path d="M 140,112 Q 145,118 152,112" fill="none" stroke="#e8907a" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M 53,44 Q 60,52 67,44" fill="none" stroke="#e8907a" stroke-width="2" stroke-linecap="round"/>
   <!-- Neck -->
-  <path d="M 118,125 L 108,135" fill="none" stroke="#e8907a" stroke-width="3.5" stroke-linecap="round"/>
+  <line x1="60" y1="58" x2="60" y2="65" stroke="#e8907a" stroke-width="2.5" stroke-linecap="round"/>
   <!-- Body -->
-  <path d="M 108,135 L 85,155" fill="none" stroke="#e8907a" stroke-width="3.5" stroke-linecap="round"/>
-  <!-- Shirt details -->
-  <path d="M 105,138 L 95,132" fill="none" stroke="#e8907a" stroke-width="3" stroke-linecap="round"/>
-  <path d="M 98,145 L 88,139" fill="none" stroke="#e8907a" stroke-width="3" stroke-linecap="round"/>
-  <path d="M 92,150 L 82,147" fill="none" stroke="#e8907a" stroke-width="2.5" stroke-linecap="round"/>
-  <!-- Left arm (on ground) -->
-  <path d="M 95,132 Q 72,148 60,170" fill="none" stroke="#e8907a" stroke-width="3.5" stroke-linecap="round"/>
-  <ellipse cx="58" cy="174" rx="7" ry="5" fill="none" stroke="#e8907a" stroke-width="3" stroke-linecap="round"/>
-  <!-- Right arm (raised) -->
-  <path d="M 100,140 Q 82,110 72,68" fill="none" stroke="#e8907a" stroke-width="3.5" stroke-linecap="round"/>
-  <line x1="72" y1="68" x2="68" y2="58" stroke="#e8907a" stroke-width="2.5" stroke-linecap="round"/>
-  <line x1="72" y1="68" x2="72" y2="56" stroke="#e8907a" stroke-width="2.5" stroke-linecap="round"/>
-  <line x1="72" y1="68" x2="76" y2="58" stroke="#e8907a" stroke-width="2.5" stroke-linecap="round"/>
-  <!-- Left leg (on ground) -->
-  <path d="M 85,155 Q 75,170 65,185" fill="none" stroke="#e8907a" stroke-width="3.5" stroke-linecap="round"/>
-  <ellipse cx="62" cy="188" rx="8" ry="5" fill="none" stroke="#e8907a" stroke-width="3" stroke-linecap="round"/>
-  <!-- Right leg (kicked up) -->
-  <path d="M 85,155 Q 105,150 118,158" fill="none" stroke="#e8907a" stroke-width="3.5" stroke-linecap="round"/>
-  <ellipse cx="122" cy="160" rx="7" ry="5" fill="none" stroke="#e8907a" stroke-width="3" stroke-linecap="round"/>
+  <path d="M 42,68 L 60,65 L 78,68 L 82,105 Q 60,112 38,105 Z" fill="#e8907a" opacity="0.15" stroke="#e8907a" stroke-width="2.5" stroke-linejoin="round"/>
+  <!-- Arms -->
+  <path d="M 42,72 Q 28,68 20,55" fill="none" stroke="#e8907a" stroke-width="2.5" stroke-linecap="round"/>
+  <circle cx="19" cy="53" r="4" fill="#FFF5EE" stroke="#e8907a" stroke-width="2"/>
+  <path d="M 78,72 Q 92,68 100,55" fill="none" stroke="#e8907a" stroke-width="2.5" stroke-linecap="round"/>
+  <circle cx="101" cy="53" r="4" fill="#FFF5EE" stroke="#e8907a" stroke-width="2"/>
+  <!-- Legs -->
+  <path d="M 48,105 L 45,145" fill="none" stroke="#e8907a" stroke-width="2.5" stroke-linecap="round"/>
+  <ellipse cx="43" cy="148" rx="8" ry="4" fill="#e8907a" opacity="0.3" stroke="#e8907a" stroke-width="2"/>
+  <path d="M 72,105 L 75,145" fill="none" stroke="#e8907a" stroke-width="2.5" stroke-linecap="round"/>
+  <ellipse cx="77" cy="148" rx="8" ry="4" fill="#e8907a" opacity="0.3" stroke="#e8907a" stroke-width="2"/>
 </svg>
