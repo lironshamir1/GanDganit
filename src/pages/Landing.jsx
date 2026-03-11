@@ -26,6 +26,12 @@ export default function Landing() {
             {/* Head */}
             <circle cx="60" cy="36" r="22" fill="#FFF5EE" stroke="#e8907a" strokeWidth="2.5"/>
 
+            {/* Hair */}
+            <path d="M 38,36 Q 38,14 60,12 Q 82,14 82,36" fill="none" stroke="#e8907a" strokeWidth="3" strokeLinecap="round"/>
+            <path d="M 42,30 Q 40,18 52,14" fill="none" stroke="#e8907a" strokeWidth="2.5" strokeLinecap="round"/>
+            <path d="M 78,30 Q 80,18 68,14" fill="none" stroke="#e8907a" strokeWidth="2.5" strokeLinecap="round"/>
+            <path d="M 60,14 Q 58,10 62,8 Q 66,10 60,14" fill="#e8907a" opacity="0.4"/>
+
             {/* Eyes */}
             <circle cx="52" cy="34" r="2.5" fill="#e8907a"/>
             <circle cx="68" cy="34" r="2.5" fill="#e8907a"/>
