@@ -37,6 +37,12 @@
   margin-bottom: 16px;
 }
 
+.about-subtitle {
+  font-size: 1.3rem;
+  color: #e8907a;
+  margin-bottom: 12px;
+}
+
 .about-text {
   font-size: 1.1rem;
   line-height: 2;
