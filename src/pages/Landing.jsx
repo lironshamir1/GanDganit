@@ -20,35 +20,58 @@ export default function Landing() {
     <div className="landing-page" onClick={() => navigate('/home')}>
       <div className={`landing-content ${visible ? 'visible' : ''}`}>
         <div className="landing-logo">
-          <svg viewBox="0 0 140 110" width="140" height="110">
-            {/* Head - large round circle on the right */}
-            <circle cx="108" cy="38" r="22" fill="#fce8e0" stroke="#d4836a" strokeWidth="2" />
-            {/* Hair bun/ponytail - small circle on top-right of head */}
-            <circle cx="122" cy="18" r="8" fill="none" stroke="#d4836a" strokeWidth="1.8" />
-            {/* Hair line connecting bun to head */}
-            <path d="M 118,22 Q 120,28 116,30" fill="none" stroke="#d4836a" strokeWidth="1.5" />
-            {/* Eye - single dot (side view) */}
-            <circle cx="103" cy="36" r="2" fill="#d4836a"/>
-            {/* Cheek blush */}
-            <circle cx="100" cy="42" r="3.5" fill="#f0b0a0" opacity="0.4"/>
-            {/* Mouth - small curve */}
-            <path d="M 100,44 Q 103,47 106,45" fill="none" stroke="#d4836a" strokeWidth="1.3" strokeLinecap="round"/>
-            {/* Back/torso - curved line from head down and to the left */}
-            <path d="M 95,55 Q 75,62 55,72" fill="none" stroke="#d4836a" strokeWidth="2" strokeLinecap="round"/>
-            {/* Right arm - reaching down to ground */}
-            <path d="M 68,65 Q 55,80 45,92" fill="none" stroke="#d4836a" strokeWidth="2" strokeLinecap="round"/>
-            {/* Left arm - reaching down to ground */}
-            <path d="M 60,69 Q 45,82 35,90" fill="none" stroke="#d4836a" strokeWidth="2" strokeLinecap="round"/>
-            {/* Hand details - small fingers */}
-            <path d="M 45,92 Q 42,95 40,93" fill="none" stroke="#d4836a" strokeWidth="1.3" strokeLinecap="round"/>
-            <path d="M 35,90 Q 32,93 30,91" fill="none" stroke="#d4836a" strokeWidth="1.3" strokeLinecap="round"/>
-            {/* Right leg - going back and down */}
-            <path d="M 95,55 Q 100,72 105,92" fill="none" stroke="#d4836a" strokeWidth="2" strokeLinecap="round"/>
-            {/* Left leg - slightly apart */}
-            <path d="M 90,58 Q 88,75 82,92" fill="none" stroke="#d4836a" strokeWidth="2" strokeLinecap="round"/>
-            {/* Feet */}
-            <path d="M 105,92 Q 108,95 112,93" fill="none" stroke="#d4836a" strokeWidth="1.5" strokeLinecap="round"/>
-            <path d="M 82,92 Q 79,95 76,93" fill="none" stroke="#d4836a" strokeWidth="1.5" strokeLinecap="round"/>
+          <svg viewBox="0 0 200 200" width="150" height="150">
+            {/* Cartwheel child - salmon/coral color */}
+
+            {/* === HEAD === Large circle, tilted to the right */}
+            <circle cx="145" cy="105" r="38" fill="none" stroke="#e8907a" strokeWidth="3.5" strokeLinecap="round"/>
+
+            {/* === HAIR === Straight bangs falling down (gravity, head tilted) */}
+            <line x1="120" y1="82" x2="112" y2="72" stroke="#e8907a" strokeWidth="3" strokeLinecap="round"/>
+            <line x1="127" y1="78" x2="121" y2="67" stroke="#e8907a" strokeWidth="3" strokeLinecap="round"/>
+            <line x1="135" y1="76" x2="131" y2="64" stroke="#e8907a" strokeWidth="3" strokeLinecap="round"/>
+            <line x1="143" y1="75" x2="141" y2="63" stroke="#e8907a" strokeWidth="3" strokeLinecap="round"/>
+            <line x1="151" y1="76" x2="151" y2="64" stroke="#e8907a" strokeWidth="3" strokeLinecap="round"/>
+
+            {/* === EYES === Closed happy eyes (curved arcs) */}
+            <path d="M 133,100 Q 136,96 139,100" fill="none" stroke="#e8907a" strokeWidth="2.5" strokeLinecap="round"/>
+            <path d="M 150,98 Q 153,94 156,98" fill="none" stroke="#e8907a" strokeWidth="2.5" strokeLinecap="round"/>
+
+            {/* === MOUTH === Small happy smile */}
+            <path d="M 140,112 Q 145,118 152,112" fill="none" stroke="#e8907a" strokeWidth="2.5" strokeLinecap="round"/>
+
+            {/* === NECK === Short line from head to body */}
+            <path d="M 118,125 L 108,135" fill="none" stroke="#e8907a" strokeWidth="3.5" strokeLinecap="round"/>
+
+            {/* === BODY/TORSO === T-shirt shape, leaning left */}
+            <path d="M 108,135 L 85,155" fill="none" stroke="#e8907a" strokeWidth="3.5" strokeLinecap="round"/>
+            {/* T-shirt sleeve lines */}
+            <path d="M 105,138 L 95,132" fill="none" stroke="#e8907a" strokeWidth="3" strokeLinecap="round"/>
+            <path d="M 98,145 L 88,139" fill="none" stroke="#e8907a" strokeWidth="3" strokeLinecap="round"/>
+            {/* Shirt bottom edge */}
+            <path d="M 92,150 L 82,147" fill="none" stroke="#e8907a" strokeWidth="2.5" strokeLinecap="round"/>
+
+            {/* === LEFT ARM === On the ground (support hand) */}
+            <path d="M 95,132 Q 72,148 60,170" fill="none" stroke="#e8907a" strokeWidth="3.5" strokeLinecap="round"/>
+            {/* Left hand (on ground) */}
+            <ellipse cx="58" cy="174" rx="7" ry="5" fill="none" stroke="#e8907a" strokeWidth="3" strokeLinecap="round"/>
+
+            {/* === RIGHT ARM === Raised up high */}
+            <path d="M 100,140 Q 82,110 72,68" fill="none" stroke="#e8907a" strokeWidth="3.5" strokeLinecap="round"/>
+            {/* Right hand (fingers up) */}
+            <line x1="72" y1="68" x2="68" y2="58" stroke="#e8907a" strokeWidth="2.5" strokeLinecap="round"/>
+            <line x1="72" y1="68" x2="72" y2="56" stroke="#e8907a" strokeWidth="2.5" strokeLinecap="round"/>
+            <line x1="72" y1="68" x2="76" y2="58" stroke="#e8907a" strokeWidth="2.5" strokeLinecap="round"/>
+
+            {/* === LEFT LEG === On the ground */}
+            <path d="M 85,155 Q 75,170 65,185" fill="none" stroke="#e8907a" strokeWidth="3.5" strokeLinecap="round"/>
+            {/* Left shoe */}
+            <ellipse cx="62" cy="188" rx="8" ry="5" fill="none" stroke="#e8907a" strokeWidth="3" strokeLinecap="round"/>
+
+            {/* === RIGHT LEG === Kicked up */}
+            <path d="M 85,155 Q 105,150 118,158" fill="none" stroke="#e8907a" strokeWidth="3.5" strokeLinecap="round"/>
+            {/* Right shoe */}
+            <ellipse cx="122" cy="160" rx="7" ry="5" fill="none" stroke="#e8907a" strokeWidth="3" strokeLinecap="round"/>
           </svg>
         </div>
         <h1 className="landing-title">גן דגנית</h1>
