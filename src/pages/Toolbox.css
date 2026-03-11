@@ -149,107 +149,17 @@
   gap: 20px;
 }
 
-.hourglass-shape {
-  position: relative;
-  width: 120px;
-  height: 220px;
+.hourglass-svg-wrap {
+  filter: drop-shadow(0 4px 12px rgba(180, 140, 50, 0.2));
 }
 
-/* Frame bars */
-.hg-frame-top,
-.hg-frame-bottom {
-  position: absolute;
-  left: -5px;
-  right: -5px;
-  height: 8px;
-  background: linear-gradient(135deg, #b8860b, #daa520, #b8860b);
-  border-radius: 4px;
-  z-index: 3;
-}
-
-.hg-frame-top { top: 0; }
-.hg-frame-bottom { bottom: 0; }
-
-/* Top bulb */
-.hg-top {
-  position: absolute;
-  top: 8px;
-  left: 10px;
-  right: 10px;
-  height: 90px;
-  background: rgba(255, 255, 255, 0.3);
-  border: 2.5px solid #daa520;
-  border-bottom: none;
-  border-radius: 40px 40px 0 0;
-  overflow: hidden;
-  clip-path: polygon(0 0, 100% 0, 70% 100%, 30% 100%);
-}
-
-.hg-sand-top {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: linear-gradient(180deg, #f4d47c, #e6a735);
-  transition: height 1s linear;
-}
-
-/* Neck */
-.hg-neck {
-  position: absolute;
-  top: 98px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 8px;
-  height: 24px;
-  z-index: 2;
-}
-
-.hg-stream {
-  width: 3px;
-  height: 100%;
-  margin: 0 auto;
-  background: #e6a735;
-  border-radius: 2px;
-  animation: streamFlow 0.5s ease-in-out infinite alternate;
-}
-
-@keyframes streamFlow {
-  0% { opacity: 0.6; }
-  100% { opacity: 1; }
-}
-
-/* Bottom bulb */
-.hg-bottom {
-  position: absolute;
-  bottom: 8px;
-  left: 10px;
-  right: 10px;
-  height: 90px;
-  background: rgba(255, 255, 255, 0.3);
-  border: 2.5px solid #daa520;
-  border-top: none;
-  border-radius: 0 0 40px 40px;
-  overflow: hidden;
-  clip-path: polygon(30% 0, 70% 0, 100% 100%, 0 100%);
-}
-
-.hg-sand-bottom {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: linear-gradient(0deg, #e6a735, #f4d47c);
-  transition: height 1s linear;
-}
-
-.hourglass-shape.finished {
+.hourglass-svg-wrap.finished {
   animation: hourglassPulse 0.6s ease 2;
 }
 
 @keyframes hourglassPulse {
   0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.05); }
+  50% { transform: scale(1.08); }
 }
 
 .hourglass-time {

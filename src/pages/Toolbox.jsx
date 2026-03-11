@@ -1,6 +1,78 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import './Toolbox.css'
 
+function HourglassSVG({ progress, running }) {
+  // progress: 0 (full top) to 100 (full bottom)
+  const topSandHeight = 70 * (1 - progress / 100)
+  const bottomSandHeight = 70 * (progress / 100)
+  const topSandY = 25 + (70 - topSandHeight)
+  const bottomSandY = 175 - bottomSandHeight
+
+  return (
+    <svg viewBox="0 0 160 200" width="180" height="225">
+      <defs>
+        <linearGradient id="sandGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#f0c65a" />
+          <stop offset="100%" stopColor="#d4952b" />
+        </linearGradient>
+        <linearGradient id="glassGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor="rgba(255,255,255,0.5)" />
+          <stop offset="100%" stopColor="rgba(200,220,240,0.3)" />
+        </linearGradient>
+        <clipPath id="topBulb">
+          <path d="M 25,25 Q 25,5 80,5 Q 135,5 135,25 L 135,80 Q 135,95 80,100 Q 25,95 25,80 Z" />
+        </clipPath>
+        <clipPath id="bottomBulb">
+          <path d="M 25,120 Q 25,105 80,100 Q 135,105 135,120 L 135,175 Q 135,195 80,195 Q 25,195 25,175 Z" />
+        </clipPath>
+      </defs>
+
+      {/* Glass body - top */}
+      <path d="M 25,25 Q 25,5 80,5 Q 135,5 135,25 L 135,80 Q 135,95 80,100 Q 25,95 25,80 Z"
+        fill="url(#glassGrad)" stroke="#b8960b" strokeWidth="2.5" />
+
+      {/* Glass body - bottom */}
+      <path d="M 25,120 Q 25,105 80,100 Q 135,105 135,120 L 135,175 Q 135,195 80,195 Q 25,195 25,175 Z"
+        fill="url(#glassGrad)" stroke="#b8960b" strokeWidth="2.5" />
+
+      {/* Sand in top bulb */}
+      {topSandHeight > 0 && (
+        <rect x="20" y={topSandY} width="120" height={topSandHeight + 5}
+          fill="url(#sandGrad)" clipPath="url(#topBulb)" />
+      )}
+
+      {/* Sand in bottom bulb */}
+      {bottomSandHeight > 0 && (
+        <rect x="20" y={bottomSandY} width="120" height={bottomSandHeight + 5}
+          fill="url(#sandGrad)" clipPath="url(#bottomBulb)" />
+      )}
+
+      {/* Falling sand stream */}
+      {running && progress < 100 && (
+        <line x1="80" y1="95" x2="80" y2={bottomSandY}
+          stroke="#d4952b" strokeWidth="2.5" strokeLinecap="round"
+          opacity="0.8">
+          <animate attributeName="opacity" values="0.5;1;0.5" dur="0.8s" repeatCount="indefinite" />
+        </line>
+      )}
+
+      {/* Top frame bar */}
+      <rect x="15" y="0" width="130" height="7" rx="3.5"
+        fill="url(#sandGrad)" stroke="#96700a" strokeWidth="1" />
+
+      {/* Bottom frame bar */}
+      <rect x="15" y="193" width="130" height="7" rx="3.5"
+        fill="url(#sandGrad)" stroke="#96700a" strokeWidth="1" />
+
+      {/* Frame side supports */}
+      <line x1="22" y1="7" x2="22" y2="14" stroke="#b8960b" strokeWidth="3" strokeLinecap="round" />
+      <line x1="138" y1="7" x2="138" y2="14" stroke="#b8960b" strokeWidth="3" strokeLinecap="round" />
+      <line x1="22" y1="186" x2="22" y2="193" stroke="#b8960b" strokeWidth="3" strokeLinecap="round" />
+      <line x1="138" y1="186" x2="138" y2="193" stroke="#b8960b" strokeWidth="3" strokeLinecap="round" />
+    </svg>
+  )
+}
+
 function Hourglass() {
   const [running, setRunning] = useState(false)
   const [seconds, setSeconds] = useState(0)
@@ -44,22 +116,8 @@ function Hourglass() {
   return (
     <div className="fullscreen-tool">
       <div className="hourglass-container">
-        <div className={`hourglass-shape ${running ? 'running' : ''} ${finished ? 'finished' : ''}`}>
-          {/* Top bulb */}
-          <div className="hg-top">
-            <div className="hg-sand-top" style={{ height: `${100 - progress}%` }} />
-          </div>
-          {/* Neck */}
-          <div className="hg-neck">
-            {running && <div className="hg-stream" />}
-          </div>
-          {/* Bottom bulb */}
-          <div className="hg-bottom">
-            <div className="hg-sand-bottom" style={{ height: `${progress}%` }} />
-          </div>
-          {/* Frame */}
-          <div className="hg-frame-top" />
-          <div className="hg-frame-bottom" />
+        <div className={`hourglass-svg-wrap ${finished ? 'finished' : ''}`}>
+          <HourglassSVG progress={progress} running={running} />
         </div>
 
         <div className="hourglass-time">
