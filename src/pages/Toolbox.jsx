@@ -198,15 +198,47 @@ function Timer() {
   )
 }
 
+function DiceFace({ value, size = 120 }) {
+  // Dot positions for each face value (on a 5x5 grid mapped to the die face)
+  const dotPositions = {
+    1: [[50, 50]],
+    2: [[25, 25], [75, 75]],
+    3: [[25, 25], [50, 50], [75, 75]],
+    4: [[25, 25], [75, 25], [25, 75], [75, 75]],
+    5: [[25, 25], [75, 25], [50, 50], [25, 75], [75, 75]],
+    6: [[25, 25], [75, 25], [25, 50], [75, 50], [25, 75], [75, 75]],
+  }
+  const dots = dotPositions[value] || []
+  const r = size * 0.08
+
+  return (
+    <svg viewBox="0 0 100 100" width={size} height={size}>
+      <rect x="2" y="2" width="96" height="96" rx="16" ry="16"
+        fill="white" stroke="#ccc" strokeWidth="2"
+        filter="url(#diceShadow)" />
+      <defs>
+        <filter id="diceShadow" x="-10%" y="-10%" width="130%" height="130%">
+          <feDropShadow dx="0" dy="2" stdDeviation="3" floodOpacity="0.15" />
+        </filter>
+      </defs>
+      {dots.map(([cx, cy], i) => (
+        <circle key={i} cx={cx} cy={cy} r={r} fill="#333" />
+      ))}
+    </svg>
+  )
+}
+
 function Dice() {
-  const [value, setValue] = useState(null)
+  const [value, setValue] = useState(3)
   const [rolling, setRolling] = useState(false)
+  const [rotation, setRotation] = useState(0)
 
   const roll = useCallback(() => {
     setRolling(true)
     let count = 0
     const interval = setInterval(() => {
       setValue(Math.floor(Math.random() * 6) + 1)
+      setRotation(prev => prev + 90)
       count++
       if (count > 10) {
         clearInterval(interval)
@@ -215,15 +247,16 @@ function Dice() {
     }, 80)
   }, [])
 
-  const faces = ['', '⚀', '⚁', '⚂', '⚃', '⚄', '⚅']
-
   return (
     <div className="fullscreen-tool">
       <div className="dice-container">
-        <div className={`dice-display ${rolling ? 'rolling' : ''}`}>
-          {value ? faces[value] : '🎲'}
+        <div
+          className={`dice-cube ${rolling ? 'rolling' : ''}`}
+          style={{ transform: `rotate(${rotation}deg)` }}
+        >
+          <DiceFace value={value} size={160} />
         </div>
-        {value && !rolling && (
+        {!rolling && (
           <div className="dice-result">{value}</div>
         )}
         <button className="tool-btn" onClick={roll} disabled={rolling}>
