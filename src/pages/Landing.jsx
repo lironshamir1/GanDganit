@@ -26,15 +26,6 @@ export default function Landing() {
             {/* Head */}
             <circle cx="60" cy="36" r="22" fill="#FFF5EE" stroke="#e8907a" strokeWidth="2.5"/>
 
-            {/* Hair behind head */}
-            <path d="M 39,30 Q 37,16 45,10 Q 53,4 65,5 Q 75,7 80,16 Q 82,22 80,30" fill="#e8907a" opacity="0.25" stroke="#e8907a" strokeWidth="2" strokeLinecap="round"/>
-            {/* Pigtail left */}
-            <path d="M 41,22 Q 31,16 33,8" fill="none" stroke="#e8907a" strokeWidth="2.5" strokeLinecap="round"/>
-            <circle cx="33" cy="6" r="3" fill="#e8907a" opacity="0.4"/>
-            {/* Pigtail right */}
-            <path d="M 79,22 Q 89,16 87,8" fill="none" stroke="#e8907a" strokeWidth="2.5" strokeLinecap="round"/>
-            <circle cx="87" cy="6" r="3" fill="#e8907a" opacity="0.4"/>
-
             {/* Eyes */}
             <circle cx="52" cy="34" r="2.5" fill="#e8907a"/>
             <circle cx="68" cy="34" r="2.5" fill="#e8907a"/>
