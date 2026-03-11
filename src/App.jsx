@@ -13,6 +13,7 @@ import Schedule from './pages/Schedule'
 import Reminders from './pages/Reminders'
 import SpeechTraining from './pages/SpeechTraining'
 import GanUpdates from './pages/GanUpdates'
+import Toolbox from './pages/Toolbox'
 
 function App() {
   const location = useLocation()
@@ -33,6 +34,7 @@ function App() {
         <Route path="/reminders" element={<Reminders />} />
         <Route path="/speech" element={<SpeechTraining />} />
         <Route path="/gan-updates" element={<GanUpdates />} />
+        <Route path="/toolbox" element={<Toolbox />} />
       </Routes>
       {!isLanding && <Navbar />}
     </>

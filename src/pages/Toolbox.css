@@ -1,0 +1,199 @@
+.toolbox-page {
+  padding-top: 30px;
+}
+
+.toolbox-header {
+  text-align: center;
+  margin-bottom: 24px;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all 0.5s ease;
+}
+
+.toolbox-header.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.toolbox-title {
+  font-size: 2rem;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.toolbox-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.5s ease 0.15s;
+}
+
+.toolbox-grid.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Tool cards */
+.tool-card {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  padding: 24px;
+  box-shadow: var(--shadow);
+  text-align: center;
+}
+
+.tool-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.tool-header h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.tool-emoji {
+  font-size: 1.5rem;
+}
+
+.tool-btn {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 10px 28px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  font-family: inherit;
+}
+
+.tool-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(126, 200, 200, 0.4);
+}
+
+.tool-btn:active {
+  transform: scale(0.96);
+}
+
+.tool-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.tool-btn-secondary {
+  background: linear-gradient(135deg, #e0e0e0, #d0d0d0);
+  color: var(--text);
+}
+
+/* Hourglass */
+.hourglass-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.hourglass-visual {
+  width: 60px;
+  height: 100px;
+  border-radius: 30px 30px 30px 30px;
+  border: 3px solid var(--primary);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.hourglass-sand-top {
+  background: linear-gradient(180deg, #F8C8A4, #F2A07B);
+  width: 100%;
+  transition: height 1s linear;
+  border-radius: 27px 27px 0 0;
+}
+
+.hourglass-sand-bottom {
+  background: linear-gradient(0deg, #F8C8A4, #F2A07B);
+  width: 100%;
+  margin-top: auto;
+  transition: height 1s linear;
+  border-radius: 0 0 27px 27px;
+}
+
+.hourglass-time {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--primary-dark);
+  font-variant-numeric: tabular-nums;
+}
+
+.hourglass-presets {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+
+.preset-btn {
+  background: #f0f0f0;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  padding: 6px 14px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
+  color: var(--text);
+}
+
+.preset-btn.active {
+  border-color: var(--primary);
+  background: linear-gradient(135deg, #E0F4F4, #B5E0E0);
+  color: var(--primary-dark);
+}
+
+/* Timer */
+.timer-display {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--primary-dark);
+  margin-bottom: 18px;
+  font-variant-numeric: tabular-nums;
+}
+
+.timer-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+/* Dice */
+.dice-display {
+  font-size: 5rem;
+  margin-bottom: 18px;
+  transition: transform 0.1s;
+  line-height: 1.2;
+}
+
+.dice-display.rolling {
+  animation: diceShake 0.1s infinite;
+}
+
+@keyframes diceShake {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-10deg); }
+  75% { transform: rotate(10deg); }
+}
