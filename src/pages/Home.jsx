@@ -14,6 +14,7 @@ const modules = [
   { path: '/schedule', title: 'סדר יום', icon: '📅', desc: 'תכנון וניהול היום', color: '#7EC8C8', bg: 'linear-gradient(135deg, #E0F7FA, #B5E0E0)' },
   { path: '/reminders', title: 'תזכורות', icon: '🔔', desc: 'תזכורות לטיפולים ומשימות', color: '#DDA0DD', bg: 'linear-gradient(135deg, #F8E8F8, #E8D0E8)' },
   { path: '/toolbox', title: 'ארגז כלים', icon: '🧰', desc: 'שעון חול, טיימר וקובייה', color: '#E8B87D', bg: 'linear-gradient(135deg, #FFF3E0, #FFE0B2)' },
+  { path: '/about', title: 'מי אנחנו', icon: '👩‍🏫', desc: 'קצת עלינו ועל הגן', color: '#e8907a', bg: 'linear-gradient(135deg, #FFF5F3, #F4C7BA)' },
 ]
 
 const dailyTips = [
