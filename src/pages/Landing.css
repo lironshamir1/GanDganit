@@ -48,6 +48,17 @@
   margin-bottom: 36px;
 }
 
+.landing-intro {
+  font-size: 0.95rem;
+  line-height: 1.9;
+  color: var(--text);
+  text-align: right;
+  direction: rtl;
+  margin: 16px 0 24px;
+  padding: 0 4px;
+  font-weight: 300;
+}
+
 .landing-quote {
   background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(10px);
