@@ -3,74 +3,113 @@ import './Toolbox.css'
 
 function HourglassSVG({ progress, running }) {
   // progress: 0 (full top) to 100 (full bottom)
-  const topSandHeight = 70 * (1 - progress / 100)
-  const bottomSandHeight = 70 * (progress / 100)
-  const topSandY = 25 + (70 - topSandHeight)
-  const bottomSandY = 175 - bottomSandHeight
+  const p = progress / 100
+
+  // Top sand shrinks from bottom up (sand level drops)
+  const topFull = 75 // max sand height in top bulb
+  const topH = topFull * (1 - p)
+  const topY = 18 + (topFull - topH)
+
+  // Bottom sand grows from bottom up
+  const botFull = 75
+  const botH = botFull * p
+  const botY = 268 - botH
+
+  // Stream end point
+  const streamEnd = botH > 0 ? botY : 268
 
   return (
-    <svg viewBox="0 0 160 200" width="180" height="225">
+    <svg viewBox="0 0 100 290" width="130" height="377">
       <defs>
-        <linearGradient id="sandGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#f0c65a" />
+        <linearGradient id="sandG" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#f5d060" />
           <stop offset="100%" stopColor="#d4952b" />
         </linearGradient>
-        <linearGradient id="glassGrad" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="rgba(255,255,255,0.5)" />
-          <stop offset="100%" stopColor="rgba(200,220,240,0.3)" />
+        <linearGradient id="frameG" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stopColor="#a07010" />
+          <stop offset="50%" stopColor="#dab040" />
+          <stop offset="100%" stopColor="#a07010" />
         </linearGradient>
-        <clipPath id="topBulb">
-          <path d="M 25,25 Q 25,5 80,5 Q 135,5 135,25 L 135,80 Q 135,95 80,100 Q 25,95 25,80 Z" />
+        {/* Top bulb: wide at top, narrows to center */}
+        <clipPath id="cTop">
+          <path d="M 12,15 L 88,15 L 88,70 Q 88,93 50,95 Q 12,93 12,70 Z" />
         </clipPath>
-        <clipPath id="bottomBulb">
-          <path d="M 25,120 Q 25,105 80,100 Q 135,105 135,120 L 135,175 Q 135,195 80,195 Q 25,195 25,175 Z" />
+        {/* Bottom bulb: narrow at center, widens to bottom */}
+        <clipPath id="cBot">
+          <path d="M 50,195 Q 88,197 88,220 L 88,270 L 12,270 L 12,220 Q 12,197 50,195 Z" />
         </clipPath>
       </defs>
 
-      {/* Glass body - top */}
-      <path d="M 25,25 Q 25,5 80,5 Q 135,5 135,25 L 135,80 Q 135,95 80,100 Q 25,95 25,80 Z"
-        fill="url(#glassGrad)" stroke="#b8960b" strokeWidth="2.5" />
+      {/* Top frame bar */}
+      <rect x="5" y="4" width="90" height="9" rx="4" fill="url(#frameG)" />
+      {/* Bottom frame bar */}
+      <rect x="5" y="277" width="90" height="9" rx="4" fill="url(#frameG)" />
 
-      {/* Glass body - bottom */}
-      <path d="M 25,120 Q 25,105 80,100 Q 135,105 135,120 L 135,175 Q 135,195 80,195 Q 25,195 25,175 Z"
-        fill="url(#glassGrad)" stroke="#b8960b" strokeWidth="2.5" />
+      {/* Left pillar */}
+      <rect x="10" y="13" width="4" height="264" rx="2" fill="#b8900b" opacity="0.5" />
+      {/* Right pillar */}
+      <rect x="86" y="13" width="4" height="264" rx="2" fill="#b8900b" opacity="0.5" />
+
+      {/* Glass outline - top bulb */}
+      <path d="M 12,15 L 88,15 L 88,70 Q 88,93 50,95 Q 12,93 12,70 Z"
+        fill="rgba(220,235,250,0.25)" stroke="#b8960b" strokeWidth="2" />
+
+      {/* Glass outline - bottom bulb */}
+      <path d="M 50,195 Q 88,197 88,220 L 88,270 L 12,270 L 12,220 Q 12,197 50,195 Z"
+        fill="rgba(220,235,250,0.25)" stroke="#b8960b" strokeWidth="2" />
+
+      {/* Neck connecting the two bulbs */}
+      <path d="M 12,70 Q 12,93 50,95 L 50,195 Q 12,197 12,220"
+        fill="none" stroke="#b8960b" strokeWidth="2" />
+      <path d="M 88,70 Q 88,93 50,95 L 50,195 Q 88,197 88,220"
+        fill="none" stroke="#b8960b" strokeWidth="2" />
 
       {/* Sand in top bulb */}
-      {topSandHeight > 0 && (
-        <rect x="20" y={topSandY} width="120" height={topSandHeight + 5}
-          fill="url(#sandGrad)" clipPath="url(#topBulb)" />
+      {topH > 1 && (
+        <rect x="10" y={topY} width="80" height={topH + 2}
+          fill="url(#sandG)" clipPath="url(#cTop)" />
       )}
 
       {/* Sand in bottom bulb */}
-      {bottomSandHeight > 0 && (
-        <rect x="20" y={bottomSandY} width="120" height={bottomSandHeight + 5}
-          fill="url(#sandGrad)" clipPath="url(#bottomBulb)" />
+      {botH > 1 && (
+        <rect x="10" y={botY} width="80" height={botH + 2}
+          fill="url(#sandG)" clipPath="url(#cBot)" />
       )}
 
-      {/* Falling sand stream */}
+      {/* Falling sand stream through neck */}
       {running && progress < 100 && (
-        <line x1="80" y1="95" x2="80" y2={bottomSandY}
-          stroke="#d4952b" strokeWidth="2.5" strokeLinecap="round"
-          opacity="0.8">
-          <animate attributeName="opacity" values="0.5;1;0.5" dur="0.8s" repeatCount="indefinite" />
+        <line x1="50" y1="90" x2="50" y2={streamEnd}
+          stroke="#d4952b" strokeWidth="2" strokeLinecap="round" opacity="0.85">
+          <animate attributeName="opacity" values="0.6;1;0.6" dur="0.6s" repeatCount="indefinite" />
         </line>
       )}
 
-      {/* Top frame bar */}
-      <rect x="15" y="0" width="130" height="7" rx="3.5"
-        fill="url(#sandGrad)" stroke="#96700a" strokeWidth="1" />
-
-      {/* Bottom frame bar */}
-      <rect x="15" y="193" width="130" height="7" rx="3.5"
-        fill="url(#sandGrad)" stroke="#96700a" strokeWidth="1" />
-
-      {/* Frame side supports */}
-      <line x1="22" y1="7" x2="22" y2="14" stroke="#b8960b" strokeWidth="3" strokeLinecap="round" />
-      <line x1="138" y1="7" x2="138" y2="14" stroke="#b8960b" strokeWidth="3" strokeLinecap="round" />
-      <line x1="22" y1="186" x2="22" y2="193" stroke="#b8960b" strokeWidth="3" strokeLinecap="round" />
-      <line x1="138" y1="186" x2="138" y2="193" stroke="#b8960b" strokeWidth="3" strokeLinecap="round" />
+      {/* Glass shine */}
+      <line x1="20" y1="22" x2="20" y2="60" stroke="rgba(255,255,255,0.5)" strokeWidth="2" strokeLinecap="round" />
+      <line x1="20" y1="225" x2="20" y2="260" stroke="rgba(255,255,255,0.5)" strokeWidth="2" strokeLinecap="round" />
     </svg>
   )
+}
+
+function playAlarm() {
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)()
+    const notes = [800, 1000, 800, 1000, 800]
+    notes.forEach((freq, i) => {
+      const osc = ctx.createOscillator()
+      const gain = ctx.createGain()
+      osc.connect(gain)
+      gain.connect(ctx.destination)
+      osc.type = 'sine'
+      osc.frequency.value = freq
+      gain.gain.setValueAtTime(0.3, ctx.currentTime + i * 0.25)
+      gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + i * 0.25 + 0.2)
+      osc.start(ctx.currentTime + i * 0.25)
+      osc.stop(ctx.currentTime + i * 0.25 + 0.25)
+    })
+  } catch {
+    // Audio not available
+  }
 }
 
 function Hourglass() {
@@ -99,6 +138,7 @@ function Hourglass() {
             clearInterval(intervalRef.current)
             setRunning(false)
             setFinished(true)
+            playAlarm()
             return duration
           }
           return prev + 1
