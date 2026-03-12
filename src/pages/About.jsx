@@ -21,7 +21,7 @@ export default function About() {
         <div className="about-section">
           <h2 className="about-subtitle">הצוות שלנו</h2>
           <ul className="team-list">
-            <li><strong>רינת שמיר</strong> — מנהלת הגן</li>
+            <li><strong>רינת שמיר</strong> — גננת ומנהלת הגן</li>
             <li><strong>גלי אהרון לוי</strong> — מרפאה בעיסוק</li>
             <li><strong>לילך כספרי</strong> — קלינאית תקשורת</li>
             <li><strong>קרן אבראשי</strong> — מטפלת רגשית במוסיקה</li>
