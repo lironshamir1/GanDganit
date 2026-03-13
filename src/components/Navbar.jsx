@@ -2,11 +2,11 @@ import { NavLink } from 'react-router-dom'
 import './Navbar.css'
 
 const navItems = [
-  { path: '/home',       label: 'בית',      icon: 'https://www.genspark.ai/api/files/s/ww3wWEDa?cache_control=3600', emoji: '🏠' },
-  { path: '/qa',         label: 'שאלות',    icon: 'https://www.genspark.ai/api/files/s/wMKMpOsS?cache_control=3600', emoji: '💬' },
-  { path: '/activities', label: 'פעילויות', icon: 'https://www.genspark.ai/api/files/s/DE3IEmAW?cache_control=3600', emoji: '🎨' },
-  { path: '/schedule',   label: 'יומן',     icon: 'https://www.genspark.ai/api/files/s/LheG615d?cache_control=3600', emoji: '📅' },
-  { path: '/inspiration',label: 'השראה',    icon: 'https://www.genspark.ai/api/files/s/gGCtvwJi?cache_control=3600', emoji: '✨' },
+  { path: '/home',        label: 'בית',      icon: '/icons/icon-about.png'       },
+  { path: '/qa',          label: 'שאלות',    icon: '/icons/icon-qa.png'          },
+  { path: '/activities',  label: 'פעילויות', icon: '/icons/icon-activities.png'  },
+  { path: '/schedule',    label: 'יומן',     icon: '/icons/icon-schedule.png'    },
+  { path: '/inspiration', label: 'השראה',    icon: '/icons/icon-inspiration.png' },
 ]
 
 export default function Navbar() {
