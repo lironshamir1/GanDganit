@@ -3,18 +3,18 @@ import { useState, useEffect } from 'react'
 import './Home.css'
 
 const modules = [
-  { path: '/qa', title: 'שאלות ותשובות', icon: '💬', desc: 'מענה מקצועי להורים', color: '#7EC8C8', bg: 'linear-gradient(135deg, #E0F4F4, #B5E0E0)' },
-  { path: '/activities', title: 'רעיונות לפעילויות', icon: '🎨', desc: 'פעילויות מותאמות לילד', color: '#B8A9D4', bg: 'linear-gradient(135deg, #EDE7F6, #D4C9E8)' },
-  { path: '/speech', title: 'אימוני שפה', icon: '🗣️', desc: 'תרגילים לפיתוח הדיבור', color: '#7EC8C8', bg: 'linear-gradient(135deg, #E0F4F4, #D4F5F5)' },
-  { path: '/independence', title: 'בניית עצמאות', icon: '⭐', desc: 'מדריך שלב אחר שלב', color: '#F8C8A4', bg: 'linear-gradient(135deg, #FFF3E8, #F8C8A4)' },
-  { path: '/boundaries', title: 'הצבת גבולות', icon: '🛡️', desc: 'גבולות באהבה ובעקביות', color: '#F2A07B', bg: 'linear-gradient(135deg, #FDEBD0, #F2A07B)' },
-  { path: '/gan-updates', title: 'עדכונים מהגן', icon: '📋', desc: 'הודעות ועדכונים שוטפים', color: '#A8D5BA', bg: 'linear-gradient(135deg, #E8F5E9, #A8D5BA)' },
-  { path: '/tasks', title: 'לוח משימות', icon: '🏆', desc: 'משימות יומיות ותגמולים', color: '#F5C6D0', bg: 'linear-gradient(135deg, #FCE4EC, #F5C6D0)' },
-  { path: '/inspiration', title: 'רגע של השראה', icon: '✨', desc: 'חיזוק ותמיכה להורים', color: '#B8A9D4', bg: 'linear-gradient(135deg, #F3E5F5, #D4C9E8)' },
-  { path: '/schedule', title: 'סדר יום', icon: '📅', desc: 'תכנון וניהול היום', color: '#7EC8C8', bg: 'linear-gradient(135deg, #E0F7FA, #B5E0E0)' },
-  { path: '/reminders', title: 'תזכורות', icon: '🔔', desc: 'תזכורות לטיפולים ומשימות', color: '#DDA0DD', bg: 'linear-gradient(135deg, #F8E8F8, #E8D0E8)' },
-  { path: '/toolbox', title: 'ארגז כלים', icon: '🧰', desc: 'שעון חול, טיימר וקובייה', color: '#E8B87D', bg: 'linear-gradient(135deg, #FFF3E0, #FFE0B2)' },
-  { path: '/about', title: 'מי אנחנו', icon: '👩‍🏫', desc: 'קצת עלינו ועל הגן', color: '#e8907a', bg: 'linear-gradient(135deg, #FFF5F3, #F4C7BA)' },
+  { path: '/qa',           title: 'שאלות ותשובות',    icon: 'https://www.genspark.ai/api/files/s/wMKMpOsS?cache_control=3600', desc: 'מענה מקצועי להורים',           bg: 'linear-gradient(135deg,#D0F4EE,#B8EDE4)' },
+  { path: '/activities',   title: 'רעיונות לפעילויות', icon: 'https://www.genspark.ai/api/files/s/DE3IEmAW?cache_control=3600', desc: 'פעילויות מותאמות לילד',         bg: 'linear-gradient(135deg,#E8E2FF,#D9D0F5)' },
+  { path: '/speech',       title: 'אימוני שפה',         icon: 'https://www.genspark.ai/api/files/s/yQ03YbzI?cache_control=3600', desc: 'תרגילים לפיתוח הדיבור',        bg: 'linear-gradient(135deg,#FFE8EE,#FFD6E0)' },
+  { path: '/independence', title: 'בניית עצמאות',       icon: 'https://www.genspark.ai/api/files/s/xft34hs0?cache_control=3600', desc: 'מדריך שלב אחר שלב',            bg: 'linear-gradient(135deg,#FFFBE0,#FFF3B0)' },
+  { path: '/boundaries',   title: 'הצבת גבולות',        icon: 'https://www.genspark.ai/api/files/s/BlfPM45h?cache_control=3600', desc: 'גבולות באהבה ובעקביות',        bg: 'linear-gradient(135deg,#FFE8D8,#FFD6B8)' },
+  { path: '/gan-updates',  title: 'עדכונים מהגן',        icon: 'https://www.genspark.ai/api/files/s/gS9x9d8l?cache_control=3600', desc: 'הודעות ועדכונים שוטפים',       bg: 'linear-gradient(135deg,#D8F5E4,#C8F0D8)' },
+  { path: '/tasks',        title: 'לוח משימות',           icon: 'https://www.genspark.ai/api/files/s/nkcsQJXJ?cache_control=3600', desc: 'משימות יומיות ותגמולים',       bg: 'linear-gradient(135deg,#FFE0E0,#FFD0D0)' },
+  { path: '/inspiration',  title: 'רגע של השראה',         icon: 'https://www.genspark.ai/api/files/s/gGCtvwJi?cache_control=3600', desc: 'חיזוק ותמיכה להורים',          bg: 'linear-gradient(135deg,#EAE0FF,#E4D8FF)' },
+  { path: '/schedule',     title: 'סדר יום',              icon: 'https://www.genspark.ai/api/files/s/LheG615d?cache_control=3600', desc: 'תכנון וניהול היום',            bg: 'linear-gradient(135deg,#D8EEFF,#C2E4FF)' },
+  { path: '/reminders',    title: 'תזכורות',               icon: 'https://www.genspark.ai/api/files/s/vMX1DMgB?cache_control=3600', desc: 'תזכורות לטיפולים ומשימות',    bg: 'linear-gradient(135deg,#EEE0FF,#E4D8FF)' },
+  { path: '/toolbox',      title: 'ארגז כלים',             icon: 'https://www.genspark.ai/api/files/s/npYJ3DoM?cache_control=3600', desc: 'שעון חול, טיימר וקובייה',     bg: 'linear-gradient(135deg,#FFF0D8,#FFE4B8)' },
+  { path: '/about',        title: 'מי אנחנו',              icon: 'https://www.genspark.ai/api/files/s/ww3wWEDa?cache_control=3600', desc: 'קצת עלינו ועל הגן',           bg: 'linear-gradient(135deg,#FFE8E8,#FFD0D0)' },
 ]
 
 const dailyTips = [
@@ -33,11 +33,6 @@ const dailyTips = [
   'בדקו שיש לילד בגן בגדי חילוף — שקט נפשי לכולם.',
   'תנו לילד 5 דקות התראה לפני מעבר בין פעילויות.',
   'הקדישו 10 דקות משחק אחד-על-אחד עם הילד — בלי טלפון.',
-  'תרגלו יחד לומר "בוקר טוב" ו"להתראות" לגננת.',
-  'שימו בתיק פתק קטן עם ציור של לב — מפתיע ומחזק.',
-  'היום תנו לילד לצאת קצת מוקדם — הגעה רגועה לגן משנה את היום.',
-  'תרגלו יחד רוכסן — תפסו את ההתחלה ותנו לילד להמשיך.',
-  'ערכו ביחד את "פינת הרגעה" בבית — כריות, ספרים ודובי.',
 ]
 
 function getRandomTip() {
@@ -64,7 +59,9 @@ export default function Home() {
   return (
     <div className="page home-page">
       <div className={`home-header ${visible ? 'visible' : ''}`}>
-        <h1 className="home-title">{greeting}, גן דגנית</h1>
+        <div className="home-badge">גן דגנית 🌸</div>
+        <h1 className="home-title">{greeting}!</h1>
+        <p className="home-subtitle">ברוכים הבאים לאזור ההורים</p>
       </div>
 
       <div className={`quote-card ${visible ? 'visible' : ''}`}>
@@ -79,14 +76,10 @@ export default function Home() {
             key={mod.path}
             to={mod.path}
             className={`module-card ${visible ? 'visible' : ''}`}
-            style={{
-              '--card-bg': mod.bg,
-              '--card-color': mod.color,
-              animationDelay: `${i * 0.06}s`
-            }}
+            style={{ '--card-bg': mod.bg, animationDelay: `${i * 0.055}s` }}
           >
             <div className="module-icon-wrap" style={{ background: mod.bg }}>
-              <span className="module-icon">{mod.icon}</span>
+              <img src={mod.icon} alt={mod.title} className="module-img" />
             </div>
             <h3 className="module-title">{mod.title}</h3>
             <p className="module-desc">{mod.desc}</p>
