@@ -1,19 +1,17 @@
 .navbar {
   position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  bottom: 0; left: 0; right: 0;
+  background: rgba(255,255,255,0.96);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   display: flex;
   justify-content: space-around;
   align-items: center;
-  padding: 8px 0 max(8px, env(safe-area-inset-bottom));
-  box-shadow: 0 -2px 20px rgba(126, 200, 200, 0.12);
+  padding: 8px 0 max(10px, env(safe-area-inset-bottom));
+  box-shadow: 0 -2px 24px rgba(125,217,198,0.15);
   z-index: 100;
   direction: rtl;
-  border-top: 1px solid rgba(126, 200, 200, 0.1);
+  border-top: 1.5px solid rgba(125,217,198,0.15);
 }
 
 .nav-item {
@@ -21,39 +19,46 @@
   flex-direction: column;
   align-items: center;
   gap: 3px;
-  padding: 8px 14px;
-  border-radius: 14px;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 6px 12px;
+  border-radius: 16px;
+  transition: all 0.28s cubic-bezier(0.4,0,0.2,1);
   color: var(--text-muted);
   position: relative;
 }
 
-.nav-item.active {
-  color: var(--primary-dark);
-}
+.nav-item.active { color: var(--primary-dark); }
 
 .nav-item.active::before {
   content: '';
   position: absolute;
-  top: -8px;
-  left: 50%;
+  top: -9px; left: 50%;
   transform: translateX(-50%);
-  width: 20px;
-  height: 3px;
+  width: 24px; height: 3px;
   background: linear-gradient(135deg, var(--primary), var(--secondary));
-  border-radius: 2px;
+  border-radius: 3px;
 }
 
-.nav-item.active .nav-icon {
-  transform: scale(1.2) translateY(-2px);
+.nav-icon-wrap {
+  width: 36px; height: 36px;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+  transition: all 0.28s cubic-bezier(0.4,0,0.2,1);
+  background: transparent;
 }
 
-.nav-icon {
-  font-size: 1.5rem;
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+.nav-item.active .nav-icon-wrap {
+  background: linear-gradient(135deg, var(--primary-light), var(--secondary-light));
+  transform: scale(1.15) translateY(-3px);
+  box-shadow: 0 4px 12px rgba(125,217,198,0.3);
+}
+
+.nav-img {
+  width: 26px; height: 26px;
+  object-fit: contain;
 }
 
 .nav-label {
-  font-size: 0.7rem;
+  font-size: 0.66rem;
   font-weight: 600;
 }
