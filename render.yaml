@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: gan-dganit
+    name: gan-dganit-v2
     runtime: static
     buildCommand: npm install && npm run build
     staticPublishPath: ./dist
