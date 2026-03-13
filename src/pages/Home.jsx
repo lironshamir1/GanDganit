@@ -3,18 +3,18 @@ import { useState, useEffect } from 'react'
 import './Home.css'
 
 const modules = [
-  { path: '/qa',           title: 'שאלות ותשובות',    icon: 'https://www.genspark.ai/api/files/s/wMKMpOsS?cache_control=3600', desc: 'מענה מקצועי להורים',           bg: 'linear-gradient(135deg,#D0F4EE,#B8EDE4)' },
-  { path: '/activities',   title: 'רעיונות לפעילויות', icon: 'https://www.genspark.ai/api/files/s/DE3IEmAW?cache_control=3600', desc: 'פעילויות מותאמות לילד',         bg: 'linear-gradient(135deg,#E8E2FF,#D9D0F5)' },
-  { path: '/speech',       title: 'אימוני שפה',         icon: 'https://www.genspark.ai/api/files/s/yQ03YbzI?cache_control=3600', desc: 'תרגילים לפיתוח הדיבור',        bg: 'linear-gradient(135deg,#FFE8EE,#FFD6E0)' },
-  { path: '/independence', title: 'בניית עצמאות',       icon: 'https://www.genspark.ai/api/files/s/xft34hs0?cache_control=3600', desc: 'מדריך שלב אחר שלב',            bg: 'linear-gradient(135deg,#FFFBE0,#FFF3B0)' },
-  { path: '/boundaries',   title: 'הצבת גבולות',        icon: 'https://www.genspark.ai/api/files/s/BlfPM45h?cache_control=3600', desc: 'גבולות באהבה ובעקביות',        bg: 'linear-gradient(135deg,#FFE8D8,#FFD6B8)' },
-  { path: '/gan-updates',  title: 'עדכונים מהגן',        icon: 'https://www.genspark.ai/api/files/s/gS9x9d8l?cache_control=3600', desc: 'הודעות ועדכונים שוטפים',       bg: 'linear-gradient(135deg,#D8F5E4,#C8F0D8)' },
-  { path: '/tasks',        title: 'לוח משימות',           icon: 'https://www.genspark.ai/api/files/s/nkcsQJXJ?cache_control=3600', desc: 'משימות יומיות ותגמולים',       bg: 'linear-gradient(135deg,#FFE0E0,#FFD0D0)' },
-  { path: '/inspiration',  title: 'רגע של השראה',         icon: 'https://www.genspark.ai/api/files/s/gGCtvwJi?cache_control=3600', desc: 'חיזוק ותמיכה להורים',          bg: 'linear-gradient(135deg,#EAE0FF,#E4D8FF)' },
-  { path: '/schedule',     title: 'סדר יום',              icon: 'https://www.genspark.ai/api/files/s/LheG615d?cache_control=3600', desc: 'תכנון וניהול היום',            bg: 'linear-gradient(135deg,#D8EEFF,#C2E4FF)' },
-  { path: '/reminders',    title: 'תזכורות',               icon: 'https://www.genspark.ai/api/files/s/vMX1DMgB?cache_control=3600', desc: 'תזכורות לטיפולים ומשימות',    bg: 'linear-gradient(135deg,#EEE0FF,#E4D8FF)' },
-  { path: '/toolbox',      title: 'ארגז כלים',             icon: 'https://www.genspark.ai/api/files/s/npYJ3DoM?cache_control=3600', desc: 'שעון חול, טיימר וקובייה',     bg: 'linear-gradient(135deg,#FFF0D8,#FFE4B8)' },
-  { path: '/about',        title: 'מי אנחנו',              icon: 'https://www.genspark.ai/api/files/s/ww3wWEDa?cache_control=3600', desc: 'קצת עלינו ועל הגן',           bg: 'linear-gradient(135deg,#FFE8E8,#FFD0D0)' },
+  { path: '/qa',           title: 'שאלות ותשובות',     icon: '/icons/icon-qa.png',           desc: 'מענה מקצועי להורים',           bg: 'linear-gradient(135deg,#D0F4EE,#B8EDE4)' },
+  { path: '/activities',   title: 'רעיונות לפעילויות',  icon: '/icons/icon-activities.png',   desc: 'פעילויות מותאמות לילד',         bg: 'linear-gradient(135deg,#E8E2FF,#D9D0F5)' },
+  { path: '/speech',       title: 'אימוני שפה',          icon: '/icons/icon-speech.png',       desc: 'תרגילים לפיתוח הדיבור',        bg: 'linear-gradient(135deg,#FFE8EE,#FFD6E0)' },
+  { path: '/independence', title: 'בניית עצמאות',        icon: '/icons/icon-independence.png', desc: 'מדריך שלב אחר שלב',            bg: 'linear-gradient(135deg,#FFFBE0,#FFF3B0)' },
+  { path: '/boundaries',   title: 'הצבת גבולות',         icon: '/icons/icon-boundaries.png',   desc: 'גבולות באהבה ובעקביות',        bg: 'linear-gradient(135deg,#FFE8D8,#FFD6B8)' },
+  { path: '/gan-updates',  title: 'עדכונים מהגן',         icon: '/icons/icon-ganupdates.png',   desc: 'הודעות ועדכונים שוטפים',       bg: 'linear-gradient(135deg,#D8F5E4,#C8F0D8)' },
+  { path: '/tasks',        title: 'לוח משימות',            icon: '/icons/icon-tasks.png',        desc: 'משימות יומיות ותגמולים',       bg: 'linear-gradient(135deg,#FFE0E0,#FFD0D0)' },
+  { path: '/inspiration',  title: 'רגע של השראה',          icon: '/icons/icon-inspiration.png',  desc: 'חיזוק ותמיכה להורים',          bg: 'linear-gradient(135deg,#EAE0FF,#E4D8FF)' },
+  { path: '/schedule',     title: 'סדר יום',               icon: '/icons/icon-schedule.png',     desc: 'תכנון וניהול היום',            bg: 'linear-gradient(135deg,#D8EEFF,#C2E4FF)' },
+  { path: '/reminders',    title: 'תזכורות',                icon: '/icons/icon-reminders.png',    desc: 'תזכורות לטיפולים ומשימות',    bg: 'linear-gradient(135deg,#EEE0FF,#E4D8FF)' },
+  { path: '/toolbox',      title: 'ארגז כלים',              icon: '/icons/icon-toolbox.png',      desc: 'שעון חול, טיימר וקובייה',     bg: 'linear-gradient(135deg,#FFF0D8,#FFE4B8)' },
+  { path: '/about',        title: 'מי אנחנו',               icon: '/icons/icon-about.png',        desc: 'קצת עלינו ועל הגן',           bg: 'linear-gradient(135deg,#FFE8E8,#FFD0D0)' },
 ]
 
 const dailyTips = [
@@ -52,9 +52,7 @@ export default function Home() {
   const greeting = getGreeting()
   const [visible, setVisible] = useState(false)
 
-  useEffect(() => {
-    setVisible(true)
-  }, [])
+  useEffect(() => { setVisible(true) }, [])
 
   return (
     <div className="page home-page">
