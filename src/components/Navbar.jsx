@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom'
 import './Navbar.css'
 
 const navItems = [
-  { path: '/home',        label: 'בית',      icon: '/icons/icon-about.png'       },
+  { path: '/home',        label: 'בית',      icon: '/icons/icon-home.png'        },
   { path: '/qa',          label: 'שאלות',    icon: '/icons/icon-qa.png'          },
   { path: '/activities',  label: 'פעילויות', icon: '/icons/icon-activities.png'  },
   { path: '/schedule',    label: 'יומן',     icon: '/icons/icon-schedule.png'    },
