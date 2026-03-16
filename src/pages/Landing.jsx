@@ -62,7 +62,7 @@ export default function Landing() {
           </svg>
         </div>
         <h1 className="landing-title">גן דגנית</h1>
-        <p className="landing-intro">הורים יקרים, שמחים להציג לכם את האתר החדש של גן דגנית! תמצאו בו עדכונים, מידע ותכנים שיחזקו את הקשר בין הגן לבית. מוזמנים להיכנס ולהשתמש באופן שוטף, כי החיבור והתיאום ביננו הם הכוח שמניע אותם קדימה.</p>
+        <p className="landing-intro">הורים יקרים, שמחים להציג לכם את האתר החדש של גן דגנית! תמצאו בו עדכונים, מידע ותכנים שיחזקו את הקשר בין הגן לבית. מוזמנים להיכנס ולהשתמש באופן שוטף, כי החיבור והתיאום ביננו הם הכוח שמניע את הילדים שלנו קדימה.</p>
         <div className={`landing-quote ${visible ? 'visible' : ''}`}>
           <span className="landing-quote-icon">💜</span>
           <p className="landing-quote-text">"{quote}"</p>
