@@ -2,13 +2,29 @@ import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import './Home.css'
 
+const GAN_UPDATES_STORAGE_KEY = 'gandganit-gan-updates'
+
+function hasNewUpdates() {
+  try {
+    const lastSeen = localStorage.getItem('gandganit-updates-last-seen')
+    const saved = localStorage.getItem(GAN_UPDATES_STORAGE_KEY)
+    if (!saved) return true
+    const updates = JSON.parse(saved)
+    if (updates.length === 0) return false
+    const latestDate = updates[0]?.date + ' ' + updates[0]?.time
+    return !lastSeen || lastSeen !== latestDate
+  } catch {
+    return false
+  }
+}
+
 const modules = [
-  { path: '/qa', title: 'שאלות ותשובות', icon: '💬', desc: 'מענה מקצועי להורים', color: '#7EC8C8', bg: 'linear-gradient(135deg, #E0F4F4, #B5E0E0)' },
+  { path: '/gan-updates', title: 'עדכונים מהגן', icon: '📋', desc: 'הודעות ועדכונים שוטפים', color: '#A8D5BA', bg: 'linear-gradient(135deg, #E8F5E9, #A8D5BA)', hasNotification: true },
   { path: '/activities', title: 'רעיונות לפעילויות', icon: '🎨', desc: 'פעילויות מותאמות לילד', color: '#B8A9D4', bg: 'linear-gradient(135deg, #EDE7F6, #D4C9E8)' },
   { path: '/speech', title: 'אימוני שפה', icon: '🗣️', desc: 'תרגילים לפיתוח הדיבור', color: '#7EC8C8', bg: 'linear-gradient(135deg, #E0F4F4, #D4F5F5)' },
   { path: '/independence', title: 'בניית עצמאות', icon: '⭐', desc: 'מדריך שלב אחר שלב', color: '#F8C8A4', bg: 'linear-gradient(135deg, #FFF3E8, #F8C8A4)' },
   { path: '/boundaries', title: 'הצבת גבולות', icon: '🛡️', desc: 'גבולות באהבה ובעקביות', color: '#F2A07B', bg: 'linear-gradient(135deg, #FDEBD0, #F2A07B)' },
-  { path: '/gan-updates', title: 'עדכונים מהגן', icon: '📋', desc: 'הודעות ועדכונים שוטפים', color: '#A8D5BA', bg: 'linear-gradient(135deg, #E8F5E9, #A8D5BA)' },
+  { path: '/qa', title: 'שאלות ותשובות', icon: '💬', desc: 'מענה מקצועי להורים', color: '#7EC8C8', bg: 'linear-gradient(135deg, #E0F4F4, #B5E0E0)' },
   { path: '/tasks', title: 'לוח משימות', icon: '🏆', desc: 'משימות יומיות ותגמולים', color: '#F5C6D0', bg: 'linear-gradient(135deg, #FCE4EC, #F5C6D0)' },
   { path: '/inspiration', title: 'רגע של השראה', icon: '✨', desc: 'חיזוק ותמיכה להורים', color: '#B8A9D4', bg: 'linear-gradient(135deg, #F3E5F5, #D4C9E8)' },
   { path: '/schedule', title: 'סדר יום', icon: '📅', desc: 'תכנון וניהול היום', color: '#7EC8C8', bg: 'linear-gradient(135deg, #E0F7FA, #B5E0E0)' },
@@ -56,6 +72,7 @@ export default function Home() {
   const [tip] = useState(getRandomTip)
   const greeting = getGreeting()
   const [visible, setVisible] = useState(false)
+  const [showNotification, setShowNotification] = useState(hasNewUpdates)
 
   useEffect(() => {
     setVisible(true)
@@ -84,9 +101,22 @@ export default function Home() {
               '--card-color': mod.color,
               animationDelay: `${i * 0.06}s`
             }}
+            onClick={() => {
+              if (mod.hasNotification) {
+                const saved = localStorage.getItem(GAN_UPDATES_STORAGE_KEY)
+                if (saved) {
+                  const updates = JSON.parse(saved)
+                  if (updates.length > 0) {
+                    localStorage.setItem('gandganit-updates-last-seen', updates[0]?.date + ' ' + updates[0]?.time)
+                  }
+                }
+                setShowNotification(false)
+              }
+            }}
           >
             <div className="module-icon-wrap" style={{ background: mod.bg }}>
               <span className="module-icon">{mod.icon}</span>
+              {mod.hasNotification && showNotification && <span className="notification-dot" />}
             </div>
             <h3 className="module-title">{mod.title}</h3>
             <p className="module-desc">{mod.desc}</p>
