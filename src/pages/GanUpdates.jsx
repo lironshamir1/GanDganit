@@ -3,12 +3,23 @@ import './GanUpdates.css'
 
 const STORAGE_KEY = 'gandganit-gan-updates'
 
+const defaultUpdates = [
+  {
+    title: 'מפגש זום עם לילך הקלינאית',
+    content: 'מחר ה-17/3 בשעה 10:00 ניפגש בזום עם לילך הקלינאית. נבקש מכל ילד להביא בובת חיה למפגש. מצפות לפגוש אותכם!',
+    type: 'event',
+    date: '16.3.2026',
+    time: '08:00',
+    pinned: true,
+  },
+]
+
 function loadUpdates() {
   try {
     const saved = localStorage.getItem(STORAGE_KEY)
     if (saved) return JSON.parse(saved)
   } catch {}
-  return []
+  return defaultUpdates
 }
 
 const updateTypes = [
