@@ -61,7 +61,7 @@ export default function Poster() {
 
         <header className="poster-header">
           <div className="poster-logo">
-            <GirlLogo size={260} />
+            <GirlLogo size={170} />
           </div>
           <h1 className="poster-title">גן דגנית</h1>
           <p className="poster-subtitle">האפליקציה שמלווה את הגן והבית</p>
