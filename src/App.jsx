@@ -1,4 +1,6 @@
 import { Routes, Route, useLocation } from 'react-router-dom'
+import { useEffect } from 'react'
+import twemoji from '@twemoji/api'
 import './App.css'
 import Navbar from './components/Navbar'
 import Landing from './pages/Landing'
@@ -22,6 +24,10 @@ function App() {
   const location = useLocation()
   const isLanding = location.pathname === '/'
   const isPoster = location.pathname === '/poster' || location.pathname === '/tips-poster'
+
+  useEffect(() => {
+    twemoji.parse(document.body, { folder: 'svg', ext: '.svg' })
+  })
 
   return (
     <>

@@ -173,6 +173,15 @@ h1, h2, h3, h4 {
   line-height: 1;
 }
 
+/* Twemoji: render emojis as SVG images, identical across platforms */
+img.emoji {
+  height: 1em;
+  width: 1em;
+  margin: 0 0.05em 0 0.1em;
+  vertical-align: -0.15em;
+  display: inline-block;
+}
+
 @media (max-width: 480px) {
   .page {
     padding: 16px;
