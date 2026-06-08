@@ -1,0 +1,485 @@
+/* ================================================================
+   POSTER — A3 portrait (297mm x 420mm)
+   Two pages: designed poster + enlarged home replica
+   ================================================================ */
+
+.poster-root {
+  direction: rtl;
+  background: #e5e7eb;
+  min-height: 100vh;
+  padding: 24px 0 80px;
+}
+
+/* Floating print toolbar — hidden when printing */
+.poster-toolbar {
+  position: sticky;
+  top: 12px;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin: 0 auto 24px;
+  max-width: 297mm;
+  padding: 14px 20px;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+}
+
+.poster-print-btn {
+  background: linear-gradient(135deg, #7EC8C8, #5FB3B3);
+  color: white;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 12px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'Heebo', sans-serif;
+  box-shadow: 0 4px 12px rgba(126, 200, 200, 0.4);
+}
+
+.poster-print-btn:hover {
+  transform: translateY(-2px);
+}
+
+.poster-toolbar-hint {
+  font-size: 0.85rem;
+  color: #6B7280;
+  text-align: center;
+  font-family: 'Heebo', sans-serif;
+}
+
+/* ================================================================
+   THE A3 PAGE — exact dimensions
+   ================================================================ */
+.poster-page {
+  width: 297mm;
+  height: 420mm;
+  margin: 0 auto 32px;
+  background: white;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.18);
+  font-family: 'Heebo', sans-serif;
+  direction: rtl;
+  color: #3D3D3D;
+}
+
+/* ================================================================
+   PAGE 1 — Designed poster
+   ================================================================ */
+.poster-designed {
+  background: linear-gradient(160deg, #EDE7F6 0%, #E0F4F4 35%, #FFF3E8 70%, #FCE4EC 100%);
+  padding: 22mm 18mm;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Decorative blobs */
+.poster-deco {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(40px);
+  opacity: 0.35;
+  pointer-events: none;
+}
+.poster-deco-1 {
+  width: 180mm;
+  height: 180mm;
+  top: -60mm;
+  right: -60mm;
+  background: radial-gradient(circle, #B8A9D4, transparent 70%);
+}
+.poster-deco-2 {
+  width: 160mm;
+  height: 160mm;
+  bottom: -50mm;
+  left: -50mm;
+  background: radial-gradient(circle, #7EC8C8, transparent 70%);
+}
+.poster-deco-3 {
+  width: 120mm;
+  height: 120mm;
+  top: 40%;
+  left: -40mm;
+  background: radial-gradient(circle, #F8C8A4, transparent 70%);
+}
+
+/* Header */
+.poster-header {
+  text-align: center;
+  position: relative;
+  z-index: 2;
+  margin-bottom: 8mm;
+}
+
+.poster-logo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 4mm;
+  animation: poster-float 4s ease-in-out infinite;
+}
+
+@keyframes poster-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4mm); }
+}
+
+.poster-title {
+  font-size: 96pt;
+  font-weight: 900;
+  line-height: 1;
+  margin: 0 0 6mm;
+  background: linear-gradient(135deg, #7EC8C8 0%, #B8A9D4 60%, #e8907a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.poster-subtitle {
+  font-size: 22pt;
+  font-weight: 500;
+  color: #5FB3B3;
+  margin: 0;
+}
+
+/* Intro paragraph */
+.poster-intro {
+  position: relative;
+  z-index: 2;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 10mm 14mm;
+  margin: 0 auto 10mm;
+  max-width: 240mm;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(126, 200, 200, 0.12);
+}
+
+.poster-intro p {
+  font-size: 16pt;
+  line-height: 1.8;
+  margin: 0;
+  font-weight: 400;
+  color: #3D3D3D;
+}
+
+/* Modules grid — 4 cols x 3 rows */
+.poster-modules-grid {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6mm;
+  margin-bottom: 10mm;
+  flex: 1;
+}
+
+.poster-module-card {
+  border-radius: 16px;
+  padding: 8mm 4mm 6mm;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3mm;
+}
+
+.poster-module-icon {
+  font-size: 38pt;
+  line-height: 1;
+}
+
+.poster-module-title {
+  font-size: 13pt;
+  font-weight: 700;
+  color: #3D3D3D;
+}
+
+.poster-module-desc {
+  font-size: 9.5pt;
+  color: #5a5a5a;
+  font-weight: 400;
+  line-height: 1.3;
+}
+
+/* Footer with QR */
+.poster-footer {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14mm;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 20px;
+  padding: 10mm 14mm;
+  box-shadow: 0 4px 20px rgba(126, 200, 200, 0.15);
+}
+
+.poster-qr-block {
+  text-align: center;
+}
+
+.poster-qr {
+  width: 50mm;
+  height: 50mm;
+  display: block;
+  border-radius: 8px;
+}
+
+.poster-qr-label {
+  margin-top: 3mm;
+  font-size: 11pt;
+  font-weight: 700;
+  color: #5FB3B3;
+}
+
+.poster-url-block {
+  text-align: center;
+}
+
+.poster-url-label {
+  font-size: 14pt;
+  color: #6B7280;
+  font-weight: 400;
+  margin: 0 0 3mm;
+}
+
+.poster-url {
+  font-size: 28pt;
+  font-weight: 700;
+  color: #5FB3B3;
+  margin: 0 0 6mm;
+  letter-spacing: 0.5px;
+  direction: ltr;
+}
+
+.poster-tagline {
+  font-size: 13pt;
+  color: #B8A9D4;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* ================================================================
+   PAGE 2 — Enlarged home replica
+   ================================================================ */
+.poster-home-replica {
+  background: #FFF8F0;
+  padding: 22mm 20mm;
+  display: flex;
+  flex-direction: column;
+}
+
+.poster-home-frame {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.poster-home-header {
+  text-align: center;
+  margin-bottom: 10mm;
+}
+
+.poster-home-title {
+  font-size: 64pt;
+  font-weight: 900;
+  margin: 0;
+  background: linear-gradient(135deg, #7EC8C8, #B8A9D4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+}
+
+/* Daily tip */
+.poster-home-tip {
+  background: linear-gradient(135deg, #E0F4F4, #EDE7F6);
+  border-radius: 24px;
+  padding: 10mm 12mm;
+  margin-bottom: 12mm;
+  text-align: center;
+}
+
+.poster-home-tip-icon {
+  font-size: 26pt;
+  display: block;
+  margin-bottom: 3mm;
+}
+
+.poster-home-tip-label {
+  font-size: 13pt;
+  font-weight: 700;
+  color: #5FB3B3;
+  margin: 0 0 3mm;
+}
+
+.poster-home-tip-text {
+  font-size: 16pt;
+  line-height: 1.7;
+  color: #3D3D3D;
+  font-weight: 400;
+  margin: 0;
+}
+
+/* Modules — 3 cols x 4 rows */
+.poster-home-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6mm;
+  flex: 1;
+  margin-bottom: 10mm;
+}
+
+.poster-home-card {
+  background: white;
+  border-radius: 20px;
+  padding: 8mm 4mm 6mm;
+  box-shadow: 0 2px 16px rgba(126, 200, 200, 0.12);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3mm;
+  text-align: center;
+}
+
+.poster-home-icon-wrap {
+  width: 22mm;
+  height: 22mm;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.poster-home-icon {
+  font-size: 34pt;
+  line-height: 1;
+}
+
+.poster-home-card-title {
+  font-size: 14pt;
+  font-weight: 700;
+  color: #3D3D3D;
+  margin: 0;
+}
+
+.poster-home-card-desc {
+  font-size: 10pt;
+  color: #6B7280;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.poster-home-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10mm;
+  background: white;
+  border-radius: 20px;
+  padding: 8mm 12mm;
+  box-shadow: 0 2px 16px rgba(126, 200, 200, 0.12);
+}
+
+.poster-home-qr {
+  width: 36mm;
+  height: 36mm;
+  border-radius: 6px;
+}
+
+.poster-home-url {
+  font-size: 22pt;
+  font-weight: 700;
+  color: #5FB3B3;
+  margin: 0 0 2mm;
+  direction: ltr;
+}
+
+.poster-home-tagline {
+  font-size: 12pt;
+  color: #6B7280;
+  margin: 0;
+}
+
+/* ================================================================
+   PRINT STYLES — A3 portrait, no margins, no UI chrome
+   ================================================================ */
+@page {
+  size: A3 portrait;
+  margin: 0;
+}
+
+@media print {
+  body {
+    background: white !important;
+  }
+
+  .poster-root {
+    background: white;
+    padding: 0;
+  }
+
+  .poster-toolbar,
+  .navbar {
+    display: none !important;
+  }
+
+  .poster-page {
+    margin: 0;
+    box-shadow: none;
+    page-break-after: always;
+    break-after: page;
+  }
+
+  .poster-page:last-child {
+    page-break-after: auto;
+    break-after: auto;
+  }
+
+  /* Force backgrounds to print */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}
+
+/* ================================================================
+   SCREEN ONLY — scale down for normal viewing.
+   Using CSS `zoom` so the layout box shrinks too (transform: scale
+   keeps the original box size and breaks centering).
+   ================================================================ */
+@media screen and (max-width: 1240px) {
+  .poster-page {
+    zoom: 0.75;
+  }
+}
+
+@media screen and (max-width: 920px) {
+  .poster-page {
+    zoom: 0.55;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .poster-page {
+    zoom: 0.32;
+  }
+  .poster-toolbar {
+    margin-left: 12px;
+    margin-right: 12px;
+  }
+}
+
+@media print {
+  .poster-page {
+    zoom: 1 !important;
+  }
+}

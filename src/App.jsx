@@ -15,10 +15,12 @@ import SpeechTraining from './pages/SpeechTraining'
 import GanUpdates from './pages/GanUpdates'
 import Toolbox from './pages/Toolbox'
 import About from './pages/About'
+import Poster from './pages/Poster'
 
 function App() {
   const location = useLocation()
   const isLanding = location.pathname === '/'
+  const isPoster = location.pathname === '/poster'
 
   return (
     <>
@@ -37,8 +39,9 @@ function App() {
         <Route path="/gan-updates" element={<GanUpdates />} />
         <Route path="/toolbox" element={<Toolbox />} />
         <Route path="/about" element={<About />} />
+        <Route path="/poster" element={<Poster />} />
       </Routes>
-      {!isLanding && <Navbar />}
+      {!isLanding && !isPoster && <Navbar />}
     </>
   )
 }
