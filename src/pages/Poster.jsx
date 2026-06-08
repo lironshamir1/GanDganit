@@ -79,8 +79,10 @@ export default function Poster() {
 
         <div className="poster-modules-grid">
           {modules.map((mod) => (
-            <div key={mod.title} className="poster-module-card" style={{ background: mod.bg }}>
-              <div className="poster-module-icon">{mod.icon}</div>
+            <div key={mod.title} className="poster-module-card">
+              <div className="poster-module-icon-wrap" style={{ background: mod.bg }}>
+                <span className="poster-module-icon">{mod.icon}</span>
+              </div>
               <div className="poster-module-title">{mod.title}</div>
               <div className="poster-module-desc">{mod.desc}</div>
             </div>

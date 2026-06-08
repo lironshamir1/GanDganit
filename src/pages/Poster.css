@@ -180,19 +180,29 @@
 }
 
 .poster-module-card {
+  background: #FFFFFF;
   border-radius: 14px;
   padding: 5mm 3mm 4mm;
   text-align: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 12px rgba(126, 200, 200, 0.12);
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 2mm;
 }
 
+.poster-module-icon-wrap {
+  width: 16mm;
+  height: 16mm;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .poster-module-icon {
-  font-size: 30pt;
+  font-size: 26pt;
   line-height: 1;
 }
 
