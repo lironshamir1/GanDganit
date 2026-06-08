@@ -452,26 +452,34 @@
 }
 
 /* ================================================================
-   SCREEN ONLY — scale down for normal viewing
+   SCREEN ONLY — scale down for normal viewing.
+   Using CSS `zoom` so the layout box shrinks too (transform: scale
+   keeps the original box size and breaks centering).
    ================================================================ */
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 1240px) {
   .poster-page {
-    transform-origin: top center;
-    transform: scale(0.75);
-    margin-bottom: -100mm;
+    zoom: 0.75;
   }
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 920px) {
   .poster-page {
-    transform: scale(0.55);
-    margin-bottom: -180mm;
+    zoom: 0.55;
   }
 }
 
 @media screen and (max-width: 600px) {
   .poster-page {
-    transform: scale(0.32);
-    margin-bottom: -280mm;
+    zoom: 0.32;
+  }
+  .poster-toolbar {
+    margin-left: 12px;
+    margin-right: 12px;
+  }
+}
+
+@media print {
+  .poster-page {
+    zoom: 1 !important;
   }
 }
