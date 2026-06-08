@@ -1,0 +1,202 @@
+/* ================================================================
+   TIPS CARDS — half-A4 each, 2 per A4 portrait page
+   A4 portrait = 210mm × 297mm  →  each tip card = 210mm × ~148mm
+   ================================================================ */
+
+.tips-root {
+  direction: rtl;
+  background: #e5e7eb;
+  min-height: 100vh;
+  padding: 24px 0 80px;
+  font-family: 'Heebo', sans-serif;
+}
+
+/* Toolbar */
+.tips-toolbar {
+  position: sticky;
+  top: 12px;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin: 0 auto 24px;
+  max-width: 210mm;
+  padding: 14px 20px;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+}
+
+.tips-print-btn {
+  background: linear-gradient(135deg, #7EC8C8, #5FB3B3);
+  color: white;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 12px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'Heebo', sans-serif;
+  box-shadow: 0 4px 12px rgba(126, 200, 200, 0.4);
+}
+
+.tips-toolbar-hint {
+  font-size: 0.9rem;
+  color: #6B7280;
+  text-align: center;
+}
+
+/* A4 portrait page = 210mm × 297mm, holds 2 cards */
+.tips-page {
+  width: 210mm;
+  height: 297mm;
+  margin: 0 auto 32px;
+  background: #FFF8F0;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.18);
+  direction: rtl;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Cut line between the two cards */
+.tips-cut-line {
+  position: relative;
+  height: 1mm;
+  border-top: 1px dashed #B2BEC3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.tips-cut-line span {
+  position: absolute;
+  background: #FFF8F0;
+  padding: 0 8mm;
+  font-size: 10pt;
+  color: #B2BEC3;
+  letter-spacing: 0.5px;
+}
+
+/* Each card — half of A4 */
+.tip-card {
+  flex: 1;
+  padding: 10mm 14mm;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tip-card-inner {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #E0F4F4, #EDE7F6);
+  border-radius: 24px;
+  padding: 14mm 18mm;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6mm;
+  box-shadow: 0 4px 24px rgba(126, 200, 200, 0.18);
+  position: relative;
+}
+
+.tip-card-icon {
+  font-size: 60pt;
+  line-height: 1;
+}
+
+.tip-card-label {
+  font-size: 18pt;
+  font-weight: 700;
+  color: #5FB3B3;
+  margin: 0;
+  letter-spacing: 1px;
+}
+
+.tip-card-text {
+  font-size: 22pt;
+  font-weight: 400;
+  line-height: 1.6;
+  color: #3D3D3D;
+  margin: 0;
+  max-width: 160mm;
+}
+
+.tip-card-footer {
+  position: absolute;
+  bottom: 8mm;
+  font-size: 11pt;
+  color: #B8A9D4;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: 1px;
+}
+
+/* ================================================================
+   PRINT
+   ================================================================ */
+@page {
+  size: A4 portrait;
+  margin: 0;
+}
+
+@media print {
+  body {
+    background: white !important;
+  }
+  .tips-root {
+    background: white;
+    padding: 0;
+  }
+  .tips-toolbar,
+  .navbar {
+    display: none !important;
+  }
+  .tips-page {
+    margin: 0;
+    box-shadow: none;
+    page-break-after: always;
+    break-after: page;
+  }
+  .tips-page:last-child {
+    page-break-after: auto;
+    break-after: auto;
+  }
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}
+
+/* ================================================================
+   Screen scaling for smaller viewports
+   ================================================================ */
+@media screen and (max-width: 880px) {
+  .tips-page {
+    zoom: 0.75;
+  }
+}
+
+@media screen and (max-width: 660px) {
+  .tips-page {
+    zoom: 0.5;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .tips-page {
+    zoom: 0.32;
+  }
+}
+
+@media print {
+  .tips-page {
+    zoom: 1 !important;
+  }
+}

@@ -16,11 +16,12 @@ import GanUpdates from './pages/GanUpdates'
 import Toolbox from './pages/Toolbox'
 import About from './pages/About'
 import Poster from './pages/Poster'
+import TipsCards from './pages/TipsCards'
 
 function App() {
   const location = useLocation()
   const isLanding = location.pathname === '/'
-  const isPoster = location.pathname === '/poster'
+  const isPoster = location.pathname === '/poster' || location.pathname === '/tips-poster'
 
   return (
     <>
@@ -40,6 +41,7 @@ function App() {
         <Route path="/toolbox" element={<Toolbox />} />
         <Route path="/about" element={<About />} />
         <Route path="/poster" element={<Poster />} />
+        <Route path="/tips-poster" element={<TipsCards />} />
       </Routes>
       {!isLanding && !isPoster && <Navbar />}
     </>
