@@ -1,4 +1,6 @@
-import { NavLink } from 'react-router-dom'
+import { useState } from 'react'
+import { NavLink, useNavigate } from 'react-router-dom'
+import { supabase } from '../lib/supabase'
 import './Navbar.css'
 
 const navItems = [
@@ -10,20 +12,46 @@ const navItems = [
 ]
 
 export default function Navbar() {
+  const [showMenu, setShowMenu] = useState(false)
+  const navigate = useNavigate()
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut()
+    navigate('/login')
+  }
+
   return (
     <nav className="navbar">
-      {navItems.map((item) => (
-        <NavLink
-          key={item.path}
-          to={item.path}
-          className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
+      <div className="nav-main">
+        {navItems.map((item) => (
+          <NavLink
+            key={item.path}
+            to={item.path}
+            className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
+          >
+            <div className="nav-icon-wrap">
+              <img src={item.icon} alt={item.label} className="nav-img" />
+            </div>
+            <span className="nav-label">{item.label}</span>
+          </NavLink>
+        ))}
+      </div>
+      <div className="nav-menu-container">
+        <button
+          className="nav-menu-button"
+          onClick={() => setShowMenu(!showMenu)}
+          aria-label="תפריט משתמש"
         >
-          <div className="nav-icon-wrap">
-            <img src={item.icon} alt={item.label} className="nav-img" />
+          👤
+        </button>
+        {showMenu && (
+          <div className="nav-menu-dropdown">
+            <button onClick={handleLogout} className="logout-button">
+              התנתקות
+            </button>
           </div>
-          <span className="nav-label">{item.label}</span>
-        </NavLink>
-      ))}
+        )}
+      </div>
     </nav>
   )
 }
