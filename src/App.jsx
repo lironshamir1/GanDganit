@@ -1,11 +1,7 @@
-import { Routes, Route, useLocation, Navigate } from 'react-router-dom'
-import { useEffect, useState } from 'react'
+import { Routes, Route, useLocation } from 'react-router-dom'
 import './App.css'
-import { supabase } from './lib/supabase'
 import Navbar from './components/Navbar'
 import Landing from './pages/Landing'
-import Login from './pages/Login'
-import Signup from './pages/Signup'
 import Home from './pages/Home'
 import QandA from './pages/QandA'
 import Activities from './pages/Activities'
@@ -22,70 +18,27 @@ import About from './pages/About'
 
 function App() {
   const location = useLocation()
-  const [user, setUser] = useState(null)
-  const [loading, setLoading] = useState(true)
-
-  const isAuthPage = location.pathname === '/login' || location.pathname === '/signup'
   const isLanding = location.pathname === '/'
-
-  useEffect(() => {
-    const checkAuth = async () => {
-      const { data: { session } } = await supabase.auth.getSession()
-      setUser(session?.user || null)
-      setLoading(false)
-    }
-
-    checkAuth()
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user || null)
-    })
-
-    return () => subscription?.unsubscribe()
-  }, [])
-
-  if (loading) {
-    return (
-      <div style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '100vh',
-        background: 'linear-gradient(135deg, #e8f5e9 0%, #fef3e2 100%)'
-      }}>
-        <p style={{ fontSize: '18px', color: '#666' }}>טוען...</p>
-      </div>
-    )
-  }
-
-  const ProtectedRoute = ({ children }) => {
-    if (!user) {
-      return <Navigate to="/login" replace />
-    }
-    return children
-  }
 
   return (
     <>
       <Routes>
         <Route path="/" element={<Landing />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
-        <Route path="/qa" element={<ProtectedRoute><QandA /></ProtectedRoute>} />
-        <Route path="/activities" element={<ProtectedRoute><Activities /></ProtectedRoute>} />
-        <Route path="/independence" element={<ProtectedRoute><Independence /></ProtectedRoute>} />
-        <Route path="/boundaries" element={<ProtectedRoute><Boundaries /></ProtectedRoute>} />
-        <Route path="/tasks" element={<ProtectedRoute><Tasks /></ProtectedRoute>} />
-        <Route path="/inspiration" element={<ProtectedRoute><Inspiration /></ProtectedRoute>} />
-        <Route path="/schedule" element={<ProtectedRoute><Schedule /></ProtectedRoute>} />
-        <Route path="/reminders" element={<ProtectedRoute><Reminders /></ProtectedRoute>} />
-        <Route path="/speech" element={<ProtectedRoute><SpeechTraining /></ProtectedRoute>} />
-        <Route path="/gan-updates" element={<ProtectedRoute><GanUpdates /></ProtectedRoute>} />
-        <Route path="/toolbox" element={<ProtectedRoute><Toolbox /></ProtectedRoute>} />
-        <Route path="/about" element={<ProtectedRoute><About /></ProtectedRoute>} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/qa" element={<QandA />} />
+        <Route path="/activities" element={<Activities />} />
+        <Route path="/independence" element={<Independence />} />
+        <Route path="/boundaries" element={<Boundaries />} />
+        <Route path="/tasks" element={<Tasks />} />
+        <Route path="/inspiration" element={<Inspiration />} />
+        <Route path="/schedule" element={<Schedule />} />
+        <Route path="/reminders" element={<Reminders />} />
+        <Route path="/speech" element={<SpeechTraining />} />
+        <Route path="/gan-updates" element={<GanUpdates />} />
+        <Route path="/toolbox" element={<Toolbox />} />
+        <Route path="/about" element={<About />} />
       </Routes>
-      {!isAuthPage && !isLanding && <Navbar />}
+      {!isLanding && <Navbar />}
     </>
   )
 }
