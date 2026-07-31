@@ -9,5 +9,8 @@ services:
         value: "20"
     routes:
       - type: rewrite
+        source: /tala.html
+        destination: /tala.html
+      - type: rewrite
         source: /*
         destination: /index.html
