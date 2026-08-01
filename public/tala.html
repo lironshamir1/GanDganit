@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<title>כלי בניית מטרות ויעדים — תל"א</title>
+<style>
+:root {
+  --teal: #3D9B9B;
+  --teal-light: #6DBFBF;
+  --teal-wash: #EBF5F5;
+  --coral: #E07A5F;
+  --coral-light: #F2A890;
+  --coral-wash: #FDF0EC;
+  --sage: #5E9E65;
+  --sage-wash: #EEF5EF;
+  --amber: #C9943A;
+  --amber-wash: #FBF4E6;
+  --navy: #2C3E50;
+  --navy-light: #4A6274;
+  --slate: #6B7F8E;
+  --mist: #95A5B0;
+  --cloud: #D5DDE2;
+  --surface: #FFFFFF;
+  --base: #FAF8F5;
+  --base-warm: #F5F0EA;
+  --shadow-sm: 0 1px 3px rgba(44,62,80,0.07);
+  --shadow-md: 0 2px 8px rgba(44,62,80,0.09);
+  --shadow-lg: 0 4px 16px rgba(44,62,80,0.10);
+  --r-sm: 8px;
+  --r-md: 14px;
+  --r-lg: 20px;
+  --r-pill: 100px;
+  --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px; --sp-5: 24px; --sp-6: 32px; --sp-7: 40px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --teal: #5BB8B8; --teal-light: #3D8A8A; --teal-wash: #1A2F2F;
+    --coral: #E8927A; --coral-light: #8A4A3A; --coral-wash: #2E1F1A;
+    --sage: #6DAF74; --sage-wash: #1A2A1C;
+    --amber: #D4A853; --amber-wash: #2A2210;
+    --navy: #E4ECF0; --navy-light: #B0C4D0; --slate: #8A9DAA; --mist: #5A6E7A; --cloud: #2A3A44;
+    --surface: #1C2830; --base: #141E24; --base-warm: #1A2228;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.2); --shadow-md: 0 2px 8px rgba(0,0,0,0.25); --shadow-lg: 0 4px 16px rgba(0,0,0,0.3);
+  }
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+button { border: none; cursor: pointer; background: none; font-family: inherit; color: inherit; -webkit-tap-highlight-color: transparent; }
+input, textarea, select { font-family: inherit; color: inherit; -webkit-appearance: none; }
+
+body {
+  font-family: -apple-system, 'Segoe UI', Tahoma, Arial, sans-serif;
+  font-size: 0.92rem; line-height: 1.65;
+  color: var(--navy); background: var(--base);
+  direction: rtl; padding: 0; min-height: 100vh;
+  -webkit-text-size-adjust: 100%;
+}
+
+.pw-header {
+  background: linear-gradient(135deg, var(--teal), var(--teal-light));
+  padding: var(--sp-6) var(--sp-4) var(--sp-5);
+}
+.pw-header-inner { max-width: 800px; margin: 0 auto; }
+.pw-title {
+  font-size: 1.4rem; font-weight: 700; color: #fff;
+  margin-bottom: var(--sp-1); letter-spacing: -0.01em;
+}
+.pw-subtitle { font-size: 0.82rem; color: rgba(255,255,255,0.8); }
+
+.pw-progress { max-width: 800px; margin: var(--sp-4) auto var(--sp-5); padding: 0 var(--sp-3); overflow-x: auto; }
+.pw-progress-track {
+  display: flex; align-items: center; justify-content: center; gap: 0;
+  min-width: 320px;
+}
+.pw-progress-step {
+  display: flex; flex-direction: column; align-items: center; gap: var(--sp-1);
+  z-index: 1; flex: 0 0 auto; padding: 0 var(--sp-3);
+}
+@media (min-width: 500px) { .pw-progress-step { padding: 0 var(--sp-5); } }
+.pw-progress-dot {
+  width: 36px; height: 36px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.82rem; font-weight: 700;
+  background: var(--cloud); color: var(--mist);
+  transition: all 0.3s ease; border: 3px solid transparent;
+}
+.pw-progress-step.active .pw-progress-dot {
+  background: var(--teal); color: #fff;
+  box-shadow: 0 0 0 4px var(--teal-wash);
+}
+.pw-progress-step.done .pw-progress-dot {
+  background: var(--sage); color: #fff;
+}
+.pw-progress-step[data-disabled="true"] { opacity: 0.45; pointer-events: none; }
+.pw-progress-step[data-disabled="false"] { cursor: pointer; }
+.pw-progress-label {
+  font-size: 0.72rem; font-weight: 600; color: var(--mist);
+  white-space: nowrap;
+}
+.pw-progress-step.active .pw-progress-label { color: var(--teal); }
+.pw-progress-step.done .pw-progress-label { color: var(--sage); }
+.pw-progress-line {
+  flex: 1; height: 3px; background: var(--cloud); min-width: 24px; max-width: 80px;
+}
+.pw-progress-line.filled { background: var(--sage); }
+
+.pw-container { max-width: 800px; margin: 0 auto; padding: 0 var(--sp-3) 80px; }
+.pw-section { display: flex; flex-direction: column; gap: var(--sp-4); }
+
+.pw-card {
+  background: var(--surface); border-radius: var(--r-md);
+  box-shadow: var(--shadow-sm); overflow: hidden;
+}
+.pw-card-header {
+  padding: var(--sp-3) var(--sp-4);
+  font-size: 0.92rem; font-weight: 700; color: #fff;
+  display: flex; align-items: center; gap: var(--sp-2);
+}
+.pw-card-header-icon { font-size: 1.1rem; }
+.pw-card-body { padding: var(--sp-4); }
+
+.domain-cognitive .pw-card-header { background: linear-gradient(90deg, #4A8FBF, #6BB0D6); }
+.domain-behavioral .pw-card-header { background: linear-gradient(90deg, #B56B8B, #D08AA5); }
+.domain-social .pw-card-header { background: linear-gradient(90deg, #6B9E6B, #8BBF8B); }
+.domain-motor .pw-card-header { background: linear-gradient(90deg, #C98A4A, #DDA66A); }
+.domain-communication .pw-card-header { background: linear-gradient(90deg, #7B7BBF, #9A9AD6); }
+.domain-life_skills .pw-card-header { background: linear-gradient(90deg, #5A9E9E, #7ABFBF); }
+
+.domain-cognitive .pw-goal-card { border-right-color: #4A8FBF; }
+.domain-behavioral .pw-goal-card { border-right-color: #B56B8B; }
+.domain-social .pw-goal-card { border-right-color: #6B9E6B; }
+.domain-motor .pw-goal-card { border-right-color: #C98A4A; }
+.domain-communication .pw-goal-card { border-right-color: #7B7BBF; }
+.domain-life_skills .pw-goal-card { border-right-color: #5A9E9E; }
+
+.pw-age-section { display: flex; flex-direction: column; gap: var(--sp-3); }
+.pw-age-label { font-size: 0.9rem; font-weight: 700; color: var(--navy); }
+.pw-age-buttons { display: flex; gap: var(--sp-2); }
+.pw-age-btn {
+  width: 54px; height: 54px; border: 2px solid var(--cloud);
+  border-radius: var(--r-md); font-size: 1.2rem; font-weight: 700;
+  background: var(--surface); color: var(--slate); transition: all 0.2s ease;
+}
+.pw-age-btn:hover { border-color: var(--teal-light); color: var(--teal); }
+.pw-age-btn.selected {
+  border-color: var(--teal); background: var(--teal); color: white;
+  box-shadow: 0 2px 8px rgba(61,155,155,0.3);
+}
+
+.pw-hint {
+  font-size: 0.86rem; color: var(--slate); line-height: 1.7;
+  background: var(--base-warm); border-radius: var(--r-sm);
+  padding: var(--sp-3) var(--sp-4); border-right: 3px solid var(--teal-light);
+}
+
+.pw-domain-picker { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
+.pw-domain-chip {
+  padding: var(--sp-2) var(--sp-3); border: 2px solid var(--cloud);
+  border-radius: var(--r-pill); font-size: 0.82rem; font-weight: 500;
+  background: var(--surface); transition: all 0.2s ease;
+}
+.pw-domain-chip.selected {
+  border-color: var(--teal); background: var(--teal);
+  color: white; font-weight: 600;
+  box-shadow: 0 2px 6px rgba(61,155,155,0.25);
+}
+
+.pw-milestones {
+  background: var(--teal-wash); border-radius: var(--r-sm);
+  padding: var(--sp-3) var(--sp-4); margin-bottom: var(--sp-3);
+  border-right: 3px solid var(--teal-light);
+}
+.pw-milestones-header { font-size: 0.8rem; font-weight: 700; color: var(--teal); margin-bottom: var(--sp-2); }
+.pw-milestones-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 3px; }
+.pw-milestones-list li {
+  font-size: 0.78rem; color: var(--slate); padding-right: 18px; position: relative;
+}
+.pw-milestones-list li::before { content: '\2022'; position: absolute; right: 2px; color: var(--teal-light); font-weight: 700; }
+
+.pw-notes-grid { display: grid; grid-template-columns: 1fr; gap: var(--sp-3); }
+@media (min-width: 500px) { .pw-notes-grid { grid-template-columns: 1fr 1fr; } }
+.pw-notes-field { display: flex; flex-direction: column; gap: var(--sp-2); }
+.pw-notes-label { font-size: 0.82rem; font-weight: 700; display: flex; align-items: center; gap: var(--sp-2); }
+.pw-notes-label-strength { color: var(--sage); }
+.pw-notes-label-improve { color: var(--amber); }
+.pw-notes-label-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.pw-notes-label-strength .pw-notes-label-dot { background: var(--sage); }
+.pw-notes-label-improve .pw-notes-label-dot { background: var(--amber); }
+.pw-textarea {
+  padding: var(--sp-3); border: 1.5px solid var(--cloud);
+  border-radius: var(--r-sm); background: var(--surface);
+  font-size: 0.86rem; line-height: 1.7; min-height: 80px; resize: vertical;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  width: 100%;
+}
+.pw-textarea:focus { border-color: var(--teal); outline: none; box-shadow: 0 0 0 3px var(--teal-wash); }
+.pw-notes-summary {
+  background: var(--base-warm); border-radius: var(--r-sm);
+  padding: var(--sp-3) var(--sp-4); margin-bottom: var(--sp-3);
+  font-size: 0.82rem; color: var(--slate); line-height: 1.7;
+}
+.pw-notes-summary p { margin: 0 0 var(--sp-1); }
+.pw-notes-summary p:last-child { margin-bottom: 0; }
+
+.pw-btn-primary {
+  padding: var(--sp-3) var(--sp-5); background: var(--teal); color: white;
+  border-radius: var(--r-sm); font-size: 0.92rem; font-weight: 700;
+  transition: all 0.2s ease; align-self: flex-start;
+  box-shadow: 0 2px 6px rgba(61,155,155,0.25);
+  width: 100%;
+}
+@media (min-width: 500px) { .pw-btn-primary { width: auto; } }
+.pw-btn-primary[disabled] { opacity: 0.4; cursor: default; }
+.pw-btn-secondary {
+  padding: var(--sp-3) var(--sp-5); background: var(--base-warm); color: var(--slate);
+  border-radius: var(--r-sm); font-size: 0.88rem; font-weight: 600;
+  transition: all 0.15s ease; align-self: flex-start;
+  width: 100%;
+}
+@media (min-width: 500px) { .pw-btn-secondary { width: auto; } }
+.pw-btn-secondary:hover { background: var(--cloud); }
+.pw-btn-outline {
+  padding: var(--sp-2) var(--sp-4); border: 1.5px solid var(--teal);
+  border-radius: var(--r-sm); color: var(--teal);
+  font-size: 0.82rem; font-weight: 700;
+  background: var(--surface); transition: all 0.15s ease;
+  flex: 1;
+}
+.pw-btn-outline:hover { background: var(--teal-wash); }
+
+.pw-goal-domain-wrap {
+  background: var(--surface); border-radius: var(--r-md);
+  box-shadow: var(--shadow-sm); overflow: hidden;
+}
+.pw-goal-domain-header {
+  padding: var(--sp-3) var(--sp-4); font-size: 0.92rem; font-weight: 700; color: #fff;
+}
+.domain-cognitive .pw-goal-domain-header { background: linear-gradient(90deg, #4A8FBF, #6BB0D6); }
+.domain-behavioral .pw-goal-domain-header { background: linear-gradient(90deg, #B56B8B, #D08AA5); }
+.domain-social .pw-goal-domain-header { background: linear-gradient(90deg, #6B9E6B, #8BBF8B); }
+.domain-motor .pw-goal-domain-header { background: linear-gradient(90deg, #C98A4A, #DDA66A); }
+.domain-communication .pw-goal-domain-header { background: linear-gradient(90deg, #7B7BBF, #9A9AD6); }
+.domain-life_skills .pw-goal-domain-header { background: linear-gradient(90deg, #5A9E9E, #7ABFBF); }
+.pw-goal-domain-body { padding: var(--sp-3); display: flex; flex-direction: column; gap: var(--sp-3); }
+
+.pw-suggestions { display: flex; flex-wrap: wrap; gap: var(--sp-2); align-items: center; }
+.pw-sugg-label { font-size: 0.78rem; color: var(--mist); font-weight: 600; }
+.pw-sugg-chip {
+  font-size: 0.78rem; padding: var(--sp-2) var(--sp-3);
+  border: 1.5px dashed var(--teal-light); border-radius: var(--r-pill);
+  color: var(--teal); background: var(--teal-wash); transition: all 0.2s ease;
+  font-weight: 500; text-align: right;
+}
+.pw-sugg-chip:active { border-style: solid; background: var(--teal); color: white; }
+
+.pw-goal-card {
+  background: var(--base); border-radius: var(--r-sm);
+  padding: var(--sp-3); border-right: 4px solid var(--teal);
+}
+.pw-goal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--sp-2); }
+.pw-goal-label { font-size: 0.82rem; color: var(--slate); font-weight: 600; }
+.pw-remove-link { font-size: 0.78rem; color: var(--coral); font-weight: 500; }
+.pw-input {
+  width: 100%; padding: var(--sp-2) var(--sp-3);
+  border: 1.5px solid var(--cloud); border-radius: var(--r-sm);
+  background: var(--surface); font-size: 0.88rem; font-weight: 600;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.pw-input:focus { border-color: var(--teal); outline: none; box-shadow: 0 0 0 3px var(--teal-wash); }
+
+.pw-obj-select-info {
+  font-size: 0.78rem; font-weight: 700; color: var(--teal);
+  margin: var(--sp-2) 0 var(--sp-1); display: flex; align-items: center; gap: var(--sp-2);
+}
+.pw-obj-select-badge {
+  background: var(--teal-wash); border: 1px solid var(--teal-light);
+  border-radius: var(--r-pill); padding: 2px 10px; font-size: 0.72rem;
+}
+
+/* Mobile-friendly objectives: cards instead of table */
+.pw-obj-list { display: flex; flex-direction: column; gap: var(--sp-2); margin: var(--sp-2) 0; }
+.pw-obj-item {
+  background: var(--surface); border: 1px solid var(--cloud);
+  border-radius: var(--r-sm); padding: var(--sp-3);
+  transition: opacity 0.2s;
+}
+.pw-obj-item.unselected { opacity: 0.35; }
+.pw-obj-item-header {
+  display: flex; align-items: center; gap: var(--sp-2); margin-bottom: var(--sp-2);
+}
+.pw-obj-num { font-weight: 700; color: var(--teal); font-size: 0.85rem; min-width: 20px; }
+.pw-obj-checkbox { width: 20px; height: 20px; accent-color: var(--teal); cursor: pointer; }
+.pw-obj-remove { font-size: 0.82rem; color: var(--mist); padding: var(--sp-1); margin-right: auto; }
+.pw-obj-fields { display: flex; flex-direction: column; gap: var(--sp-2); }
+.pw-obj-field-label { font-size: 0.72rem; font-weight: 700; color: var(--mist); margin-bottom: 2px; }
+.pw-cell-input {
+  width: 100%; padding: var(--sp-2);
+  border: 1px solid var(--cloud); border-radius: 6px;
+  font-size: 0.82rem; background: var(--surface);
+  resize: vertical; transition: border-color 0.15s;
+  min-height: 36px;
+}
+.pw-cell-input:focus { border-color: var(--teal); outline: none; }
+.pw-obj-item.unselected .pw-cell-input { background: var(--base-warm); }
+.pw-obj-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-2); }
+
+.pw-add-row {
+  font-size: 0.8rem; color: var(--teal); font-weight: 700;
+  padding: var(--sp-2) 0; display: flex; align-items: center; gap: var(--sp-1);
+}
+.pw-add-goal {
+  font-size: 0.82rem; color: var(--teal); font-weight: 700;
+  padding: var(--sp-2) 0;
+}
+
+.pw-preview-actions { display: flex; gap: var(--sp-2); flex-wrap: wrap; }
+.pw-preview {
+  background: var(--surface); border: 1px solid var(--cloud);
+  border-radius: var(--r-md); padding: var(--sp-3); overflow-x: auto;
+  box-shadow: var(--shadow-sm);
+}
+.pv-goal { margin-bottom: var(--sp-5); }
+.pv-goal-title { font-size: 0.92rem; font-weight: 700; margin-bottom: var(--sp-1); color: var(--navy); }
+.pv-goal-domain { font-size: 0.8rem; color: var(--slate); margin-bottom: var(--sp-3); }
+.pv-obj-table { width: 100%; border-collapse: collapse; font-size: 0.75rem; margin-bottom: var(--sp-3); }
+.pv-obj-table th, .pv-obj-table td {
+  border: 1px solid var(--cloud); padding: var(--sp-1) var(--sp-2); text-align: right;
+}
+.pv-obj-table th { background: var(--teal); color: white; font-weight: 700; font-size: 0.72rem; }
+.pv-obj-table tr:nth-child(even) td { background: var(--teal-wash); }
+
+.toast {
+  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+  background: var(--navy); color: white;
+  padding: 12px 28px; border-radius: var(--r-pill);
+  font-size: 0.82rem; font-weight: 700;
+  opacity: 0; transition: opacity 0.3s; pointer-events: none; z-index: 100;
+  box-shadow: var(--shadow-lg);
+}
+.toast.show { opacity: 1; }
+
+.pw-feedback-banner {
+  background: linear-gradient(90deg, var(--amber-wash), var(--coral-wash));
+  border: 1.5px solid var(--amber);
+  border-radius: var(--r-md);
+  padding: var(--sp-4);
+  margin-bottom: var(--sp-3);
+  text-align: center;
+}
+.pw-feedback-title { font-size: 0.9rem; font-weight: 700; color: var(--navy); margin-bottom: var(--sp-1); }
+.pw-feedback-text { font-size: 0.8rem; color: var(--slate); }
+</style>
+</head>
+<body>
+
+<div id="app"></div>
+<div class="toast" id="toast"></div>
+
+<script>
+var talaDomains = [
+  {id:'cognitive',label:'\u05e7\u05d5\u05d2\u05e0\u05d9\u05d8\u05d9\u05d1\u05d9 \u05dc\u05d9\u05de\u05d5\u05d3\u05d9',icon:'\ud83e\udde0'},
+  {id:'behavioral',label:'\u05d4\u05ea\u05e0\u05d4\u05d2\u05d5\u05ea\u05d9 \u05e8\u05d2\u05e9\u05d9',icon:'\ud83d\udc9b'},
+  {id:'social',label:'\u05d7\u05d1\u05e8\u05ea\u05d9',icon:'\ud83d\udc6b'},
+  {id:'motor',label:'\u05de\u05d5\u05d8\u05d5\u05e8\u05d9\u05e7\u05d4',icon:'\u270b'},
+  {id:'communication',label:'\u05ea\u05e7\u05e9\u05d5\u05e8\u05ea\u05d9 \u05e9\u05e4\u05ea\u05d9',icon:'\ud83d\udcac'},
+  {id:'life_skills',label:'\u05db\u05d9\u05e9\u05d5\u05e8\u05d9 \u05d7\u05d9\u05d9\u05dd',icon:'\ud83c\udfe0'},
+];
+
+var ageMilestones = [
+  {domainId:'cognitive',milestones:{'3':['מזהה 2-3 צבעים בסיסיים','מבין מושגי גודל: גדול/קטן','סופר עד 3 בליווי','מרכיב פאזל של 4-6 חלקים','משחק סימבולי פשוט (מאכיל בובה)','מקשיב לסיפור קצר (2-3 דקות)'],'4':['מזהה 4-6 צבעים וצורות בסיסיות','מבין גדול/קטן, הרבה/מעט','סופר עד 5-10 ברצף','מרכיב פאזל של 8-12 חלקים','משחק סימבולי מפותח עם תסריט','שומר קשב למשימה מובנית 5-8 דקות'],'5':['מזהה צבעים, צורות, ואותיות בודדות','מבין מושגי מיקום (מעל/מתחת, לפני/אחרי)','סופר עד 20 ומתחיל להתאים כמות למספר','מרכיב פאזל של 15-24 חלקים','מבצע מיון לפי 2 קריטריונים','שומר קשב למשימה 10-15 דקות'],'6':['מזהה רוב האותיות, מתחיל לכתוב שמו','מבין מושגים כמותיים מורכבים (ראשון/אחרון, זוגות)','סופר עד 30+ ומבצע חיבור פשוט','חושב בצורה סדרתית ופותר בעיות פשוטות','מבצע משימות רב-שלביות','שומר קשב ממושך למשימות מובנות']}},
+  {domainId:'behavioral',milestones:{'3':['מביע רגשות בסיסיים (שמחה, עצב, כעס)','מתחיל להירגע בעזרת מבוגר','מגלה חרדת פרידה טבעית לגיל','מתקשה עדיין בהמתנה ודחיית סיפוקים','מגיב לגבולות פשוטים'],'4':['מזהה רגשות בסיסיים בעצמו ובאחרים','מתחיל להשתמש במילים לביטוי רגשי','נפרד מהורה ללא בכי ממושך','מסוגל לדחות סיפוקים לזמן קצר','מגיב לחיזוק חיובי'],'5':['מזהה מגוון רגשות ויודע לקרוא להם בשם','משתמש באסטרטגיות הרגעה בסיסיות בהנחיה','מביע רגשות במילים ברוב המקרים','מתמודד עם שינויים בשגרה','מגלה ביטחון עצמי בפעילויות מוכרות'],'6':['מווסת רגשות באופן עצמאי ברוב המצבים','משתמש באסטרטגיות הרגעה באופן עצמאי','מביע רגשות מורכבים (אכזבה, גאווה, קנאה)','מתמודד עם תסכול ומציע פתרונות','בעל ביטחון עצמי בסיטואציות חדשות']}},
+  {domainId:'social',milestones:{'3':['משחק ליד ילדים אחרים (משחק מקביל)','מתחיל ליצור קשר עם ילד אחד','משתף בהנחיית מבוגר','מתקשה עדיין בחילופי תורות','מעדיף מבוגרים מוכרים'],'4':['משחק עם ילד אחד משחק הדדי קצר','משתף צעצועים בהנחיה','ממתין לתורו בפעילות קטנה','מתחיל ליזום קשר חברתי','מבין כללים חברתיים בסיסיים'],'5':['משחק משחק הדדי ממושך עם חבר','משתף, מתפשר, מנהל משא ומתן','ממתין לתורו ללא קושי משמעותי','יוצר ומשמר חברויות','משחק משחק שיתופי עם כללים'],'6':['משתתף במשחקים קבוצתיים מורכבים','מנהל קונפליקטים באופן עצמאי חלקית','מגלה אמפתיה ורגישות לאחרים','מבין נורמות חברתיות ופועל לפיהן','יוצר קשרי חברות יציבים']}},
+  {domainId:'motor',milestones:{'3':['רץ, מטפס, ויורד מדרגות באופן בסיסי','אוחז עפרון באחיזה לא בשלה (אגרופית)','מצייר שרבוטים מעגליים','מתחיל לגזור — גזירות בודדות','בונה מגדל מ-6-8 קוביות'],'4':['קופץ על שתי רגליים, עולה מדרגות לסירוגין','אוחז עפרון באחיזה מתפתחת','מצייר אדם-ראשן (עיגול + קווים)','גוזר ברצף לאורך קו ישר','צובע בתוך שטח גדול (דיוק חלקי)'],'5':['מדלג, קופץ על רגל אחת, תופס כדור','אוחז עפרון באחיזה תפקודית (שלישונית)','מצייר אדם עם גוף ופרטים','גוזר לאורך קווים מעוגלים','כותב אותיות בודדות, צובע בדיוק סביר'],'6':['שיווי משקל טוב, רוכב על אופניים','אחיזת עיפרון בשלה, לחץ מתאים','מצייר ציורים מפורטים עם רקע','גוזר צורות מורכבות','כותב את שמו ואותיות נוספות']}},
+  {domainId:'communication',milestones:{'3':['משתמש ב-200-500 מילים','מרכיב משפטים של 2-3 מילים','מובנות דיבור — 50-75% למאזין זר','מבין הוראות פשוטות בת שני חלקים','עונה על שאלות "מה" ו"איפה"'],'4':['משתמש ב-1,000+ מילים, משפטים של 4-5 מילים','מספר אירועים בסדר כרונולוגי','מובנות דיבור — 75-90%','מבין הוראות מורכבות','שואל שאלות "למה" ו"מתי"'],'5':['משתמש במשפטים מורכבים ומחוברים','מספר סיפור עם התחלה, אמצע וסוף','מובנות דיבור — 90-100%','מבין הומור ומשחקי מילים פשוטים','משתמש בשפה לפתרון בעיות חברתיות'],'6':['שולט בדקדוק ותחביר תקינים','מנהל שיחה הדדית ממושכת','מספר ומסביר באופן ברור ומסודר','מבין רמזים לשוניים ושפת גוף','משתמש בשפה מטא-קוגניטיבית (חושב על חשיבה)']}},
+  {domainId:'life_skills',milestones:{'3':['אוכל בכף בעצמו (עם שפיכות)','שותה מכוס פתוחה','מתחיל תהליך גמילה מחיתולים','מוריד מכנסיים בעזרה חלקית','שוטף ידיים בהנחיה'],'4':['אוכל באופן עצמאי עם כלים','הולך לשירותים באופן כמעט עצמאי','מלביש ופושט בגדים פשוטים','שוטף ידיים ומנגב באופן עצמאי','מסדר צעצועים בהנחיה'],'5':['עצמאי באכילה כולל שימוש בסכין מותאמת','עצמאי בשירותים (כולל ניגוב)','מתלבש באופן עצמאי כולל כפתורים','נועל נעליים (עם/בלי קשירה)','מבצע שגרת יום בליווי מינימלי'],'6':['עצמאי מלא בכל תפקודי האכילה','מקפיד על היגיינה אישית באופן עצמאי','מתלבש ופושט לחלוטין באופן עצמאי','קושר נעליים (או לומד)','אחראי על חפציו האישיים']}},
+];
+
+var goalSuggestions = [
+  {goalText:'העשרת אוצר מילים והרחבת הבנה של מושגים בסיסיים',domain:'cognitive',objectives:[
+    {text:'יזהה ויקרא בשם 6 צבעים בסיסיים',methods:'שילוב מושגים בשגרת היום, משחקי מיון וזיהוי',criteria:'יזהה נכון 6 מתוך 6 צבעים',timeline:'עד סוף שנה'},
+    {text:'יזהה ויקרא בשם 4 צורות בסיסיות',methods:'פעילויות מיון צורות, התאמה לשבלונות',criteria:'יזהה נכון 4 מתוך 4 צורות',timeline:'חצי שנה'},
+    {text:'יבין מושגי כמות: הרבה/מעט, גדול/קטן',methods:'פעילויות מיון, השוואה עם חפצים קונקרטיים',criteria:'יבצע נכון ב-4 מתוך 5 ניסיונות',timeline:'חצי שנה'},
+    {text:'יספור ברצף נכון עד 10 עם התאמת חפצים',methods:'משחקי ספירה, שירי ספירה, ספירה בשגרת היום',criteria:'יספור נכון ברצף ויתאים כמות',timeline:'עד סוף שנה'},
+    {text:'יבין מושגי מיקום: מעל/מתחת, לפני/אחרי',methods:'משחקי תנועה עם הוראות מיקום, פעילויות עם חפצים',criteria:'יבצע הוראות מיקום ב-4 מתוך 5 הזדמנויות',timeline:'עד סוף שנה'},
+    {text:'יבין ויבצע הוראות מורכבות הכוללות 2-3 שלבים',methods:'מתן הוראות מדורגות בשגרה, משחקי הוראות',criteria:'יבצע הוראה דו-שלבית ב-3 מתוך 5 הזדמנויות',timeline:'עד סוף שנה'},
+  ]},
+  {goalText:'שיפור קשב וארגון במשימות לימודיות',domain:'cognitive',objectives:[
+    {text:'ישמור על קשב למשימה מובנית למשך 10 דקות',methods:'חלוקת משימות לשלבים, טיימר חזותי',criteria:'ישלים משימה ב-3 מתוך 5 הזדמנויות',timeline:'חצי שנה'},
+    {text:'ירכיב פאזל בהתאם לגילו באופן עצמאי',methods:'תרגול מדורג, בנייה לפי דגם',criteria:'ירכיב באופן עצמאי ללא עזרה',timeline:'3 חודשים'},
+    {text:'ישלים משימה מובנית מתחילתה ועד סופה',methods:'לוח משימות חזותי, חיזוק בסיום',criteria:'ישלים משימה ב-4 מתוך 5 הזדמנויות',timeline:'חצי שנה'},
+    {text:'יחזור לפעילות לאחר הפרעה קצרה',methods:'תזכורת מילולית, סימן חזותי',criteria:'יחזור למשימה לאחר תזכורת אחת ב-3 מתוך 5',timeline:'עד סוף שנה'},
+    {text:'ימיין חפצים לפי קריטריון אחד',methods:'משחקי מיון, סלסלות ממוינות',criteria:'ימיין נכון ב-4 מתוך 5 ניסיונות',timeline:'3 חודשים'},
+    {text:'ישתתף באופן פעיל בפעילות קבוצתית מובנית',methods:'הכנה מקדימה, מקום ישיבה מותאם',criteria:'ישתתף ללא הפרעה למשך 5-8 דקות',timeline:'עד סוף שנה'},
+  ]},
+  {goalText:'פיתוח חשיבה וכישורי פתרון בעיות',domain:'cognitive',objectives:[
+    {text:'ישלים דפוס חוזר פשוט (AB, AAB)',methods:'משחקי דפוסים עם חרוזים, קוביות',criteria:'ישלים דפוס ב-3 מתוך 5 ניסיונות',timeline:'חצי שנה'},
+    {text:'יזהה מה חסר בתמונה או בסדרה',methods:'כרטיסיות "מה חסר", משחקי זיכרון',criteria:'יזהה את החסר ב-3 מתוך 5 הזדמנויות',timeline:'עד סוף שנה'},
+    {text:'ישחק משחק סימבולי הכולל תסריט ותפקידים',methods:'העשרת פינות משחק, מודלינג',criteria:'ישחק משחק דמיוני עם תסריט ב-2 תפקידים',timeline:'עד סוף שנה'},
+    {text:'יתאר רצף של 3 אירועים בסדר כרונולוגי',methods:'כרטיסיות רצף, סיפורי שגרה',criteria:'יסדר נכון 3 כרטיסיות ב-3 מתוך 5 פעמים',timeline:'עד סוף שנה'},
+    {text:'יציע פתרון לבעיה פשוטה שמוצגת לפניו',methods:'הצגת דילמות בסיפורים, תרגול מובנה',criteria:'יציע פתרון רלוונטי אחד לפחות',timeline:'עד סוף שנה'},
+    {text:'יזכור ויבצע שגרות מוכרות בגן ללא תזכורת',methods:'לוח שגרה חזותי, חזרה יומיומית',criteria:'יבצע 3 שגרות ללא תזכורת',timeline:'חצי שנה'},
+  ]},
+  {goalText:'שיפור ויסות רגשי והתמודדות עם תסכול',domain:'behavioral',objectives:[
+    {text:'יזהה 4 רגשות בסיסיים בתמונות ובעצמו',methods:'לוח רגשות יומי, ספרי רגשות, שיח מונחה',criteria:'יזהה נכון ויקרא בשם את הרגש',timeline:'3 חודשים'},
+    {text:'ישתמש באסטרטגיית הרגעה אחת לפחות בהנחיה',methods:'פינת רוגע, כלי ויסות, מודלינג',criteria:'ישתמש בכלי ויסות ב-3 מתוך 5 מצבי תסכול',timeline:'חצי שנה'},
+    {text:'יביע רגש במילים במקום בהתנהגות',methods:'מודלינג שפתי, תרגול תסריטים, חיזוק חיובי',criteria:'יביע רגש במילים לפחות ב-50% מהמקרים',timeline:'עד סוף שנה'},
+    {text:'יקבל שינוי בשגרה ללא התפרצות רגשית',methods:'הכנה מקדימה, לוח שגרה חזותי',criteria:'יתמודד עם שינוי ללא התפרצות ב-3 מתוך 5',timeline:'עד סוף שנה'},
+    {text:'ידחה סיפוקים לפרק זמן קצר (2-3 דקות)',methods:'טיימר חזותי, חיזוק על המתנה',criteria:'ימתין 2 דקות ללא התפרצות ב-3 מתוך 5',timeline:'חצי שנה'},
+    {text:'יזהה מצב רגשי אצל ילד אחר ויגיב בהתאם',methods:'שיח מונחה, סיפורים חברתיים',criteria:'יזהה רגש ויגיב בהתאם ב-2 מתוך 4',timeline:'עד סוף שנה'},
+  ]},
+  {goalText:'חיזוק ביטחון עצמי ועצמאות',domain:'behavioral',objectives:[
+    {text:'ייפרד מההורה בבוקר ללא בכי ממושך',methods:'שגרת פרידה קבועה, חפץ מעבר, חיזוק חיובי',criteria:'ייפרד ללא בכי ב-4 מתוך 5 ימים',timeline:'3 חודשים'},
+    {text:'יבחר פעילות באופן עצמאי מתוך שתי אפשרויות',methods:'מתן בחירות לאורך היום, עידוד עצמאות',criteria:'יבחר באופן עצמאי ללא היסוס',timeline:'חצי שנה'},
+    {text:'ינסה פעילות חדשה ללא סירוב מוחלט',methods:'חשיפה הדרגתית, ליווי מבוגר, חיזוק על ניסיון',criteria:'ינסה פעילות חדשה ב-3 מתוך 5 הזדמנויות',timeline:'עד סוף שנה'},
+    {text:'יביע צורך או רצון באופן ישיר',methods:'מודלינג, תרגול משפטי בקשה, חיזוק',criteria:'יביע צורך במילים ב-4 מתוך 5 הזדמנויות',timeline:'חצי שנה'},
+    {text:'יגלה גאווה בהישגיו ויראה עבודה שהשלים',methods:'חיזוק חיובי ספציפי, תצוגת עבודות',criteria:'יראה או יספר על הישג באופן יזום',timeline:'עד סוף שנה'},
+    {text:'יפעל באופן עצמאי בשגרות מוכרות',methods:'הפחתה הדרגתית של ליווי, לוח שגרה חזותי',criteria:'יבצע 2 שגרות באופן עצמאי',timeline:'עד סוף שנה'},
+  ]},
+  {goalText:'שיפור שיתוף פעולה וקבלת גבולות',domain:'behavioral',objectives:[
+    {text:'יגיב להנחיה של מבוגר ללא סירוב ממושך',methods:'הנחיות ברורות, בחירה מוגבלת, חיזוק',criteria:'ישתף פעולה ב-4 מתוך 5 הנחיות',timeline:'3 חודשים'},
+    {text:'יעבור בין פעילויות בהנחיית מבוגר',methods:'הכנה מקדימה, שגרת מעברים, חיזוק',criteria:'יעבור ללא התנגדות ב-3 מתוך 5 מעברים',timeline:'חצי שנה'},
+    {text:'יקבל "לא" ללא התפרצות ממושכת',methods:'הצעת חלופה, שפה חיובית, סיפור חברתי',criteria:'יקבל סירוב ללא התפרצות מעל 2 דקות',timeline:'עד סוף שנה'},
+    {text:'ישב במקומו בפעילות מובנית למשך הזמן הנדרש',methods:'מקום ישיבה מותאם, כרית ויסות, הפסקות',criteria:'ישב 8-10 דקות ב-3 מתוך 5 פעילויות',timeline:'חצי שנה'},
+    {text:'ישתתף בשגרות קבוצתיות (מעגל בוקר, ארוחה)',methods:'הכנה חזותית, תפקיד קבוע, חיזוק',criteria:'ישתתף בפעילות קבוצתית מלאה ב-3 מתוך 5 ימים',timeline:'עד סוף שנה'},
+    {text:'ישמור על כללי הגן',methods:'תזכורות חזותיות, כללים ברורים, חיזוק עקבי',criteria:'ישמור על כלל מרכזי ברוב הזמן',timeline:'עד סוף שנה'},
+  ]},
+  {goalText:'שיפור יכולות המשחק ההדדי עם בני גיל',domain:'social',objectives:[
+    {text:'ישחק עם חבר משחק מובנה בתיווך מבוגר 10 דקות',methods:'תיווך, מודלינג, טיפולים בזוג',criteria:'ישחק ברצף 10 דקות עם חבר אחד',timeline:'3 חודשים'},
+    {text:'ישחק עם חבר ללא תיווך מבוגר',methods:'הפחתה הדרגתית של התיווך, חיזוק חיובי',criteria:'ישחק ללא תיווך ב-3 מתוך 5 הזדמנויות',timeline:'עד סוף שנה'},
+    {text:'ישחק עם חבר משחק חופשי (לא מובנה)',methods:'הנחיית משחק חופשי, סיפורים חברתיים',criteria:'ישחק משחק לא מובנה ברצף 10 דקות',timeline:'עד סוף שנה'},
+    {text:'יצטרף למשחק של ילדים אחרים',methods:'תרגול מודלינג, סיפורים חברתיים',criteria:'יצטרף בהצלחה ב-2 מתוך 4 הזדמנויות',timeline:'עד סוף שנה'},
+    {text:'ישמור על נושא משחק משותף עם חבר',methods:'תיווך שפתי, הרחבת תסריט',criteria:'ישמור על נושא ב-3 מתוך 5 משחקים',timeline:'חצי שנה'},
+    {text:'יתפשר ויקבל רעיון של חבר במשחק',methods:'תרגול מובנה, משפטי תיווך',criteria:'יתפשר ב-2 מתוך 4 מצבי קונפליקט',timeline:'עד סוף שנה'},
+  ]},
+  {goalText:'פיתוח מיומנויות חברתיות בסיסיות',domain:'social',objectives:[
+    {text:'ישתף צעצוע עם ילד אחר בהנחיית מבוגר',methods:'משחק מובנה בזוגות, מודלינג',criteria:'ישתף ב-3 מתוך 5 הזדמנויות',timeline:'3 חודשים'},
+    {text:'ימתין לתורו בפעילות קבוצתית',methods:'משחקי תור, חיזוק חיובי, תזכורות',criteria:'ימתין לתורו ללא התפרצות ב-3 מתוך 5',timeline:'חצי שנה'},
+    {text:'יגלה אמפתיה בסיסית כלפי ילד שנפגע',methods:'מודלינג, שיח על רגשות, חיזוק',criteria:'יגיב לילד שנפגע ב-2 מתוך 4 הזדמנויות',timeline:'עד סוף שנה'},
+    {text:'ייזום פנייה חברתית לילד אחר',methods:'תרגול משפטי פנייה, מודלינג',criteria:'ייזום פנייה אחת ביום ב-3 מתוך 5 ימים',timeline:'עד סוף שנה'},
+    {text:'ייענה בחיוב כשילד אחר פונה אליו',methods:'תרגול תגובות, סיפורים חברתיים',criteria:'ייענה בחיוב ב-3 מתוך 5 פניות',timeline:'חצי שנה'},
+    {text:'ישתמש בנימוסים בסיסיים (תודה, בבקשה, סליחה)',methods:'מודלינג עקבי, תזכורת, חיזוק',criteria:'ישתמש בנימוסים ללא תזכורת ב-3 מתוך 5',timeline:'עד סוף שנה'},
+  ]},
+  {goalText:'שיפור תקשורת חברתית ויכולת שיחה',domain:'social',objectives:[
+    {text:'ישמור על קשר עין בזמן שיחה',methods:'תרגול מובנה, תזכורת עדינה',criteria:'ישמור קשר עין ב-3 מתוך 5 אינטראקציות',timeline:'3 חודשים'},
+    {text:'יענה לשאלה שחבר שואל אותו',methods:'תרגול בזוגות, מודלינג, משחק שאלות',criteria:'יענה לשאלה ב-4 מתוך 5 פניות',timeline:'חצי שנה'},
+    {text:'ישאל שאלה לחבר במהלך משחק',methods:'כרטיסיות שאלות, מודלינג',criteria:'ישאל שאלה אחת לפחות בכל אינטראקציה',timeline:'עד סוף שנה'},
+    {text:'יספר לחבר על חוויה אישית קצרה',methods:'מעגל שיתוף, שאלות מכוונות',criteria:'יספר חוויה ב-3 משפטים לפחות',timeline:'עד סוף שנה'},
+    {text:'ישתתף בשיחה הדדית של 2-3 תורות',methods:'תרגול תורנות שיחה, כדור שיחה',criteria:'ישתתף ב-2 תורות שיחה ב-3 מתוך 5',timeline:'עד סוף שנה'},
+    {text:'ישתמש בשם של חבר כשפונה אליו',methods:'תזכורת, מודלינג, משחקי שמות',criteria:'ישתמש בשם ב-3 מתוך 5 פניות',timeline:'חצי שנה'},
+  ]},
+  {goalText:'שיפור תפקודים ידניים — ציור, יצירה ולמידה',domain:'motor',objectives:[
+    {text:'ירכוש אחיזת עיפרון תפקודית',methods:'התאמת כלי כתיבה, מתאם אחיזה, תרגול יומי',criteria:'יאחז באחיזה תואמת גיל',timeline:'3 חודשים'},
+    {text:'יצבע שטחים בתוך קווי מתאר בדיוק סביר',methods:'צבעים עבים, גואש, הקטנה הדרגתית',criteria:'ימלא שטח ללא חריגה משמעותית',timeline:'חצי שנה'},
+    {text:'ירכוש אחיזת מספריים ויגזור לאורך קו',methods:'תרגול גזירה, פלסטלינה, רצועות נייר',criteria:'יגזור לאורך קו ישר באורך 10 ס"מ',timeline:'עד סוף שנה'},
+    {text:'יצייר ציור חופשי הכולל דמות אדם',methods:'תרגול ציור מודרך, התבוננות',criteria:'יצייר אדם עם ראש, גוף, וגפיים',timeline:'עד סוף שנה'},
+    {text:'יעתיק צורות בסיסיות (עיגול, קו, צלב)',methods:'תרגול על לוח, חול, נייר',criteria:'יעתיק 3 צורות בדיוק סביר',timeline:'חצי שנה'},
+    {text:'יבצע פעולות יצירה עדינות',methods:'פעילויות יצירה מגוונות, תרגול יומי',criteria:'יבצע 3 פעולות יצירה באופן עצמאי',timeline:'עד סוף שנה'},
+  ]},
+  {goalText:'שיפור שיווי משקל, קואורדינציה ותנועתיות',domain:'motor',objectives:[
+    {text:'ילך על קו ישר באורך 3 מטר',methods:'מסלולי מוטוריקה, קורת שיווי משקל',criteria:'יבצע ב-3 מתוך 5 ניסיונות',timeline:'3 חודשים'},
+    {text:'ידלג על שתי רגליים ברצף של 5 קפיצות',methods:'משחקי תנועה קבוצתיים, תרגול חוזר',criteria:'ידלג ברצף ללא הפסקה',timeline:'חצי שנה'},
+    {text:'יעמוד על רגל אחת למשך 5 שניות',methods:'משחקי פלמינגו, אימון שיווי משקל',criteria:'יעמוד 5 שניות ב-3 מתוך 5 ניסיונות',timeline:'חצי שנה'},
+    {text:'יתפוס כדור גדול שנזרק אליו',methods:'תרגול זריקה ותפיסה, כדורים בגדלים שונים',criteria:'יתפוס ב-3 מתוך 5 זריקות',timeline:'עד סוף שנה'},
+    {text:'יעלה וירד מדרגות בצעדים חלופיים',methods:'תרגול יומי, הפחתת תמיכה',criteria:'יעלה וירד ללא אחיזה במעקה',timeline:'עד סוף שנה'},
+    {text:'ירכב על אופניים/קורקינט בהתאם לגילו',methods:'תרגול בחצר, ליווי, עידוד הדרגתי',criteria:'ירכב באופן עצמאי על מסלול קצר',timeline:'עד סוף שנה'},
+  ]},
+  {goalText:'שיפור עיבוד חושי ויסות תנועתי',domain:'motor',objectives:[
+    {text:'ישתתף בפעילויות חושיות-מוטוריות ללא סירוב',methods:'חשיפה הדרגתית, דיאטה חושית',criteria:'ישתתף ללא סירוב ב-4 מתוך 5 פעילויות',timeline:'3 חודשים'},
+    {text:'יווסת את רמת העוררות בפעילויות מוטוריות',methods:'הפסקות תנועתיות, כלי ויסות',criteria:'יחזור לרמת עוררות מתאימה בעזרה מינימלית',timeline:'חצי שנה'},
+    {text:'יתכנן ויבצע רצף תנועתי של 3 שלבים',methods:'מסלולים מדורגים, הנחיה מילולית',criteria:'יבצע מסלול של 3 תחנות ברצף',timeline:'עד סוף שנה'},
+    {text:'ישתמש בשתי ידיים בתיאום',methods:'פעילויות דו-ידניות, קרעי נייר',criteria:'ישתמש בשתי ידיים בתיאום ב-3 פעילויות',timeline:'חצי שנה'},
+    {text:'ישמור על יציבה תקינה בזמן ישיבה',methods:'כיסא מותאם, כרית ויסות, תזכורות',criteria:'ישב ביציבה תקינה 5-8 דקות',timeline:'עד סוף שנה'},
+    {text:'יחצה קו אמצע הגוף בפעילות',methods:'פעילויות חצייה, ציור על משטחים גדולים',criteria:'יחצה קו אמצע ב-3 מתוך 5 פעילויות',timeline:'עד סוף שנה'},
+  ]},
+  {goalText:'העשרת אוצר מילים, הבנה ומובנות הדיבור',domain:'communication',objectives:[
+    {text:'ירחיב אוצר מילים פעלי (10-15 פעלים)',methods:'סיפורים, מודלינג, תיאור פעולות בזמן אמת',criteria:'ישתמש ב-10-15 פעלים באופן ספונטני',timeline:'עד סוף שנה'},
+    {text:'יבנה משפטים תקינים של 3-4 מילים',methods:'מודלינג שפתי, הרחבה ועיבוד',criteria:'ישתמש במשפטים של 3+ מילים ב-50%',timeline:'עד סוף שנה'},
+    {text:'ישפר את מובנות הדיבור',methods:'טיפול קלינאי תקשורת, תרגול צלילים',criteria:'מובנות דיבור 75%+ למאזין זר',timeline:'עד סוף שנה'},
+    {text:'ישתמש במילות תיאור',methods:'משחקי תיאור, מיון תמונות',criteria:'ישתמש ב-8 מילות תיאור באופן ספונטני',timeline:'עד סוף שנה'},
+    {text:'יבין ויבצע הוראות בנות 2 חלקים',methods:'מתן הוראות מדורגות, משחקי הוראות',criteria:'יבצע הוראה דו-שלבית ב-4 מתוך 5',timeline:'חצי שנה'},
+    {text:'יענה על שאלות "מי", "מה", "איפה"',methods:'שיח על סיפורים, שאלות מכוונות',criteria:'יענה נכון ב-3 מתוך 5 שאלות',timeline:'עד סוף שנה'},
+  ]},
+  {goalText:'פיתוח תקשורת פונקציונלית ויוזמת שיח',domain:'communication',objectives:[
+    {text:'יבקש חפץ רצוי באמצעות מילה, תמונה או מחווה',methods:'יצירת הזדמנויות תקשורת, לוח תקשורת',criteria:'יבקש באופן עצמאי ב-4 מתוך 5 הזדמנויות',timeline:'3 חודשים'},
+    {text:'ישתמש בצירוף של 2 מילים להבעת רצון',methods:'מודלינג שפתי, הרחבה, שאלות מכוונות',criteria:'ישתמש בצירוף 2 מילים ב-50%',timeline:'חצי שנה'},
+    {text:'ייזום תקשורת — יפנה לבקש, לספר, לשאול',methods:'עיכוב מכוון, יצירת מוטיבציה',criteria:'ייזום פנייה 3 פעמים ביום',timeline:'עד סוף שנה'},
+    {text:'ייעזר במבוגר כשנתקל בקושי',methods:'מודלינג "אני צריך עזרה", יצירת הזדמנויות',criteria:'יפנה לבקש עזרה ב-3 מתוך 5 מצבים',timeline:'חצי שנה'},
+    {text:'יגיב לפנייה שפתית של מבוגר או ילד',methods:'פנייה בגובה העיניים, שימוש בשם',criteria:'יגיב לפנייה ב-4 מתוך 5 פעמים',timeline:'3 חודשים'},
+    {text:'ישתמש במחוות תקשורת תומכות',methods:'מודלינג מחוות, תמיכה פיזית',criteria:'ישתמש במחוות ב-3 מתוך 5 הזדמנויות',timeline:'חצי שנה'},
+  ]},
+  {goalText:'פיתוח שפה נרטיבית ויכולת שיח',domain:'communication',objectives:[
+    {text:'יספר על אירוע שחווה בסדר כרונולוגי',methods:'כרטיסיות רצף, שיח על אירועים',criteria:'יספר על אירוע ב-3 משפטים בסדר נכון',timeline:'עד סוף שנה'},
+    {text:'יתאר תמונה תוך שימוש ב-3 פרטים',methods:'שיח על תמונות, שאלות מנחות',criteria:'יתאר 3 פרטים ללא שאלות מנחות',timeline:'חצי שנה'},
+    {text:'ישתתף בשיח קבוצתי עם תרומה רלוונטית',methods:'שאלות מכוונות, תפקיד קבוע',criteria:'ישתתף בתרומה אחת ב-3 מתוך 5 מעגלים',timeline:'עד סוף שנה'},
+    {text:'ישתמש במילות קישור (ואז, כי, אבל)',methods:'מודלינג, הרחבה, סיפורים שיתופיים',criteria:'ישתמש במילת קישור ב-3 מתוך 5 סיפורים',timeline:'עד סוף שנה'},
+    {text:'ימלא מילה חסרה בשיר או סיפור מוכר',methods:'שירים עם השמטה, סיפורים חוזרים',criteria:'ימלא מילה ב-4 מתוך 5 הזדמנויות',timeline:'3 חודשים'},
+    {text:'ישאל שאלות "מה", "איפה", "מי" באופן ספונטני',methods:'מודלינג שאלות, יצירת סקרנות',criteria:'ישאל שאלה אחת לפחות בכל שיחה',timeline:'עד סוף שנה'},
+  ]},
+  {goalText:'קידום עצמאות בתפקודי אכילה',domain:'life_skills',objectives:[
+    {text:'יאכל בכף באופן עצמאי ללא שפיכה',methods:'תרגול בזמן ארוחות, כלים מותאמים',criteria:'יאכל ללא שפיכה ב-4 מתוך 5 ארוחות',timeline:'3 חודשים'},
+    {text:'ישתמש במזלג לדקירת מזון',methods:'תרגול עם מזון קשה, הנחיה פיזית',criteria:'ישתמש במזלג באופן עצמאי',timeline:'חצי שנה'},
+    {text:'ישתה מכוס פתוחה ללא שפיכה',methods:'תרגול הדרגתי מכוס קטנה, מודלינג',criteria:'ישתה ללא שפיכה ב-4 מתוך 5',timeline:'3 חודשים'},
+    {text:'יפתח אריזות מזון פשוטות',methods:'תרגול יומי, ניתוח משימה',criteria:'יפתח באופן עצמאי 2 סוגי אריזות',timeline:'חצי שנה'},
+    {text:'ימזוג מים מכד קטן לכוס',methods:'תרגול עם כלים מותאמים',criteria:'ימזוג ללא שפיכה משמעותית',timeline:'עד סוף שנה'},
+    {text:'ינקה את מקומו לאחר ארוחה',methods:'לוח משימות חזותי, שגרה קבועה',criteria:'ינקה את מקומו ללא תזכורת',timeline:'עד סוף שנה'},
+  ]},
+  {goalText:'קידום עצמאות בהלבשה ובהיגיינה אישית',domain:'life_skills',objectives:[
+    {text:'ינעל נעליים באופן עצמאי',methods:'תרגול בזמני מעבר, נעליים מותאמות',criteria:'ינעל ללא עזרת מבוגר',timeline:'3 חודשים'},
+    {text:'יוריד ויעלה מכנסיים באופן עצמאי',methods:'תרגול יומי, ניתוח משימה',criteria:'יבצע באופן עצמאי ב-4 מתוך 5',timeline:'3 חודשים'},
+    {text:'ילבש חולצה באופן עצמאי',methods:'תרגול מובנה, ניתוח משימה',criteria:'ילבש חולצה ללא עזרה',timeline:'חצי שנה'},
+    {text:'ישטוף ידיים באופן עצמאי בכל השלבים',methods:'ניתוח משימה חזותי, שגרה קבועה',criteria:'ישטוף ידיים בכל השלבים ללא תזכורת',timeline:'3 חודשים'},
+    {text:'ינגב פנים ואף באופן עצמאי',methods:'תזכורת, מודלינג, מראה בגובה הילד',criteria:'ינגב בהנחיה מילולית בלבד',timeline:'חצי שנה'},
+    {text:'יסרק או יברוש שיער בעזרה מינימלית',methods:'תרגול יומי, מברשת מותאמת',criteria:'יבצע את רוב הפעולה בעצמו',timeline:'עד סוף שנה'},
+  ]},
+  {goalText:'קידום גמילה ושימוש עצמאי בשירותים',domain:'life_skills',objectives:[
+    {text:'ידווח על צורך בשירותים באופן עקבי',methods:'לוח זמנים קבוע, חיזוק חיובי',criteria:'ידווח באופן עצמאי ב-4 מתוך 5',timeline:'3 חודשים'},
+    {text:'ילך לשירותים בזמן ויגיע יבש',methods:'שגרת שירותים, תזכורות מרווחות',criteria:'יגיע יבש ב-4 מתוך 5 בדיקות',timeline:'חצי שנה'},
+    {text:'ישתמש בשירותים בליווי מילולי בלבד',methods:'ניתוח משימה, הפחתת ליווי הדרגתית',criteria:'ישתמש בליווי מילולי בלבד',timeline:'עד סוף שנה'},
+    {text:'ינגב באופן עצמאי לאחר שירותים',methods:'ניתוח משימה, הנחיה פיזית שפוחתת',criteria:'ינגב בעצמו ללא עזרה פיזית',timeline:'עד סוף שנה'},
+    {text:'ישטוף ידיים לאחר שירותים ללא תזכורת',methods:'שגרה קבועה, שילוט ליד הכיור',criteria:'ישטוף ידיים ללא תזכורת ב-4 מתוך 5',timeline:'חצי שנה'},
+    {text:'יסדר את בגדיו לאחר שירותים',methods:'ניתוח משימה, תזכורת חזותית',criteria:'יסדר בגדים באופן עצמאי',timeline:'עד סוף שנה'},
+  ]},
+];
+
+var step = 'assessment';
+var childAge = '';
+var activeDomainIds = [];
+var domainNotes = {};
+var goals = [];
+
+function getDomainLabel(id) { return (talaDomains.find(function(d){return d.id===id})||{}).label||''; }
+function getDomainIcon(id) { return (talaDomains.find(function(d){return d.id===id})||{}).icon||''; }
+
+function getMilestones(domainId) {
+  if(!childAge) return [];
+  var dm = ageMilestones.find(function(m){return m.domainId===domainId});
+  return dm ? (dm.milestones[childAge]||[]) : [];
+}
+
+function getNotes(domainId) {
+  return domainNotes[domainId] || {strengths:'', toStrengthen:''};
+}
+
+function hasNotes() {
+  return activeDomainIds.some(function(id) {
+    var n = getNotes(id);
+    return n.strengths.trim() || n.toStrengthen.trim();
+  });
+}
+
+function getSelectedGoals() {
+  return goals.map(function(g) {
+    return {id:g.id, goalText:g.goalText, domain:g.domain,
+      objectives: g.objectives.filter(function(o){return o.selected})};
+  }).filter(function(g){return g.objectives.length > 0});
+}
+
+function showToast(msg) {
+  var t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(function(){t.classList.remove('show')}, 2000);
+}
+
+function esc(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+function render() {
+  var app = document.getElementById('app');
+  var h = '';
+
+  h += '<div class="pw-header"><div class="pw-header-inner">';
+  h += '<div class="pw-title">\u05d1\u05e0\u05d9\u05d9\u05ea \u05de\u05d8\u05e8\u05d5\u05ea \u05d5\u05d9\u05e2\u05d3\u05d9\u05dd</div>';
+  h += '<div class="pw-subtitle">\u05ea\u05db\u05e0\u05d9\u05ea \u05dc\u05d9\u05de\u05d5\u05d3\u05d9\u05dd \u05d0\u05d9\u05e9\u05d9\u05ea \u2014 \u05db\u05dc\u05d9 \u05e2\u05d6\u05e8 \u05dc\u05e6\u05d5\u05d5\u05ea \u05e8\u05d1-\u05de\u05e7\u05e6\u05d5\u05e2\u05d9</div>';
+  h += '</div></div>';
+
+  h += '<div class="pw-feedback-banner">';
+  h += '<div class="pw-feedback-title">\u05d6\u05d4\u05d5 \u05d0\u05d1-\u05d8\u05d9\u05e4\u05d5\u05e1 \u05dc\u05d4\u05ea\u05e0\u05e1\u05d5\u05ea \u2014 \u05dc\u05d0 \u05e9\u05d5\u05de\u05e8 \u05e0\u05ea\u05d5\u05e0\u05d9\u05dd</div>';
+  h += '<div class="pw-feedback-text">\u05e0\u05e1\u05d5 \u05d0\u05ea \u05d4\u05e9\u05dc\u05d1\u05d9\u05dd, \u05d4\u05e7\u05dc\u05d9\u05e7\u05d5 \u05d5\u05d4\u05ea\u05e0\u05e1\u05d5. \u05e0\u05e9\u05de\u05d7 \u05dc\u05e9\u05de\u05d5\u05e2 \u05de\u05d4 \u05d0\u05ea/\u05d4 \u05d7\u05d5\u05e9\u05d1/\u05ea!</div>';
+  h += '</div>';
+
+  var step1Done = hasNotes();
+  var step2Done = goals.length > 0;
+  h += '<div class="pw-progress"><div class="pw-progress-track">';
+  h += '<div class="pw-progress-step '+(step==='assessment'?'active':'')+' '+(step!=='assessment'&&step1Done?'done':'')+'" data-disabled="false" onclick="step=\'assessment\';render()">';
+  h += '<div class="pw-progress-dot">'+(step!=='assessment'&&step1Done?'\u2713':'1')+'</div>';
+  h += '<div class="pw-progress-label">\u05d4\u05e2\u05e8\u05db\u05ea \u05ea\u05e4\u05e7\u05d5\u05d3</div></div>';
+  h += '<div class="pw-progress-line '+(step1Done?'filled':'')+'"></div>';
+  h += '<div class="pw-progress-step '+(step==='goals'?'active':'')+' '+(step==='preview'&&step2Done?'done':'')+'" data-disabled="'+(step1Done?'false':'true')+'" onclick="if('+step1Done+'){step=\'goals\';render()}">';
+  h += '<div class="pw-progress-dot">'+(step==='preview'&&step2Done?'\u2713':'2')+'</div>';
+  h += '<div class="pw-progress-label">\u05de\u05d8\u05e8\u05d5\u05ea \u05d5\u05d9\u05e2\u05d3\u05d9\u05dd</div></div>';
+  h += '<div class="pw-progress-line '+(step2Done?'filled':'')+'"></div>';
+  h += '<div class="pw-progress-step '+(step==='preview'?'active':'')+'" data-disabled="'+(step2Done?'false':'true')+'" onclick="if('+step2Done+'){step=\'preview\';render()}">';
+  h += '<div class="pw-progress-dot">3</div>';
+  h += '<div class="pw-progress-label">\u05ea\u05e6\u05d5\u05d2\u05d4 \u05d5\u05d4\u05d5\u05e8\u05d3\u05d4</div></div>';
+  h += '</div></div>';
+
+  h += '<div class="pw-container">';
+  if(step==='assessment') h += renderAssessment();
+  else if(step==='goals') h += renderGoals();
+  else h += renderPreview();
+  h += '</div>';
+
+  app.innerHTML = h;
+}
+
+function renderAssessment() {
+  var h = '<div class="pw-section">';
+
+  h += '<div class="pw-age-section"><label class="pw-age-label">\u05d2\u05d9\u05dc \u05d4\u05d9\u05dc\u05d3/\u05d4</label><div class="pw-age-buttons">';
+  var ages = ['3','4','5','6'];
+  for(var a=0;a<ages.length;a++)
+    h += '<button class="pw-age-btn '+(childAge===ages[a]?'selected':'')+'" onclick="childAge=\''+ages[a]+'\';render()">'+ages[a]+'</button>';
+  h += '</div></div>';
+
+  h += '<div class="pw-hint">\u05d1\u05d7\u05e8\u05d5 \u05ea\u05d7\u05d5\u05de\u05d9 \u05ea\u05e4\u05e7\u05d5\u05d3 \u05d5\u05ea\u05d0\u05e8\u05d5 \u05d1\u05d7\u05d5\u05e4\u05e9\u05d9\u05d5\u05ea \u05d0\u05ea \u05e0\u05e7\u05d5\u05d3\u05d5\u05ea \u05d4\u05d7\u05d5\u05d6\u05e7 \u05d5\u05d0\u05ea \u05d4\u05e0\u05e7\u05d5\u05d3\u05d5\u05ea \u05dc\u05d7\u05d9\u05d6\u05d5\u05e7. \u05e2\u05dc \u05e1\u05de\u05da \u05d4\u05d4\u05e2\u05e8\u05d5\u05ea, \u05ea\u05d5\u05db\u05dc\u05d5 \u05dc\u05d1\u05d7\u05d5\u05e8 \u05de\u05d8\u05e8\u05d5\u05ea \u05d5\u05d9\u05e2\u05d3\u05d9\u05dd \u05de\u05ea\u05d0\u05d9\u05de\u05d9\u05dd.</div>';
+
+  h += '<div class="pw-domain-picker">';
+  for(var i=0;i<talaDomains.length;i++){
+    var d = talaDomains[i];
+    var sel = activeDomainIds.indexOf(d.id)>=0;
+    h += '<button class="pw-domain-chip '+(sel?'selected':'')+'" onclick="toggleDomain(\''+d.id+'\')">'+(sel?'\u2713 ':'')+d.icon+' '+d.label+'</button>';
+  }
+  h += '</div>';
+
+  for(var di=0;di<activeDomainIds.length;di++){
+    var did = activeDomainIds[di];
+    var d = talaDomains.find(function(x){return x.id===did});
+    if(!d) continue;
+    var ms = getMilestones(did);
+    var notes = getNotes(did);
+
+    h += '<div class="pw-card domain-'+did+'">';
+    h += '<div class="pw-card-header"><span class="pw-card-header-icon">'+d.icon+'</span> '+d.label+'</div>';
+    h += '<div class="pw-card-body">';
+
+    if(ms.length>0){
+      h += '<div class="pw-milestones">';
+      h += '<div class="pw-milestones-header">\u05e6\u05d9\u05e4\u05d9\u05d5\u05ea \u05d4\u05ea\u05e4\u05ea\u05d7\u05d5\u05ea\u05d9\u05d5\u05ea \u2014 \u05d2\u05d9\u05dc '+childAge+' (\u05d4\u05ea\u05e4\u05ea\u05d7\u05d5\u05ea \u05ea\u05e7\u05d9\u05e0\u05d4)</div>';
+      h += '<ul class="pw-milestones-list">';
+      for(var m=0;m<ms.length;m++) h += '<li>'+ms[m]+'</li>';
+      h += '</ul></div>';
+    }
+
+    h += '<div class="pw-notes-grid">';
+    h += '<div class="pw-notes-field">';
+    h += '<label class="pw-notes-label pw-notes-label-strength"><span class="pw-notes-label-dot"></span>\u05e0\u05e7\u05d5\u05d3\u05d5\u05ea \u05d7\u05d5\u05d6\u05e7</label>';
+    h += '<textarea class="pw-textarea" oninput="updateNotes(\''+did+'\',\'strengths\',this.value)" placeholder="\u05ea\u05d0\u05e8\u05d5 \u05d0\u05ea \u05d4\u05d9\u05db\u05d5\u05dc\u05d5\u05ea \u05d4\u05d7\u05d6\u05e7\u05d5\u05ea...">'+esc(notes.strengths)+'</textarea>';
+    h += '</div>';
+    h += '<div class="pw-notes-field">';
+    h += '<label class="pw-notes-label pw-notes-label-improve"><span class="pw-notes-label-dot"></span>\u05e0\u05e7\u05d5\u05d3\u05d5\u05ea \u05dc\u05d7\u05d9\u05d6\u05d5\u05e7</label>';
+    h += '<textarea class="pw-textarea" oninput="updateNotes(\''+did+'\',\'toStrengthen\',this.value)" placeholder="\u05ea\u05d0\u05e8\u05d5 \u05d0\u05ea \u05d4\u05ea\u05d7\u05d5\u05de\u05d9\u05dd \u05e9\u05d3\u05d5\u05e8\u05e9\u05d9\u05dd \u05d7\u05d9\u05d6\u05d5\u05e7...">'+esc(notes.toStrengthen)+'</textarea>';
+    h += '</div></div></div></div>';
+  }
+
+  if(activeDomainIds.length > 0) {
+    var notesReady = hasNotes();
+    h += '<button id="btn-next-step" class="pw-btn-primary" '+(notesReady?'':'disabled')+' onclick="step=\'goals\';render()">\u05d1\u05d7\u05d9\u05e8\u05ea \u05de\u05d8\u05e8\u05d5\u05ea \u05d5\u05d9\u05e2\u05d3\u05d9\u05dd \u2190</button>';
+    if(!notesReady) h += '<div style="font-size:0.78rem;color:var(--mist);margin-top:var(--sp-1);">\u05db\u05ea\u05d1\u05d5 \u05d4\u05e2\u05e8\u05d5\u05ea \u05d1\u05ea\u05d7\u05d5\u05dd \u05d0\u05d7\u05d3 \u05dc\u05e4\u05d7\u05d5\u05ea \u05db\u05d3\u05d9 \u05dc\u05d4\u05de\u05e9\u05d9\u05da</div>';
+  }
+
+  h += '</div>';
+  return h;
+}
+
+function renderGoals() {
+  var h = '<div class="pw-section">';
+  h += '<div class="pw-hint">\u05d1\u05d7\u05e8\u05d5 \u05de\u05d8\u05e8\u05d5\u05ea \u05de\u05ea\u05d5\u05da \u05d4\u05d4\u05e6\u05e2\u05d5\u05ea (3 \u05dc\u05db\u05dc \u05ea\u05d7\u05d5\u05dd, \u05db\u05dc \u05d0\u05d7\u05ea \u05e2\u05dd 6 \u05d9\u05e2\u05d3\u05d9\u05dd). \u05e1\u05de\u05e0\u05d5 \u05d0\u05ea \u05d4\u05d9\u05e2\u05d3\u05d9\u05dd \u05d4\u05e8\u05e6\u05d5\u05d9\u05d9\u05dd \u2014 \u05de\u05d5\u05de\u05dc\u05e5 \u05dc\u05d1\u05d7\u05d5\u05e8 4 \u05de\u05ea\u05d5\u05da 6.</div>';
+
+  for(var di=0;di<activeDomainIds.length;di++){
+    var did = activeDomainIds[di];
+    var d = talaDomains.find(function(x){return x.id===did});
+    if(!d) continue;
+    var dGoals = goals.filter(function(g){return g.domain===did});
+    var existingTexts = goals.map(function(g){return g.goalText});
+    var suggestions = goalSuggestions.filter(function(s){return s.domain===did && existingTexts.indexOf(s.goalText)<0});
+    var notes = getNotes(did);
+
+    h += '<div class="pw-goal-domain-wrap domain-'+did+'">';
+    h += '<div class="pw-goal-domain-header">'+d.icon+' '+d.label+'</div>';
+    h += '<div class="pw-goal-domain-body">';
+
+    if(notes.strengths.trim() || notes.toStrengthen.trim()){
+      h += '<div class="pw-notes-summary">';
+      if(notes.strengths.trim()) h += '<p><strong>\u05d7\u05d5\u05d6\u05e7:</strong> '+esc(notes.strengths)+'</p>';
+      if(notes.toStrengthen.trim()) h += '<p><strong>\u05dc\u05d7\u05d9\u05d6\u05d5\u05e7:</strong> '+esc(notes.toStrengthen)+'</p>';
+      h += '</div>';
+    }
+
+    if(suggestions.length>0){
+      h += '<div class="pw-suggestions"><span class="pw-sugg-label">\u05d4\u05d5\u05e1\u05e3 \u05de\u05d8\u05e8\u05d4:</span>';
+      for(var si=0;si<suggestions.length;si++){
+        var sg = suggestions[si];
+        h += '<button class="pw-sugg-chip" onclick="addSuggestion(\''+sg.goalText.replace(/'/g,"\\'")+'\')">+ '+sg.goalText+'</button>';
+      }
+      h += '</div>';
+    }
+
+    for(var gi=0;gi<dGoals.length;gi++){
+      var g = dGoals[gi];
+      var selCount = g.objectives.filter(function(o){return o.selected}).length;
+      h += '<div class="pw-goal-card">';
+      h += '<div class="pw-goal-header"><label class="pw-goal-label">\u05de\u05d8\u05e8\u05d4</label>';
+      h += '<button class="pw-remove-link" onclick="removeGoal(\''+g.id+'\')">\u05d4\u05e1\u05e8 \u05de\u05d8\u05e8\u05d4</button></div>';
+      h += '<input class="pw-input" value="'+esc(g.goalText)+'" oninput="updateGoalText(\''+g.id+'\',this.value)" placeholder="\u05de\u05d8\u05e8\u05d4...">';
+
+      h += '<div class="pw-obj-select-info"><span class="pw-obj-select-badge">\u05e0\u05d1\u05d7\u05e8\u05d5 '+selCount+' \u05de\u05ea\u05d5\u05da '+g.objectives.length+'</span></div>';
+
+      h += '<div class="pw-obj-list">';
+      for(var oi=0;oi<g.objectives.length;oi++){
+        var o = g.objectives[oi];
+        h += '<div class="pw-obj-item '+(o.selected?'':'unselected')+'">';
+        h += '<div class="pw-obj-item-header">';
+        h += '<input type="checkbox" class="pw-obj-checkbox" '+(o.selected?'checked':'')+' onchange="toggleObj(\''+g.id+'\','+oi+')">';
+        h += '<span class="pw-obj-num">'+(oi+1)+'</span>';
+        h += '<button class="pw-obj-remove" onclick="removeObj(\''+g.id+'\','+oi+')">\u2715</button>';
+        h += '</div>';
+        h += '<div class="pw-obj-fields">';
+        h += '<div><div class="pw-obj-field-label">\u05d4\u05d9\u05e2\u05d3</div>';
+        h += '<textarea class="pw-cell-input" oninput="updateObj(\''+g.id+'\','+oi+',\'text\',this.value)">'+esc(o.text)+'</textarea></div>';
+        h += '<div class="pw-obj-row-2">';
+        h += '<div><div class="pw-obj-field-label">\u05e4\u05e8\u05e7 \u05d6\u05de\u05df</div>';
+        h += '<input class="pw-cell-input" value="'+esc(o.timeline)+'" oninput="updateObj(\''+g.id+'\','+oi+',\'timeline\',this.value)"></div>';
+        h += '<div><div class="pw-obj-field-label">\u05d0\u05de\u05d5\u05ea \u05de\u05d9\u05d3\u05d4</div>';
+        h += '<textarea class="pw-cell-input" oninput="updateObj(\''+g.id+'\','+oi+',\'criteria\',this.value)">'+esc(o.criteria)+'</textarea></div>';
+        h += '</div>';
+        h += '<div><div class="pw-obj-field-label">\u05d3\u05e8\u05db\u05d9 \u05d4\u05d5\u05e8\u05d0\u05d4</div>';
+        h += '<textarea class="pw-cell-input" oninput="updateObj(\''+g.id+'\','+oi+',\'methods\',this.value)">'+esc(o.methods)+'</textarea></div>';
+        h += '</div></div>';
+      }
+      h += '</div>';
+      h += '<button class="pw-add-row" onclick="addObj(\''+g.id+'\')">+ \u05d4\u05d5\u05e1\u05e3 \u05d9\u05e2\u05d3</button>';
+      h += '</div>';
+    }
+    h += '<button class="pw-add-goal" onclick="addCustomGoal(\''+did+'\')">+ \u05de\u05d8\u05e8\u05d4 \u05d7\u05d3\u05e9\u05d4 \u05d1\u05ea\u05d7\u05d5\u05dd '+d.label+'</button>';
+    h += '</div></div>';
+  }
+
+  var selGoals = getSelectedGoals();
+  h += '<button class="pw-btn-primary" '+(selGoals.length===0?'disabled':'')+' onclick="step=\'preview\';render()">\u05ea\u05e6\u05d5\u05d2\u05d4 \u05de\u05e7\u05d3\u05d9\u05de\u05d4 ('+selGoals.length+' \u05de\u05d8\u05e8\u05d5\u05ea)</button>';
+  h += '</div>';
+  return h;
+}
+
+function renderPreview() {
+  var selGoals = getSelectedGoals();
+  var h = '<div class="pw-section">';
+  h += '<div class="pw-preview-actions">';
+  h += '<button class="pw-btn-outline" onclick="copyText()">\u05d4\u05e2\u05ea\u05e7 \u05d8\u05e7\u05e1\u05d8</button>';
+  h += '<button class="pw-btn-outline" onclick="downloadDocx()">\u05d4\u05d5\u05e8\u05d3 Word</button>';
+  h += '</div>';
+
+  h += '<div class="pw-preview">';
+  for(var gi=0;gi<selGoals.length;gi++){
+    var g = selGoals[gi];
+    var domLabel = getDomainLabel(g.domain);
+    var domIcon = getDomainIcon(g.domain);
+    h += '<div class="pv-goal">';
+    h += '<h4 class="pv-goal-title">'+domIcon+' \u05de\u05d8\u05e8\u05d4: '+esc(g.goalText)+'</h4>';
+    h += '<p class="pv-goal-domain">\u05ea\u05d7\u05d5\u05dd: '+domLabel+'</p>';
+    h += '<div style="overflow-x:auto"><table class="pv-obj-table"><thead><tr><th>#</th><th>\u05d4\u05d9\u05e2\u05d3</th><th>\u05e4\u05e8\u05e7 \u05d6\u05de\u05df</th><th>\u05d3\u05e8\u05db\u05d9 \u05d4\u05d5\u05e8\u05d0\u05d4</th><th>\u05d0\u05de\u05d5\u05ea \u05de\u05d9\u05d3\u05d4</th><th>\u05d4\u05e2\u05e8\u05db\u05ea \u05d1\u05d9\u05e0\u05d9\u05d9\u05dd</th><th>\u05d4\u05e2\u05e8\u05db\u05d4 \u05de\u05e1\u05db\u05de\u05ea</th></tr></thead><tbody>';
+    for(var oi=0;oi<g.objectives.length;oi++){
+      var o = g.objectives[oi];
+      h += '<tr><td>'+(oi+1)+'</td><td>'+esc(o.text)+'</td><td>'+esc(o.timeline)+'</td><td>'+esc(o.methods)+'</td><td>'+esc(o.criteria)+'</td><td></td><td></td></tr>';
+    }
+    h += '</tbody></table></div></div>';
+  }
+  h += '</div>';
+  h += '<button class="pw-btn-secondary" onclick="step=\'goals\';render()">\u2192 \u05d7\u05d6\u05e8\u05d4 \u05dc\u05e2\u05e8\u05d9\u05db\u05d4</button>';
+  h += '</div>';
+  return h;
+}
+
+function toggleDomain(id) {
+  var i = activeDomainIds.indexOf(id);
+  if(i>=0) activeDomainIds.splice(i,1); else activeDomainIds.push(id);
+  render();
+}
+
+function updateNotes(did, field, val) {
+  if(!domainNotes[did]) domainNotes[did] = {strengths:'', toStrengthen:''};
+  domainNotes[did][field] = val;
+  var btn = document.getElementById('btn-next-step');
+  if(btn) {
+    var ready = hasNotes();
+    btn.disabled = !ready;
+    var hint = btn.nextElementSibling;
+    if(hint && hint.tagName === 'DIV') hint.style.display = ready ? 'none' : 'block';
+  }
+}
+
+function addSuggestion(goalText) {
+  var sg = goalSuggestions.find(function(s){return s.goalText===goalText});
+  if(!sg) return;
+  goals.push({
+    id:'g'+Math.random().toString(36).slice(2,7),
+    goalText:sg.goalText,
+    domain:sg.domain,
+    objectives:sg.objectives.map(function(o){return {text:o.text,methods:o.methods,criteria:o.criteria,timeline:o.timeline,selected:true}}),
+  });
+  render();
+}
+
+function removeGoal(id) { goals = goals.filter(function(g){return g.id!==id}); render(); }
+function updateGoalText(id, val) { var g=goals.find(function(x){return x.id===id}); if(g) g.goalText=val; }
+function updateObj(gid,idx,field,val) { var g=goals.find(function(x){return x.id===gid}); if(g&&g.objectives[idx]) g.objectives[idx][field]=val; }
+function removeObj(gid,idx) { var g=goals.find(function(x){return x.id===gid}); if(g){g.objectives.splice(idx,1);render();} }
+function addObj(gid) { var g=goals.find(function(x){return x.id===gid}); if(g){g.objectives.push({text:'',methods:'',criteria:'',timeline:'',selected:true});render();} }
+function addCustomGoal(did) { goals.push({id:'g'+Math.random().toString(36).slice(2,7),goalText:'',domain:did,objectives:[{text:'',methods:'',criteria:'',timeline:'',selected:true}]}); render(); }
+
+function toggleObj(gid, idx) {
+  var g = goals.find(function(x){return x.id===gid});
+  if(g && g.objectives[idx]) {
+    g.objectives[idx].selected = !g.objectives[idx].selected;
+    render();
+  }
+}
+
+function copyText() {
+  var selGoals = getSelectedGoals();
+  var t='';
+  for(var gi=0;gi<selGoals.length;gi++){
+    var g = selGoals[gi];
+    t+='\u05de\u05d8\u05e8\u05d4: '+g.goalText+'\n\u05ea\u05d7\u05d5\u05dd: '+getDomainLabel(g.domain)+'\n\n';
+    for(var oi=0;oi<g.objectives.length;oi++){
+      var o=g.objectives[oi];
+      t+='  '+(oi+1)+'. \u05d9\u05e2\u05d3: '+o.text+'\n';
+      if(o.timeline) t+='     \u05e4\u05e8\u05e7 \u05d6\u05de\u05df: '+o.timeline+'\n';
+      if(o.methods) t+='     \u05d3\u05e8\u05db\u05d9 \u05d4\u05d5\u05e8\u05d0\u05d4: '+o.methods+'\n';
+      if(o.criteria) t+='     \u05d0\u05de\u05d5\u05ea \u05de\u05d9\u05d3\u05d4: '+o.criteria+'\n';
+      t+='\n';
+    }
+    t+='\u2500'.repeat(30)+'\n\n';
+  }
+  if(navigator.clipboard) {
+    navigator.clipboard.writeText(t).then(function(){showToast('\u05d4\u05d8\u05e7\u05e1\u05d8 \u05d4\u05d5\u05e2\u05ea\u05e7')});
+  } else {
+    var ta = document.createElement('textarea');
+    ta.value = t; document.body.appendChild(ta); ta.select();
+    document.execCommand('copy'); document.body.removeChild(ta);
+    showToast('\u05d4\u05d8\u05e7\u05e1\u05d8 \u05d4\u05d5\u05e2\u05ea\u05e7');
+  }
+}
+
+function downloadDocx() {
+  var selGoals = getSelectedGoals();
+  var tables = '';
+  var grouped = {};
+  for (var gi=0;gi<selGoals.length;gi++) {
+    var g = selGoals[gi];
+    if (!grouped[g.domain]) grouped[g.domain] = [];
+    grouped[g.domain].push(g);
+  }
+
+  var domainKeys = Object.keys(grouped);
+  for (var dk=0;dk<domainKeys.length;dk++) {
+    var did = domainKeys[dk];
+    var label = getDomainLabel(did);
+    tables += '<h2 style="color:#3D9B9B;font-family:David,Arial;border-bottom:2px solid #6DBFBF;padding-bottom:4pt;margin-top:18pt;">\u05ea\u05d7\u05d5\u05dd: '+esc(label)+'</h2>';
+
+    for (var gg=0;gg<grouped[did].length;gg++) {
+      var g = grouped[did][gg];
+      tables += '<p style="font-family:David,Arial;font-size:12pt;font-weight:bold;margin-top:12pt;">\u05de\u05d8\u05e8\u05d4: '+esc(g.goalText)+'</p>';
+      tables += '<table border="1" cellpadding="4" cellspacing="0" style="border-collapse:collapse;width:100%;font-family:David,Arial;font-size:10pt;direction:rtl;">';
+      tables += '<tr style="background-color:#3D9B9B;color:white;font-weight:bold;text-align:center;">';
+      tables += '<td style="width:4%">#</td><td style="width:22%">\u05d4\u05d9\u05e2\u05d3</td><td style="width:8%">\u05e4\u05e8\u05e7 \u05d6\u05de\u05df</td><td style="width:20%">\u05d3\u05e8\u05db\u05d9 \u05d4\u05d5\u05e8\u05d0\u05d4</td><td style="width:16%">\u05d0\u05de\u05d5\u05ea \u05de\u05d9\u05d3\u05d4</td><td style="width:15%">\u05d4\u05e2\u05e8\u05db\u05ea \u05d1\u05d9\u05e0\u05d9\u05d9\u05dd</td><td style="width:15%">\u05d4\u05e2\u05e8\u05db\u05d4 \u05de\u05e1\u05db\u05de\u05ea</td>';
+      tables += '</tr>';
+      for (var oi=0;oi<g.objectives.length;oi++) {
+        var o = g.objectives[oi];
+        tables += '<tr><td style="text-align:center">'+(oi+1)+'</td><td>'+esc(o.text)+'</td><td style="text-align:center">'+esc(o.timeline)+'</td><td>'+esc(o.methods)+'</td><td>'+esc(o.criteria)+'</td><td></td><td></td></tr>';
+      }
+      tables += '</table>';
+    }
+  }
+
+  var html = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">' +
+  '<head><meta charset="utf-8"><style>' +
+  '@page { size: landscape; margin: 1.27cm; }' +
+  'body { direction: rtl; font-family: David, Arial; }' +
+  'table { border-color: #AAAAAA; }' +
+  '</style></head><body>' +
+  '<h1 style="text-align:center;color:#3D9B9B;font-family:David,Arial;">\u05de\u05d8\u05e8\u05d5\u05ea \u05d5\u05d9\u05e2\u05d3\u05d9\u05dd</h1>' +
+  '<p style="text-align:center;color:#888;font-family:David,Arial;">\u05ea\u05db\u05e0\u05d9\u05ea \u05dc\u05d9\u05de\u05d5\u05d3\u05d9\u05dd \u05d0\u05d9\u05e9\u05d9\u05ea \u2014 \u05d8\u05d1\u05dc\u05ea \u05de\u05d8\u05e8\u05d5\u05ea \u05d5\u05d9\u05e2\u05d3\u05d9\u05dd</p>' +
+  tables + '</body></html>';
+
+  var blob = new Blob(['\ufeff' + html], { type: 'application/msword' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = '\u05de\u05d8\u05e8\u05d5\u05ea_\u05d5\u05d9\u05e2\u05d3\u05d9\u05dd.doc';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  showToast('\u05d4\u05e7\u05d5\u05d1\u05e5 \u05d4\u05d5\u05e8\u05d3');
+}
+
+render();
+</script>
+</body>
+</html>
