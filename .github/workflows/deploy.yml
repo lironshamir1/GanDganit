@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: ['claude/create-new-branch-RTYpY', 'main']
+    branches: ['claude/create-new-branch-RTYpY', 'claude/new-project-setup-g4c2y2', 'main']
 
 permissions:
   contents: read
