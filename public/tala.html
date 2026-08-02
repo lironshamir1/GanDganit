@@ -256,6 +256,39 @@ body {
   font-weight: 500; text-align: right;
 }
 .pw-sugg-chip:active { border-style: solid; background: var(--teal); color: white; }
+.pw-sugg-chip.recommended {
+  border-color: var(--sage); border-style: solid;
+  background: var(--sage-wash); color: var(--sage); font-weight: 600;
+}
+.pw-sugg-chip.recommended:active { background: var(--sage); color: white; }
+.pw-sugg-section-label {
+  font-size: 0.78rem; color: var(--sage); font-weight: 700;
+  display: flex; align-items: center; gap: var(--sp-2);
+  width: 100%;
+}
+.pw-sugg-more-label {
+  font-size: 0.75rem; color: var(--mist); font-weight: 600;
+  margin-top: var(--sp-2); width: 100%;
+}
+.pw-refinement {
+  margin-top: var(--sp-3); padding-top: var(--sp-3);
+  border-top: 1px dashed var(--cloud);
+}
+.pw-refinement-label {
+  font-size: 0.78rem; font-weight: 700; color: var(--amber);
+  margin-bottom: var(--sp-2); display: flex; align-items: center; gap: var(--sp-2);
+}
+.pw-refinement-textarea {
+  width: 100%; padding: var(--sp-2) var(--sp-3);
+  border: 1.5px solid var(--cloud); border-radius: var(--r-sm);
+  background: var(--surface); font-size: 0.82rem;
+  line-height: 1.6; min-height: 60px; resize: vertical;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.pw-refinement-textarea:focus {
+  border-color: var(--amber); outline: none;
+  box-shadow: 0 0 0 3px var(--amber-wash);
+}
 
 .pw-goal-card {
   background: var(--base); border-radius: var(--r-sm);
@@ -526,6 +559,41 @@ var goalSuggestions = [
   ]},
 ];
 
+var goalRelevanceKeys = {};
+goalRelevanceKeys['העשרת אוצר מילים והרחבת הבנה של מושגים בסיסיים'] = ['צבע','צור','מושג','ספיר','מיון','גודל','כמות','מספר','זיהוי','הבנ','הורא','קטן','מעל','מתחת','מיקום'];
+goalRelevanceKeys['שיפור קשב וארגון במשימות לימודיות'] = ['קשב','ריכוז','התמד','משימ','ארגון','פאזל','הפרע','הסח','ישיב','מובנ','השלמ','מיקוד'];
+goalRelevanceKeys['פיתוח חשיבה וכישורי פתרון בעיות'] = ['חשיב','פתרון','סדר','דפוס','סימבול','דמיו','רצף','שגר','זיכרון','בעי','תסריט'];
+goalRelevanceKeys['שיפור ויסות רגשי והתמודדות עם תסכול'] = ['ויסות','רגש','תסכול','כעס','בכי','התפרצ','הרגע','רוגע','שינוי','דחיי','סיפוק'];
+goalRelevanceKeys['חיזוק ביטחון עצמי ועצמאות'] = ['ביטחון','פריד','בחיר','סירוב','חדש','עצמאו','גאוו','ניסיון','יוזמ'];
+goalRelevanceKeys['שיפור שיתוף פעולה וקבלת גבולות'] = ['שיתוף','גבול','הנחי','מעבר','ישיב','סירוב','כלל','שגר','התנגד'];
+goalRelevanceKeys['שיפור יכולות המשחק ההדדי עם בני גיל'] = ['משחק','הדדי','חבר','תיווך','חופש','מובנ','שיתוף','תור','נושא'];
+goalRelevanceKeys['פיתוח מיומנויות חברתיות בסיסיות'] = ['שיתוף','תור','אמפת','פניי','נימוס','המתנ','חבר','צעצוע'];
+goalRelevanceKeys['שיפור תקשורת חברתית ויכולת שיחה'] = ['שיח','קשר עין','שאל','סיפור','הדדי','תור','שם','פנייה'];
+goalRelevanceKeys['שיפור תפקודים ידניים — ציור, יצירה ולמידה'] = ['אחיז','עיפרון','ציור','גזיר','מספרי','כתיב','צביע','יצירה','צורו'];
+goalRelevanceKeys['שיפור שיווי משקל, קואורדינציה ותנועתיות'] = ['שיווי','משקל','קפיצ','דילוג','כדור','מדרגו','תנוע','הליכ','ריצ','אופני'];
+goalRelevanceKeys['שיפור עיבוד חושי ויסות תנועתי'] = ['חושי','ויסות','עוררו','יציב','ישיב','תיאום','ידיי','קו אמצע'];
+goalRelevanceKeys['העשרת אוצר מילים, הבנה ומובנות הדיבור'] = ['מיל','אוצר','משפט','דיבור','מובנו','הבנ','הוראו','שאל','תיאור','פעל'];
+goalRelevanceKeys['פיתוח תקשורת פונקציונלית ויוזמת שיח'] = ['בקש','תקשור','יוזמ','פניי','עזר','מחוו','צירוף','רצון','צורך'];
+goalRelevanceKeys['פיתוח שפה נרטיבית ויכולת שיח'] = ['סיפור','תיאור','שיח','קישור','שאל','רצף','מעגל','נרטיב'];
+goalRelevanceKeys['קידום עצמאות בתפקודי אכילה'] = ['אכיל','כף','מזלג','שתיי','כוס','ארוח','מזון','אריז'];
+goalRelevanceKeys['קידום עצמאות בהלבשה ובהיגיינה אישית'] = ['הלבש','נעלי','מכנס','חולצ','ידיי','ניגוב','שטיפ','היגיינ','בגד'];
+goalRelevanceKeys['קידום גמילה ושימוש עצמאי בשירותים'] = ['גמיל','שירות','חיתול','ניגוב','ניקי','רטיב','יבש','צורך'];
+
+function scoreGoalRelevance(goalText, notes) {
+  var keywords = goalRelevanceKeys[goalText];
+  if(!keywords) return 0;
+  var toStr = notes.toStrengthen || '';
+  var strng = notes.strengths || '';
+  if(!toStr.trim() && !strng.trim()) return 0;
+  var score = 0;
+  for(var i=0;i<keywords.length;i++){
+    var kw = keywords[i];
+    if(toStr.indexOf(kw)>=0) score += 3;
+    else if(strng.indexOf(kw)>=0) score += 1;
+  }
+  return score;
+}
+
 var step = 'assessment';
 var childAge = '';
 var activeDomainIds = [];
@@ -689,11 +757,27 @@ function renderGoals() {
       h += '</div>';
     }
 
-    if(suggestions.length>0){
-      h += '<div class="pw-suggestions"><span class="pw-sugg-label">\u05d4\u05d5\u05e1\u05e3 \u05de\u05d8\u05e8\u05d4:</span>';
-      for(var si=0;si<suggestions.length;si++){
-        var sg = suggestions[si];
-        h += '<button class="pw-sugg-chip" onclick="addSuggestion(\''+sg.goalText.replace(/'/g,"\\'")+'\')">+ '+sg.goalText+'</button>';
+    var scored = suggestions.map(function(s){return {s:s, sc:scoreGoalRelevance(s.goalText,notes)};});
+    scored.sort(function(a,b){return b.sc - a.sc;});
+    var recmd = scored.filter(function(x){return x.sc>0;});
+    var other = scored.filter(function(x){return x.sc===0;});
+
+    if(recmd.length>0 || other.length>0){
+      h += '<div class="pw-suggestions">';
+      if(recmd.length>0){
+        h += '<div class="pw-sugg-section-label">\u05de\u05d5\u05de\u05dc\u05e5 \u05e2\u05dc \u05e1\u05de\u05da \u05d4\u05d4\u05e2\u05e8\u05db\u05d4 \u05e9\u05dc\u05db\u05dd</div>';
+        for(var si=0;si<recmd.length;si++){
+          var sg = recmd[si].s;
+          h += '<button class="pw-sugg-chip recommended" onclick="addSuggestion(\''+sg.goalText.replace(/'/g,"\\'")+'\')">+ '+sg.goalText+'</button>';
+        }
+      }
+      if(other.length>0){
+        if(recmd.length>0) h += '<div class="pw-sugg-more-label">\u05d4\u05e6\u05e2\u05d5\u05ea \u05e0\u05d5\u05e1\u05e4\u05d5\u05ea:</div>';
+        else h += '<span class="pw-sugg-label">\u05d4\u05d5\u05e1\u05e3 \u05de\u05d8\u05e8\u05d4:</span>';
+        for(var si=0;si<other.length;si++){
+          var sg = other[si].s;
+          h += '<button class="pw-sugg-chip" onclick="addSuggestion(\''+sg.goalText.replace(/'/g,"\\'")+'\')">+ '+sg.goalText+'</button>';
+        }
       }
       h += '</div>';
     }
@@ -732,6 +816,10 @@ function renderGoals() {
       }
       h += '</div>';
       h += '<button class="pw-add-row" onclick="addObj(\''+g.id+'\')">+ \u05d4\u05d5\u05e1\u05e3 \u05d9\u05e2\u05d3</button>';
+      h += '<div class="pw-refinement">';
+      h += '<div class="pw-refinement-label">\u05d4\u05e2\u05e8\u05d5\u05ea \u05dc\u05d3\u05d9\u05d5\u05e7 \u05d4\u05de\u05d8\u05e8\u05d4</div>';
+      h += '<textarea class="pw-refinement-textarea" oninput="updateRefinement(\''+g.id+'\',this.value)" placeholder="\u05db\u05ea\u05d1\u05d5 \u05d4\u05e2\u05e8\u05d5\u05ea \u05dc\u05d3\u05d9\u05d5\u05e7 \u2014 \u05dc\u05de\u05e9\u05dc: \'\u05d4\u05d9\u05dc\u05d3 \u05db\u05d1\u05e8 \u05de\u05d6\u05d4\u05d4 3 \u05e6\u05d1\u05e2\u05d9\u05dd, \u05e6\u05e8\u05d9\u05da \u05dc\u05d4\u05d2\u05d9\u05e2 \u05dc-6\' \u05d0\u05d5 \'\u05dc\u05d4\u05ea\u05de\u05e7\u05d3 \u05d1\u05e6\u05d1\u05e2\u05d9\u05dd \u05d7\u05de\u05d9\u05dd\'">'+esc(g.refinementNotes||'')+'</textarea>';
+      h += '</div>';
       h += '</div>';
     }
     h += '<button class="pw-add-goal" onclick="addCustomGoal(\''+did+'\')">+ \u05de\u05d8\u05e8\u05d4 \u05d7\u05d3\u05e9\u05d4 \u05d1\u05ea\u05d7\u05d5\u05dd '+d.label+'</button>';
@@ -799,6 +887,7 @@ function addSuggestion(goalText) {
     goalText:sg.goalText,
     domain:sg.domain,
     objectives:sg.objectives.map(function(o){return {text:o.text,methods:o.methods,criteria:o.criteria,timeline:o.timeline,selected:true}}),
+    refinementNotes:'',
   });
   render();
 }
@@ -808,7 +897,8 @@ function updateGoalText(id, val) { var g=goals.find(function(x){return x.id===id
 function updateObj(gid,idx,field,val) { var g=goals.find(function(x){return x.id===gid}); if(g&&g.objectives[idx]) g.objectives[idx][field]=val; }
 function removeObj(gid,idx) { var g=goals.find(function(x){return x.id===gid}); if(g){g.objectives.splice(idx,1);render();} }
 function addObj(gid) { var g=goals.find(function(x){return x.id===gid}); if(g){g.objectives.push({text:'',methods:'',criteria:'',timeline:'',selected:true});render();} }
-function addCustomGoal(did) { goals.push({id:'g'+Math.random().toString(36).slice(2,7),goalText:'',domain:did,objectives:[{text:'',methods:'',criteria:'',timeline:'',selected:true}]}); render(); }
+function addCustomGoal(did) { goals.push({id:'g'+Math.random().toString(36).slice(2,7),goalText:'',domain:did,objectives:[{text:'',methods:'',criteria:'',timeline:'',selected:true}],refinementNotes:''}); render(); }
+function updateRefinement(gid,val) { var g=goals.find(function(x){return x.id===gid}); if(g) g.refinementNotes=val; }
 
 function toggleObj(gid, idx) {
   var g = goals.find(function(x){return x.id===gid});
