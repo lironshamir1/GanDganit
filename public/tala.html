@@ -289,6 +289,19 @@ body {
   border-color: var(--amber); outline: none;
   box-shadow: 0 0 0 3px var(--amber-wash);
 }
+.pw-btn-confirm {
+  padding: var(--sp-2) var(--sp-4); background: var(--sage);
+  color: white; border-radius: var(--r-sm);
+  font-size: 0.85rem; font-weight: 700;
+  margin-top: var(--sp-3); width: 100%;
+  transition: background 0.2s;
+  box-shadow: 0 2px 6px rgba(94,158,101,0.25);
+}
+.pw-btn-confirm:active { background: var(--teal); }
+.pw-edit-goal-link {
+  font-size: 0.75rem; color: var(--amber); font-weight: 600;
+  margin-right: auto; padding: var(--sp-1) var(--sp-2);
+}
 
 .pw-goal-card {
   background: var(--base); border-radius: var(--r-sm);
@@ -784,42 +797,47 @@ function renderGoals() {
 
     for(var gi=0;gi<dGoals.length;gi++){
       var g = dGoals[gi];
-      var selCount = g.objectives.filter(function(o){return o.selected}).length;
       h += '<div class="pw-goal-card">';
       h += '<div class="pw-goal-header"><label class="pw-goal-label">\u05de\u05d8\u05e8\u05d4</label>';
       h += '<button class="pw-remove-link" onclick="removeGoal(\''+g.id+'\')">\u05d4\u05e1\u05e8 \u05de\u05d8\u05e8\u05d4</button></div>';
       h += '<input class="pw-input" value="'+esc(g.goalText)+'" oninput="updateGoalText(\''+g.id+'\',this.value)" placeholder="\u05de\u05d8\u05e8\u05d4...">';
 
-      h += '<div class="pw-obj-select-info"><span class="pw-obj-select-badge">\u05e0\u05d1\u05d7\u05e8\u05d5 '+selCount+' \u05de\u05ea\u05d5\u05da '+g.objectives.length+'</span></div>';
-
-      h += '<div class="pw-obj-list">';
-      for(var oi=0;oi<g.objectives.length;oi++){
-        var o = g.objectives[oi];
-        h += '<div class="pw-obj-item '+(o.selected?'':'unselected')+'">';
-        h += '<div class="pw-obj-item-header">';
-        h += '<input type="checkbox" class="pw-obj-checkbox" '+(o.selected?'checked':'')+' onchange="toggleObj(\''+g.id+'\','+oi+')">';
-        h += '<span class="pw-obj-num">'+(oi+1)+'</span>';
-        h += '<button class="pw-obj-remove" onclick="removeObj(\''+g.id+'\','+oi+')">\u2715</button>';
-        h += '</div>';
-        h += '<div class="pw-obj-fields">';
-        h += '<div><div class="pw-obj-field-label">\u05d4\u05d9\u05e2\u05d3</div>';
-        h += '<textarea class="pw-cell-input" oninput="updateObj(\''+g.id+'\','+oi+',\'text\',this.value)">'+esc(o.text)+'</textarea></div>';
-        h += '<div class="pw-obj-row-2">';
-        h += '<div><div class="pw-obj-field-label">\u05e4\u05e8\u05e7 \u05d6\u05de\u05df</div>';
-        h += '<input class="pw-cell-input" value="'+esc(o.timeline)+'" oninput="updateObj(\''+g.id+'\','+oi+',\'timeline\',this.value)"></div>';
-        h += '<div><div class="pw-obj-field-label">\u05d0\u05de\u05d5\u05ea \u05de\u05d9\u05d3\u05d4</div>';
-        h += '<textarea class="pw-cell-input" oninput="updateObj(\''+g.id+'\','+oi+',\'criteria\',this.value)">'+esc(o.criteria)+'</textarea></div>';
-        h += '</div>';
-        h += '<div><div class="pw-obj-field-label">\u05d3\u05e8\u05db\u05d9 \u05d4\u05d5\u05e8\u05d0\u05d4</div>';
-        h += '<textarea class="pw-cell-input" oninput="updateObj(\''+g.id+'\','+oi+',\'methods\',this.value)">'+esc(o.methods)+'</textarea></div>';
-        h += '</div></div>';
-      }
-      h += '</div>';
-      h += '<button class="pw-add-row" onclick="addObj(\''+g.id+'\')">+ \u05d4\u05d5\u05e1\u05e3 \u05d9\u05e2\u05d3</button>';
       h += '<div class="pw-refinement">';
       h += '<div class="pw-refinement-label">\u05d4\u05e2\u05e8\u05d5\u05ea \u05dc\u05d3\u05d9\u05d5\u05e7 \u05d4\u05de\u05d8\u05e8\u05d4</div>';
-      h += '<textarea class="pw-refinement-textarea" oninput="updateRefinement(\''+g.id+'\',this.value)" placeholder="\u05db\u05ea\u05d1\u05d5 \u05d4\u05e2\u05e8\u05d5\u05ea \u05dc\u05d3\u05d9\u05d5\u05e7 \u2014 \u05dc\u05de\u05e9\u05dc: \'\u05d4\u05d9\u05dc\u05d3 \u05db\u05d1\u05e8 \u05de\u05d6\u05d4\u05d4 3 \u05e6\u05d1\u05e2\u05d9\u05dd, \u05e6\u05e8\u05d9\u05da \u05dc\u05d4\u05d2\u05d9\u05e2 \u05dc-6\' \u05d0\u05d5 \'\u05dc\u05d4\u05ea\u05de\u05e7\u05d3 \u05d1\u05e6\u05d1\u05e2\u05d9\u05dd \u05d7\u05de\u05d9\u05dd\'">'+esc(g.refinementNotes||'')+'</textarea>';
+      h += '<textarea class="pw-refinement-textarea" oninput="updateRefinement(\''+g.id+'\',this.value)" placeholder="\u05db\u05ea\u05d1\u05d5 \u05d4\u05e2\u05e8\u05d5\u05ea \u05dc\u05d3\u05d9\u05d5\u05e7 \u2014 \u05dc\u05de\u05e9\u05dc: \'\u05d4\u05d9\u05dc\u05d3 \u05db\u05d1\u05e8 \u05de\u05d6\u05d4\u05d4 3 \u05e6\u05d1\u05e2\u05d9\u05dd, \u05e6\u05e8\u05d9\u05da \u05dc\u05d4\u05d2\u05d9\u05e2 \u05dc-6\'">'+esc(g.refinementNotes||'')+'</textarea>';
       h += '</div>';
+
+      if(!g.confirmed){
+        h += '<button class="pw-btn-confirm" onclick="confirmGoal(\''+g.id+'\')">\u05d0\u05d9\u05e9\u05d5\u05e8 \u05de\u05d8\u05e8\u05d4 \u2014 \u05d4\u05e6\u05d2 \u05d9\u05e2\u05d3\u05d9\u05dd</button>';
+      } else {
+        var selCount = g.objectives.filter(function(o){return o.selected}).length;
+        h += '<div class="pw-obj-select-info"><span class="pw-obj-select-badge">\u05e0\u05d1\u05d7\u05e8\u05d5 '+selCount+' \u05de\u05ea\u05d5\u05da '+g.objectives.length+'</span>';
+        h += '<button class="pw-edit-goal-link" onclick="reopenGoal(\''+g.id+'\')">\u05e2\u05e8\u05d5\u05da \u05de\u05d8\u05e8\u05d4</button></div>';
+        h += '<div class="pw-obj-list">';
+        for(var oi=0;oi<g.objectives.length;oi++){
+          var o = g.objectives[oi];
+          h += '<div class="pw-obj-item '+(o.selected?'':'unselected')+'">';
+          h += '<div class="pw-obj-item-header">';
+          h += '<input type="checkbox" class="pw-obj-checkbox" '+(o.selected?'checked':'')+' onchange="toggleObj(\''+g.id+'\','+oi+')">';
+          h += '<span class="pw-obj-num">'+(oi+1)+'</span>';
+          h += '<button class="pw-obj-remove" onclick="removeObj(\''+g.id+'\','+oi+')">\u2715</button>';
+          h += '</div>';
+          h += '<div class="pw-obj-fields">';
+          h += '<div><div class="pw-obj-field-label">\u05d4\u05d9\u05e2\u05d3</div>';
+          h += '<textarea class="pw-cell-input" oninput="updateObj(\''+g.id+'\','+oi+',\'text\',this.value)">'+esc(o.text)+'</textarea></div>';
+          h += '<div class="pw-obj-row-2">';
+          h += '<div><div class="pw-obj-field-label">\u05e4\u05e8\u05e7 \u05d6\u05de\u05df</div>';
+          h += '<input class="pw-cell-input" value="'+esc(o.timeline)+'" oninput="updateObj(\''+g.id+'\','+oi+',\'timeline\',this.value)"></div>';
+          h += '<div><div class="pw-obj-field-label">\u05d0\u05de\u05d5\u05ea \u05de\u05d9\u05d3\u05d4</div>';
+          h += '<textarea class="pw-cell-input" oninput="updateObj(\''+g.id+'\','+oi+',\'criteria\',this.value)">'+esc(o.criteria)+'</textarea></div>';
+          h += '</div>';
+          h += '<div><div class="pw-obj-field-label">\u05d3\u05e8\u05db\u05d9 \u05d4\u05d5\u05e8\u05d0\u05d4</div>';
+          h += '<textarea class="pw-cell-input" oninput="updateObj(\''+g.id+'\','+oi+',\'methods\',this.value)">'+esc(o.methods)+'</textarea></div>';
+          h += '</div></div>';
+        }
+        h += '</div>';
+        h += '<button class="pw-add-row" onclick="addObj(\''+g.id+'\')">+ \u05d4\u05d5\u05e1\u05e3 \u05d9\u05e2\u05d3</button>';
+      }
       h += '</div>';
     }
     h += '<button class="pw-add-goal" onclick="addCustomGoal(\''+did+'\')">+ \u05de\u05d8\u05e8\u05d4 \u05d7\u05d3\u05e9\u05d4 \u05d1\u05ea\u05d7\u05d5\u05dd '+d.label+'</button>';
@@ -887,7 +905,7 @@ function addSuggestion(goalText) {
     goalText:sg.goalText,
     domain:sg.domain,
     objectives:sg.objectives.map(function(o){return {text:o.text,methods:o.methods,criteria:o.criteria,timeline:o.timeline,selected:true}}),
-    refinementNotes:'',
+    refinementNotes:'', confirmed:false,
   });
   render();
 }
@@ -897,8 +915,10 @@ function updateGoalText(id, val) { var g=goals.find(function(x){return x.id===id
 function updateObj(gid,idx,field,val) { var g=goals.find(function(x){return x.id===gid}); if(g&&g.objectives[idx]) g.objectives[idx][field]=val; }
 function removeObj(gid,idx) { var g=goals.find(function(x){return x.id===gid}); if(g){g.objectives.splice(idx,1);render();} }
 function addObj(gid) { var g=goals.find(function(x){return x.id===gid}); if(g){g.objectives.push({text:'',methods:'',criteria:'',timeline:'',selected:true});render();} }
-function addCustomGoal(did) { goals.push({id:'g'+Math.random().toString(36).slice(2,7),goalText:'',domain:did,objectives:[{text:'',methods:'',criteria:'',timeline:'',selected:true}],refinementNotes:''}); render(); }
+function addCustomGoal(did) { goals.push({id:'g'+Math.random().toString(36).slice(2,7),goalText:'',domain:did,objectives:[{text:'',methods:'',criteria:'',timeline:'',selected:true}],refinementNotes:'',confirmed:false}); render(); }
 function updateRefinement(gid,val) { var g=goals.find(function(x){return x.id===gid}); if(g) g.refinementNotes=val; }
+function confirmGoal(gid) { var g=goals.find(function(x){return x.id===gid}); if(g){g.confirmed=true;render();} }
+function reopenGoal(gid) { var g=goals.find(function(x){return x.id===gid}); if(g){g.confirmed=false;render();} }
 
 function toggleObj(gid, idx) {
   var g = goals.find(function(x){return x.id===gid});
