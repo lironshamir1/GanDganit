@@ -886,10 +886,6 @@ function renderGoals() {
       var cms = g.chatMessages||[];
       for(var ci=0;ci<cms.length;ci++){
         h += '<div class="pw-chat-msg '+cms[ci].role+'">'+esc(cms[ci].content)+'</div>';
-        if(cms[ci].role==='assistant' && !g.confirmed) {
-          var sug = extractSuggestedGoal(cms[ci].content);
-          if(sug) h += '<button class="pw-chat-apply-btn" onclick="applySuggestedGoal(\''+g.id+'\',\''+sug.replace(/\\/g,'\\\\').replace(/'/g,"\\'")+'\')">✏️ החל ניסוח זה על המטרה</button>';
-        }
       }
       h += '</div>';
       h += '<div class="pw-chat-input-row">';
@@ -1106,14 +1102,12 @@ async function sendChat(gid) {
     aDiv.textContent = data.content;
     msgsEl.appendChild(aDiv);
 
+    // Update the apply-input placeholder with latest suggestion if AI used quotes
     if(!g.confirmed) {
       var liveSug = extractSuggestedGoal(data.content);
       if(liveSug) {
-        var applyBtn = document.createElement('button');
-        applyBtn.className = 'pw-chat-apply-btn';
-        applyBtn.textContent = '✏️ החל ניסוח זה על המטרה';
-        applyBtn.onclick = (function(id, s){ return function(){ applySuggestedGoal(id, s); }; })(gid, liveSug);
-        msgsEl.appendChild(applyBtn);
+        var applyInp = document.getElementById('apply-input-'+gid);
+        if(applyInp) applyInp.value = liveSug;
       }
     }
   } catch(err) {
