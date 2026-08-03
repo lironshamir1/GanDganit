@@ -42,15 +42,17 @@ app.post('/api/chat', async (req, res) => {
     ...messages.map(m => ({ role: m.role, content: m.content })),
   ];
 
+  const model = process.env.GSK_MODEL || 'claude-haiku-4-5';
+
   try {
-    const response = await fetch('https://www.genspark.ai/v1/chat/completions', {
+    const response = await fetch('https://www.genspark.ai/api/llm_proxy/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
-        model: 'gemini-2.0-flash',
+        model,
         messages: chatMessages,
       }),
     });
