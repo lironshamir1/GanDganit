@@ -11,7 +11,7 @@
     "start": "node server.js"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.115.0",
+    "@google/generative-ai": "^0.24.1",
     "@twemoji/api": "^17.0.3",
     "express": "^5.2.1",
     "react": "^19.2.0",
