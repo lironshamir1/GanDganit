@@ -1,5 +1,4 @@
 import express from 'express';
-import { GoogleGenerativeAI } from '@google/generative-ai';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 
@@ -24,9 +23,9 @@ const SYSTEM_PROMPT = `אתה יועץ מומחה בחינוך מיוחד לגי
 - כשאת/ה מציע/ה ניסוח מדויק למטרה, הדגש אותו בין גרשיים כך: "הניסוח המוצע"`;
 
 app.post('/api/chat', async (req, res) => {
-  const apiKey = process.env.GEMINI_API_KEY;
+  const apiKey = process.env.GSK_API_KEY;
   if (!apiKey) {
-    return res.status(500).json({ error: 'מפתח API לא הוגדר. יש להגדיר GEMINI_API_KEY בהגדרות Render.' });
+    return res.status(500).json({ error: 'מפתח API לא הוגדר. יש להגדיר GSK_API_KEY בהגדרות Render.' });
   }
 
   const { messages, domain, goalText, childAge, notes } = req.body;
@@ -38,31 +37,36 @@ app.post('/api/chat', async (req, res) => {
 - נקודות חוזק שצוינו: ${notes?.strengths || 'לא צוינו'}
 - נקודות לחיזוק שצוינו: ${notes?.toStrengthen || 'לא צוינו'}`;
 
+  const chatMessages = [
+    { role: 'system', content: SYSTEM_PROMPT + contextBlock },
+    ...messages.map(m => ({ role: m.role, content: m.content })),
+  ];
+
   try {
-    const genAI = new GoogleGenerativeAI(apiKey);
-    const model = genAI.getGenerativeModel({
-      model: 'gemini-2.0-flash',
-      systemInstruction: SYSTEM_PROMPT + contextBlock,
+    const response = await fetch('https://www.genspark.ai/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${apiKey}`,
+      },
+      body: JSON.stringify({
+        model: 'gemini-2.0-flash',
+        messages: chatMessages,
+      }),
     });
 
-    const historyMsgs = messages.slice(0, -1)
-      .map(m => ({
-        role: m.role === 'assistant' ? 'model' : 'user',
-        parts: [{ text: m.content }],
-      }));
-    while (historyMsgs.length > 0 && historyMsgs[0].role === 'model') {
-      historyMsgs.shift();
+    if (!response.ok) {
+      const errBody = await response.text();
+      console.error('Genspark API error:', response.status, errBody);
+      return res.status(500).json({ error: 'שגיאה בתקשורת. נסו שוב.' });
     }
 
-    const chat = model.startChat({ history: historyMsgs });
-
-    const lastMsg = messages[messages.length - 1];
-    const result = await chat.sendMessage(lastMsg.content);
-    const text = result.response.text();
+    const data = await response.json();
+    const text = data.choices?.[0]?.message?.content || '';
 
     res.json({ content: text });
   } catch (err) {
-    console.error('Gemini API error:', err.message);
+    console.error('Genspark API error:', err.message);
     res.status(500).json({ error: 'שגיאה בתקשורת. נסו שוב.' });
   }
 });
