@@ -1021,6 +1021,23 @@ function removeObj(gid,idx) { var g=goals.find(function(x){return x.id===gid}); 
 function addObj(gid) { var g=goals.find(function(x){return x.id===gid}); if(g){g.objectives.push({text:'',methods:'',criteria:'',timeline:'',selected:true});render();} }
 function addCustomGoal(did) { var notes=getNotes(did); var initMsg=getInitialChat(did,'',notes); goals.push({id:'g'+Math.random().toString(36).slice(2,7),goalText:'',domain:did,objectives:[{text:'',methods:'',criteria:'',timeline:'',selected:true}],refinementNotes:'',confirmed:false,chatMessages:[{role:'assistant',content:initMsg}]}); render(); }
 function updateRefinement(gid,val) { var g=goals.find(function(x){return x.id===gid}); if(g) g.refinementNotes=val; }
+function extractObjectives(text) {
+  var match = text.match(/\[יעדים:([\s\S]*?)\]/);
+  if(!match) return null;
+  var block = match[1];
+  var parts = block.split('---');
+  var objs = parts.map(function(part) {
+    var obj = {text:'', methods:'', criteria:'', timeline:'', selected:true};
+    var m;
+    m = part.match(/יעד\s*\d+[:.]\s*([^\n]+)/);  if(m) obj.text = m[1].trim();
+    m = part.match(/מדד[:.]\s*([^\n]+)/);          if(m) obj.criteria = m[1].trim();
+    m = part.match(/שיטות[:.]\s*([^\n]+)/);        if(m) obj.methods = m[1].trim();
+    m = part.match(/זמן[:.]\s*([^\n]+)/);           if(m) obj.timeline = m[1].trim();
+    return obj;
+  }).filter(function(o){ return o.text.length > 3; });
+  return objs.length > 0 ? objs : null;
+}
+
 function extractSuggestedGoal(text) {
   // Primary: [מטרה: ...] marker set by the system prompt
   var m = text.match(/\[מטרה:\s*([^\]]{8,200})\]/);
@@ -1126,19 +1143,25 @@ async function sendChat(gid) {
     msgsEl.appendChild(aDiv);
 
     // Auto-apply suggested goal wording when AI provides a [מטרה: ...] marker
-    if(!g.confirmed) {
-      var liveSug = extractSuggestedGoal(data.content);
-      if(liveSug) {
-        g.goalText = liveSug;
-        var goalInp = document.getElementById('goal-input-'+gid);
-        if(goalInp) {
-          goalInp.value = liveSug;
-          goalInp.classList.add('pw-input-updated');
-          setTimeout(function(){ goalInp.classList.remove('pw-input-updated'); }, 2500);
-        }
-        var applyInp = document.getElementById('apply-input-'+gid);
-        if(applyInp) applyInp.value = liveSug;
+    var liveSug = extractSuggestedGoal(data.content);
+    if(liveSug) {
+      g.goalText = liveSug;
+      var goalInp = document.getElementById('goal-input-'+gid);
+      if(goalInp) {
+        goalInp.value = liveSug;
+        goalInp.classList.add('pw-input-updated');
+        setTimeout(function(){ goalInp.classList.remove('pw-input-updated'); }, 2500);
       }
+      var applyInp = document.getElementById('apply-input-'+gid);
+      if(applyInp) applyInp.value = liveSug;
+    }
+
+    // Auto-populate objectives when AI provides a [יעדים: ...] block
+    var parsedObjs = extractObjectives(data.content);
+    if(parsedObjs) {
+      g.objectives = parsedObjs;
+      // If goal is already confirmed, re-render to show updated objectives
+      if(g.confirmed) render();
     }
   } catch(err) {
     typingDiv.className = 'pw-chat-msg error';
