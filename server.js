@@ -45,12 +45,16 @@ app.post('/api/chat', async (req, res) => {
       systemInstruction: SYSTEM_PROMPT + contextBlock,
     });
 
-    const chat = model.startChat({
-      history: messages.slice(0, -1).map(m => ({
+    const historyMsgs = messages.slice(0, -1)
+      .map(m => ({
         role: m.role === 'assistant' ? 'model' : 'user',
         parts: [{ text: m.content }],
-      })),
-    });
+      }));
+    while (historyMsgs.length > 0 && historyMsgs[0].role === 'model') {
+      historyMsgs.shift();
+    }
+
+    const chat = model.startChat({ history: historyMsgs });
 
     const lastMsg = messages[messages.length - 1];
     const result = await chat.sendMessage(lastMsg.content);
