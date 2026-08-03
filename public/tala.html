@@ -344,6 +344,13 @@ body {
 }
 .pw-chat-send:disabled { opacity: 0.4; }
 .pw-chat-typing { font-size: 0.75rem; color: var(--mist); padding: var(--sp-1) var(--sp-3); }
+.pw-chat-apply-btn {
+  font-size: 0.78rem; color: var(--teal); background: #e8f5f3;
+  border: 1px solid var(--teal); border-radius: var(--r-sm);
+  padding: var(--sp-1) var(--sp-3); cursor: pointer; margin: var(--sp-1) var(--sp-3);
+  width: calc(100% - 2 * var(--sp-3)); text-align: right; display: block;
+}
+.pw-chat-apply-btn:hover { background: var(--teal); color: #fff; }
 
 .pw-goal-card {
   background: var(--base); border-radius: var(--r-sm);
@@ -859,6 +866,10 @@ function renderGoals() {
       var cms = g.chatMessages||[];
       for(var ci=0;ci<cms.length;ci++){
         h += '<div class="pw-chat-msg '+cms[ci].role+'">'+esc(cms[ci].content)+'</div>';
+        if(cms[ci].role==='assistant' && !g.confirmed) {
+          var sug = extractSuggestedGoal(cms[ci].content);
+          if(sug) h += '<button class="pw-chat-apply-btn" onclick="applySuggestedGoal(\''+g.id+'\',\''+sug.replace(/\\/g,'\\\\').replace(/'/g,"\\'")+'\')">✏️ החל ניסוח זה על המטרה</button>';
+        }
       }
       h += '</div>';
       h += '<div class="pw-chat-input-row">';
@@ -978,6 +989,20 @@ function removeObj(gid,idx) { var g=goals.find(function(x){return x.id===gid}); 
 function addObj(gid) { var g=goals.find(function(x){return x.id===gid}); if(g){g.objectives.push({text:'',methods:'',criteria:'',timeline:'',selected:true});render();} }
 function addCustomGoal(did) { var initMsg=getInitialChat(did,''); goals.push({id:'g'+Math.random().toString(36).slice(2,7),goalText:'',domain:did,objectives:[{text:'',methods:'',criteria:'',timeline:'',selected:true}],refinementNotes:'',confirmed:false,chatMessages:[{role:'assistant',content:initMsg}]}); render(); }
 function updateRefinement(gid,val) { var g=goals.find(function(x){return x.id===gid}); if(g) g.refinementNotes=val; }
+function extractSuggestedGoal(text) {
+  // Detect text in double quotes that looks like a goal formulation (8–150 chars)
+  var m = text.match(/"([^"]{8,150})"/);
+  return m ? m[1] : null;
+}
+function applySuggestedGoal(gid, text) {
+  var g = goals.find(function(x){return x.id===gid});
+  if(!g) return;
+  g.goalText = text;
+  render();
+  // Scroll to the goal input so the user sees the update
+  var inp = document.querySelector('.pw-input');
+  if(inp) inp.scrollIntoView({behavior:'smooth', block:'center'});
+}
 function confirmGoal(gid) { var g=goals.find(function(x){return x.id===gid}); if(g){g.confirmed=true;render();} }
 function reopenGoal(gid) { var g=goals.find(function(x){return x.id===gid}); if(g){g.confirmed=false;render();} }
 
@@ -1042,6 +1067,17 @@ async function sendChat(gid) {
     aDiv.className = 'pw-chat-msg assistant';
     aDiv.textContent = data.content;
     msgsEl.appendChild(aDiv);
+
+    if(!g.confirmed) {
+      var liveSug = extractSuggestedGoal(data.content);
+      if(liveSug) {
+        var applyBtn = document.createElement('button');
+        applyBtn.className = 'pw-chat-apply-btn';
+        applyBtn.textContent = '✏️ החל ניסוח זה על המטרה';
+        applyBtn.onclick = (function(id, s){ return function(){ applySuggestedGoal(id, s); }; })(gid, liveSug);
+        msgsEl.appendChild(applyBtn);
+      }
+    }
   } catch(err) {
     typingDiv.className = 'pw-chat-msg error';
     typingDiv.textContent = err.message;
