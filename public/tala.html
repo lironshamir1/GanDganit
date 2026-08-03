@@ -853,7 +853,7 @@ function renderGoals() {
       h += '<div class="pw-goal-card">';
       h += '<div class="pw-goal-header"><label class="pw-goal-label">\u05de\u05d8\u05e8\u05d4</label>';
       h += '<button class="pw-remove-link" onclick="removeGoal(\''+g.id+'\')">\u05d4\u05e1\u05e8 \u05de\u05d8\u05e8\u05d4</button></div>';
-      h += '<input class="pw-input" value="'+esc(g.goalText)+'" oninput="updateGoalText(\''+g.id+'\',this.value)" placeholder="\u05de\u05d8\u05e8\u05d4...">';
+      h += '<input id="goal-input-'+g.id+'" class="pw-input" value="'+esc(g.goalText)+'" oninput="updateGoalText(\''+g.id+'\',this.value)" placeholder="\u05de\u05d8\u05e8\u05d4...">';
 
       h += '<div class="pw-refinement">';
       h += '<div class="pw-refinement-label">\u05d4\u05e2\u05e8\u05d5\u05ea \u05dc\u05d3\u05d9\u05d5\u05e7 \u05d4\u05de\u05d8\u05e8\u05d4</div>';
@@ -999,8 +999,7 @@ function applySuggestedGoal(gid, text) {
   if(!g) return;
   g.goalText = text;
   render();
-  // Scroll to the goal input so the user sees the update
-  var inp = document.querySelector('.pw-input');
+  var inp = document.getElementById('goal-input-'+gid);
   if(inp) inp.scrollIntoView({behavior:'smooth', block:'center'});
 }
 function confirmGoal(gid) { var g=goals.find(function(x){return x.id===gid}); if(g){g.confirmed=true;render();} }
