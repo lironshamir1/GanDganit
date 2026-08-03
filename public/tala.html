@@ -371,6 +371,12 @@ body {
   border-radius: var(--r-sm); font-size: 0.82rem; font-weight: 700; white-space: nowrap;
 }
 .pw-chat-apply-do:hover { background: var(--teal-dark, #3d8a6e); }
+@keyframes goalUpdated {
+  0%   { border-color: var(--teal); background: #d0efe8; }
+  70%  { border-color: var(--teal); background: #d0efe8; }
+  100% { border-color: var(--cloud); background: var(--base); }
+}
+.pw-input-updated { animation: goalUpdated 2.5s ease forwards; }
 
 .pw-goal-card {
   background: var(--base); border-radius: var(--r-sm);
@@ -1015,9 +1021,12 @@ function addObj(gid) { var g=goals.find(function(x){return x.id===gid}); if(g){g
 function addCustomGoal(did) { var initMsg=getInitialChat(did,''); goals.push({id:'g'+Math.random().toString(36).slice(2,7),goalText:'',domain:did,objectives:[{text:'',methods:'',criteria:'',timeline:'',selected:true}],refinementNotes:'',confirmed:false,chatMessages:[{role:'assistant',content:initMsg}]}); render(); }
 function updateRefinement(gid,val) { var g=goals.find(function(x){return x.id===gid}); if(g) g.refinementNotes=val; }
 function extractSuggestedGoal(text) {
-  // Detect text in double quotes that looks like a goal formulation (8–150 chars)
-  var m = text.match(/"([^"]{8,150})"/);
-  return m ? m[1] : null;
+  // Primary: [מטרה: ...] marker set by the system prompt
+  var m = text.match(/\[מטרה:\s*([^\]]{8,200})\]/);
+  if(m) return m[1].trim();
+  // Fallback: quoted text (straight or curly quotes)
+  m = text.match(/[“"]([^“”"]{8,150})[”"]/);
+  return m ? m[1].trim() : null;
 }
 function applySuggestedGoal(gid, text) {
   var g = goals.find(function(x){return x.id===gid});
@@ -1102,10 +1111,17 @@ async function sendChat(gid) {
     aDiv.textContent = data.content;
     msgsEl.appendChild(aDiv);
 
-    // Update the apply-input placeholder with latest suggestion if AI used quotes
+    // Auto-apply suggested goal wording when AI provides a [מטרה: ...] marker
     if(!g.confirmed) {
       var liveSug = extractSuggestedGoal(data.content);
       if(liveSug) {
+        g.goalText = liveSug;
+        var goalInp = document.getElementById('goal-input-'+gid);
+        if(goalInp) {
+          goalInp.value = liveSug;
+          goalInp.classList.add('pw-input-updated');
+          setTimeout(function(){ goalInp.classList.remove('pw-input-updated'); }, 2500);
+        }
         var applyInp = document.getElementById('apply-input-'+gid);
         if(applyInp) applyInp.value = liveSug;
       }
