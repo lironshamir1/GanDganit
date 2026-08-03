@@ -1001,7 +1001,8 @@ function updateNotes(did, field, val) {
 function addSuggestion(goalText) {
   var sg = goalSuggestions.find(function(s){return s.goalText===goalText});
   if(!sg) return;
-  var initMsg = getInitialChat(sg.domain, sg.goalText);
+  var notes = getNotes(sg.domain);
+  var initMsg = getInitialChat(sg.domain, sg.goalText, notes);
   goals.push({
     id:'g'+Math.random().toString(36).slice(2,7),
     goalText:sg.goalText,
@@ -1018,7 +1019,7 @@ function updateGoalText(id, val) { var g=goals.find(function(x){return x.id===id
 function updateObj(gid,idx,field,val) { var g=goals.find(function(x){return x.id===gid}); if(g&&g.objectives[idx]) g.objectives[idx][field]=val; }
 function removeObj(gid,idx) { var g=goals.find(function(x){return x.id===gid}); if(g){g.objectives.splice(idx,1);render();} }
 function addObj(gid) { var g=goals.find(function(x){return x.id===gid}); if(g){g.objectives.push({text:'',methods:'',criteria:'',timeline:'',selected:true});render();} }
-function addCustomGoal(did) { var initMsg=getInitialChat(did,''); goals.push({id:'g'+Math.random().toString(36).slice(2,7),goalText:'',domain:did,objectives:[{text:'',methods:'',criteria:'',timeline:'',selected:true}],refinementNotes:'',confirmed:false,chatMessages:[{role:'assistant',content:initMsg}]}); render(); }
+function addCustomGoal(did) { var notes=getNotes(did); var initMsg=getInitialChat(did,'',notes); goals.push({id:'g'+Math.random().toString(36).slice(2,7),goalText:'',domain:did,objectives:[{text:'',methods:'',criteria:'',timeline:'',selected:true}],refinementNotes:'',confirmed:false,chatMessages:[{role:'assistant',content:initMsg}]}); render(); }
 function updateRefinement(gid,val) { var g=goals.find(function(x){return x.id===gid}); if(g) g.refinementNotes=val; }
 function extractSuggestedGoal(text) {
   // Primary: [מטרה: ...] marker set by the system prompt
@@ -1049,17 +1050,30 @@ function applyInputGoal(gid) {
 function confirmGoal(gid) { var g=goals.find(function(x){return x.id===gid}); if(g){g.confirmed=true;render();} }
 function reopenGoal(gid) { var g=goals.find(function(x){return x.id===gid}); if(g){g.confirmed=false;render();} }
 
-function getInitialChat(domain, goalText) {
+function getInitialChat(domain, goalText, notes) {
+  var strengths = (notes && notes.strengths && notes.strengths.trim()) ? notes.strengths.trim() : null;
+  var toStrengthen = (notes && notes.toStrengthen && notes.toStrengthen.trim()) ? notes.toStrengthen.trim() : null;
+
+  var intro = goalText
+    ? 'בחרתם את המטרה: "' + goalText + '".\n\n'
+    : 'כתבו את המטרה למעלה ונדייק אותה יחד.\n\n';
+
+  var notesBlock = '';
+  if(strengths) notesBlock += 'מה שהילד כבר עושה טוב: ' + strengths + '\n';
+  if(toStrengthen) notesBlock += 'מה לחיזוק: ' + toStrengthen + '\n';
+  if(notesBlock) notesBlock = notesBlock + '\n';
+
   var q = {
-    cognitive:'מה הרמה הנוכחית של הילד בתחום? למשל, האם מזהה צבעים? סופר? האם המטרה כפי שהיא מנוסחת מתאימה לרמתו?',
-    behavioral:'ספרו לי עוד — באילו מצבים הקושי בולט ביותר? ומה כבר מצליח? כך נוכל לנסח מטרה מדויקת.',
-    social:'ספרו — האם הילד יוזם קשר? משחק עם ילדים? מה הפער בין המצב הנוכחי למטרה שבחרתם?',
-    motor:'ספרו על המצב הנוכחי — איך נראית האחיזה? התנועה? כדי שנוכל לוודא שהמטרה בגובה העיניים.',
-    communication:'מה רמת התקשורת הנוכחית? כמה מילים משתמש? האם המטרה מתאימה לפער הנוכחי?',
-    life_skills:'ספרו — מה הילד כבר עושה בעצמו? איפה צריך ליווי? כך נוכל לדייק.',
+    cognitive: 'כדי לנסח מטרה טובה — בואו נבנה אותה על בסיס מה שהילד כבר יודע.\nאיך לדעתכם ניתן להשתמש ביכולות הקיימות כגשר לתחום שצריך חיזוק?',
+    behavioral: 'נסחים מטרה שמתחילה ממה שכבר עובד.\nבאילו מצבים/פעילויות הילד מצליח להתאפק או לשתף פעולה? נוכל להרחיב מהן.',
+    social: 'מטרה טובה בונה על הצלחות קיימות.\nמה כבר קורה בתחום החברתי — גם אם קטן? עם מי? באיזה הקשר? מכאן נתחיל.',
+    motor: 'בואו נמצא את נקודת המוצא החזקה ביותר.\nאיזו תנועה/פעולה מוטורית הילד עושה בקלות יחסית? נבנה ממנה.',
+    communication: 'מטרה תקשורתית טובה מתחילה מאיפה שהילד כבר מצליח.\nמה הילד כבר מצליח לתקשר, אפילו בצורה חלקית? גסטות, מילים, צלילים?',
+    life_skills: 'נמצא את "הצעד הבא הקטן" מעבר למה שהילד כבר עושה.\nמה הילד כבר עושה לבד, גם חלקית? מכאן נבנה את המטרה.',
   };
-  var intro = goalText ? 'בחרתם את המטרה "'+goalText+'". בואו נדייק אותה יחד.\n\n' : 'כתבו את המטרה למעלה ונדייק אותה יחד.\n\n';
-  return intro + (q[domain] || 'ספרו לי עוד על הרמה הנוכחית של הילד בתחום זה.');
+
+  var question = q[domain] || 'איך לדעתכם נוכל לבנות על החוזקות הקיימות כדי להתמודד עם האתגרים?';
+  return intro + notesBlock + question;
 }
 
 async function sendChat(gid) {
