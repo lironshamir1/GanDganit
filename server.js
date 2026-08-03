@@ -1,5 +1,5 @@
 import express from 'express';
-import Anthropic from '@anthropic-ai/sdk';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 
@@ -10,14 +10,7 @@ const app = express();
 app.use(express.json());
 app.use(express.static(join(__dirname, 'dist')));
 
-app.post('/api/chat', async (req, res) => {
-  if (!process.env.ANTHROPIC_API_KEY) {
-    return res.status(500).json({ error: 'מפתח API לא הוגדר. יש להגדיר ANTHROPIC_API_KEY בהגדרות Render.' });
-  }
-
-  const { messages, domain, goalText, childAge, notes } = req.body;
-
-  const systemPrompt = `אתה יועץ מומחה בחינוך מיוחד לגיל הרך, עם התמחות בכתיבת תכניות לימודים אישיות (תל"א).
+const SYSTEM_PROMPT = `אתה יועץ מומחה בחינוך מיוחד לגיל הרך, עם התמחות בכתיבת תכניות לימודים אישיות (תל"א).
 אתה עוזר לצוות רב-מקצועי של גן חינוך מיוחד לדייק ולשפר מטרות ויעדים עבור ילדים עם עיכובים התפתחותיים.
 
 הנחיות:
@@ -28,9 +21,17 @@ app.post('/api/chat', async (req, res) => {
 - הצע ניסוחים מקצועיים מדויקים כשמתאים
 - חשוב על ריאליסטיות המטרה ביחס לגיל ולרמת התפקוד
 - תשובות קצרות וממוקדות — 2-4 משפטים בדרך כלל
-- כשאת/ה מציע/ה ניסוח מדויק למטרה, הדגש אותו בין גרשיים כך: "הניסוח המוצע"
+- כשאת/ה מציע/ה ניסוח מדויק למטרה, הדגש אותו בין גרשיים כך: "הניסוח המוצע"`;
 
-הקשר נוכחי:
+app.post('/api/chat', async (req, res) => {
+  const apiKey = process.env.GEMINI_API_KEY;
+  if (!apiKey) {
+    return res.status(500).json({ error: 'מפתח API לא הוגדר. יש להגדיר GEMINI_API_KEY בהגדרות Render.' });
+  }
+
+  const { messages, domain, goalText, childAge, notes } = req.body;
+
+  const contextBlock = `\nהקשר נוכחי:
 - תחום תפקוד: ${domain || 'לא צוין'}
 - מטרה שנבחרה: ${goalText || 'לא צוינה'}
 - גיל הילד: ${childAge || 'לא צוין'}
@@ -38,16 +39,26 @@ app.post('/api/chat', async (req, res) => {
 - נקודות לחיזוק שצוינו: ${notes?.toStrengthen || 'לא צוינו'}`;
 
   try {
-    const client = new Anthropic();
-    const response = await client.messages.create({
-      model: 'claude-haiku-4-5-20251001',
-      max_tokens: 500,
-      system: systemPrompt,
-      messages: messages.map(m => ({ role: m.role, content: m.content })),
+    const genAI = new GoogleGenerativeAI(apiKey);
+    const model = genAI.getGenerativeModel({
+      model: 'gemini-2.0-flash',
+      systemInstruction: SYSTEM_PROMPT + contextBlock,
     });
-    res.json({ content: response.content[0].text });
+
+    const chat = model.startChat({
+      history: messages.slice(0, -1).map(m => ({
+        role: m.role === 'assistant' ? 'model' : 'user',
+        parts: [{ text: m.content }],
+      })),
+    });
+
+    const lastMsg = messages[messages.length - 1];
+    const result = await chat.sendMessage(lastMsg.content);
+    const text = result.response.text();
+
+    res.json({ content: text });
   } catch (err) {
-    console.error('Anthropic API error:', err.message);
+    console.error('Gemini API error:', err.message);
     res.status(500).json({ error: 'שגיאה בתקשורת. נסו שוב.' });
   }
 });
