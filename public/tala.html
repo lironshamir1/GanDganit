@@ -351,6 +351,26 @@ body {
   width: calc(100% - 2 * var(--sp-3)); text-align: right; display: block;
 }
 .pw-chat-apply-btn:hover { background: var(--teal); color: #fff; }
+.pw-chat-apply-row {
+  border-top: 1px solid var(--cloud); background: var(--surface);
+  padding: var(--sp-2) var(--sp-3) var(--sp-3);
+}
+.pw-chat-apply-label {
+  font-size: 0.74rem; color: var(--mist); font-weight: 600;
+  display: block; margin-bottom: var(--sp-1);
+}
+.pw-chat-apply-inner { display: flex; gap: var(--sp-2); align-items: center; }
+.pw-chat-apply-input {
+  flex: 1; padding: var(--sp-2); border: 1px solid var(--teal);
+  border-radius: var(--r-sm); font-size: 0.82rem; background: var(--base);
+  font-family: inherit; direction: rtl;
+}
+.pw-chat-apply-input:focus { outline: none; border-color: var(--teal); box-shadow: 0 0 0 2px rgba(94,158,101,0.15); }
+.pw-chat-apply-do {
+  padding: var(--sp-2) var(--sp-3); background: var(--teal); color: white;
+  border-radius: var(--r-sm); font-size: 0.82rem; font-weight: 700; white-space: nowrap;
+}
+.pw-chat-apply-do:hover { background: var(--teal-dark, #3d8a6e); }
 
 .pw-goal-card {
   background: var(--base); border-radius: var(--r-sm);
@@ -875,7 +895,16 @@ function renderGoals() {
       h += '<div class="pw-chat-input-row">';
       h += '<textarea class="pw-chat-input" id="chat-input-'+g.id+'" placeholder="\u05db\u05ea\u05d1\u05d5 \u05e9\u05d0\u05dc\u05d4 \u05d0\u05d5 \u05d4\u05e2\u05e8\u05d4..." onkeydown="if(event.key===\'Enter\'&&!event.shiftKey){event.preventDefault();sendChat(\''+g.id+'\');}"></textarea>';
       h += '<button class="pw-chat-send" id="chat-send-'+g.id+'" onclick="sendChat(\''+g.id+'\')">\u05e9\u05dc\u05d7</button>';
-      h += '</div></div>';
+      h += '</div>';
+      if(!g.confirmed) {
+        h += '<div class="pw-chat-apply-row">';
+        h += '<label class="pw-chat-apply-label">\u05e0\u05d9\u05e1\u05d5\u05d7 \u05de\u05e2\u05d5\u05d3\u05db\u05df \u05dc\u05de\u05d8\u05e8\u05d4:</label>';
+        h += '<div class="pw-chat-apply-inner">';
+        h += '<input class="pw-chat-apply-input" id="apply-input-'+g.id+'" value="'+esc(g.goalText)+'" placeholder="\u05d4\u05d3\u05d1\u05d9\u05e7\u05d5 \u05d0\u05d5 \u05db\u05ea\u05d1\u05d5 \u05d0\u05ea \u05d4\u05e0\u05d9\u05e1\u05d5\u05d7 \u05d4\u05de\u05e2\u05d5\u05d3\u05db\u05df...">';
+        h += '<button class="pw-chat-apply-do" onclick="applyInputGoal(\''+g.id+'\')">\u05e2\u05d3\u05db\u05df</button>';
+        h += '</div></div>';
+      }
+      h += '</div>';
 
       if(!g.confirmed){
         h += '<button class="pw-btn-confirm" onclick="confirmGoal(\''+g.id+'\')">\u05d0\u05d9\u05e9\u05d5\u05e8 \u05de\u05d8\u05e8\u05d4 \u2014 \u05d4\u05e6\u05d2 \u05d9\u05e2\u05d3\u05d9\u05dd</button>';
@@ -1001,6 +1030,16 @@ function applySuggestedGoal(gid, text) {
   render();
   var inp = document.getElementById('goal-input-'+gid);
   if(inp) inp.scrollIntoView({behavior:'smooth', block:'center'});
+}
+function applyInputGoal(gid) {
+  var g = goals.find(function(x){return x.id===gid});
+  if(!g) return;
+  var inp = document.getElementById('apply-input-'+gid);
+  if(!inp || !inp.value.trim()) return;
+  g.goalText = inp.value.trim();
+  render();
+  var goalInp = document.getElementById('goal-input-'+gid);
+  if(goalInp) goalInp.scrollIntoView({behavior:'smooth', block:'center'});
 }
 function confirmGoal(gid) { var g=goals.find(function(x){return x.id===gid}); if(g){g.confirmed=true;render();} }
 function reopenGoal(gid) { var g=goals.find(function(x){return x.id===gid}); if(g){g.confirmed=false;render();} }
