@@ -302,6 +302,48 @@ body {
   font-size: 0.75rem; color: var(--amber); font-weight: 600;
   margin-right: auto; padding: var(--sp-1) var(--sp-2);
 }
+.pw-chat {
+  margin-top: var(--sp-3); background: var(--base-warm);
+  border-radius: var(--r-sm); border: 1px solid var(--cloud); overflow: hidden;
+}
+.pw-chat-header {
+  padding: var(--sp-2) var(--sp-3); font-size: 0.78rem; font-weight: 700;
+  color: var(--teal); border-bottom: 1px solid var(--cloud); background: var(--surface);
+}
+.pw-chat-messages {
+  padding: var(--sp-3); max-height: 280px; overflow-y: auto;
+  display: flex; flex-direction: column; gap: var(--sp-2);
+}
+.pw-chat-msg {
+  padding: var(--sp-2) var(--sp-3); border-radius: var(--r-sm);
+  font-size: 0.82rem; line-height: 1.6; max-width: 88%; white-space: pre-wrap;
+}
+.pw-chat-msg.assistant {
+  background: var(--surface); border: 1px solid var(--cloud);
+  align-self: flex-start; border-right: 3px solid var(--teal);
+}
+.pw-chat-msg.user {
+  background: var(--teal-wash); border: 1px solid var(--teal-light);
+  align-self: flex-end;
+}
+.pw-chat-msg.error { color: var(--coral); font-size: 0.78rem; align-self: center; }
+.pw-chat-input-row {
+  display: flex; gap: var(--sp-2); padding: var(--sp-2) var(--sp-3);
+  border-top: 1px solid var(--cloud); background: var(--surface); align-items: flex-end;
+}
+.pw-chat-input {
+  flex: 1; padding: var(--sp-2); border: 1px solid var(--cloud);
+  border-radius: var(--r-sm); font-size: 0.82rem; resize: none;
+  min-height: 36px; max-height: 80px; background: var(--base);
+  font-family: inherit; direction: rtl;
+}
+.pw-chat-input:focus { border-color: var(--teal); outline: none; }
+.pw-chat-send {
+  padding: var(--sp-2) var(--sp-3); background: var(--teal); color: white;
+  border-radius: var(--r-sm); font-size: 0.82rem; font-weight: 700; white-space: nowrap;
+}
+.pw-chat-send:disabled { opacity: 0.4; }
+.pw-chat-typing { font-size: 0.75rem; color: var(--mist); padding: var(--sp-1) var(--sp-3); }
 
 .pw-goal-card {
   background: var(--base); border-radius: var(--r-sm);
@@ -685,6 +727,10 @@ function render() {
   h += '</div>';
 
   app.innerHTML = h;
+  setTimeout(function(){
+    var chats = document.querySelectorAll('.pw-chat-messages');
+    for(var i=0;i<chats.length;i++) chats[i].scrollTop = chats[i].scrollHeight;
+  }, 0);
 }
 
 function renderAssessment() {
@@ -807,6 +853,19 @@ function renderGoals() {
       h += '<textarea class="pw-refinement-textarea" oninput="updateRefinement(\''+g.id+'\',this.value)" placeholder="\u05db\u05ea\u05d1\u05d5 \u05d4\u05e2\u05e8\u05d5\u05ea \u05dc\u05d3\u05d9\u05d5\u05e7 \u2014 \u05dc\u05de\u05e9\u05dc: \'\u05d4\u05d9\u05dc\u05d3 \u05db\u05d1\u05e8 \u05de\u05d6\u05d4\u05d4 3 \u05e6\u05d1\u05e2\u05d9\u05dd, \u05e6\u05e8\u05d9\u05da \u05dc\u05d4\u05d2\u05d9\u05e2 \u05dc-6\'">'+esc(g.refinementNotes||'')+'</textarea>';
       h += '</div>';
 
+      h += '<div class="pw-chat">';
+      h += '<div class="pw-chat-header">\u05e9\u05d9\u05d7 \u05dc\u05d3\u05d9\u05d5\u05e7 \u05d4\u05de\u05d8\u05e8\u05d4</div>';
+      h += '<div class="pw-chat-messages" id="chat-msgs-'+g.id+'">';
+      var cms = g.chatMessages||[];
+      for(var ci=0;ci<cms.length;ci++){
+        h += '<div class="pw-chat-msg '+cms[ci].role+'">'+esc(cms[ci].content)+'</div>';
+      }
+      h += '</div>';
+      h += '<div class="pw-chat-input-row">';
+      h += '<textarea class="pw-chat-input" id="chat-input-'+g.id+'" placeholder="\u05db\u05ea\u05d1\u05d5 \u05e9\u05d0\u05dc\u05d4 \u05d0\u05d5 \u05d4\u05e2\u05e8\u05d4..." onkeydown="if(event.key===\'Enter\'&&!event.shiftKey){event.preventDefault();sendChat(\''+g.id+'\');}"></textarea>';
+      h += '<button class="pw-chat-send" id="chat-send-'+g.id+'" onclick="sendChat(\''+g.id+'\')">\u05e9\u05dc\u05d7</button>';
+      h += '</div></div>';
+
       if(!g.confirmed){
         h += '<button class="pw-btn-confirm" onclick="confirmGoal(\''+g.id+'\')">\u05d0\u05d9\u05e9\u05d5\u05e8 \u05de\u05d8\u05e8\u05d4 \u2014 \u05d4\u05e6\u05d2 \u05d9\u05e2\u05d3\u05d9\u05dd</button>';
       } else {
@@ -900,12 +959,14 @@ function updateNotes(did, field, val) {
 function addSuggestion(goalText) {
   var sg = goalSuggestions.find(function(s){return s.goalText===goalText});
   if(!sg) return;
+  var initMsg = getInitialChat(sg.domain, sg.goalText);
   goals.push({
     id:'g'+Math.random().toString(36).slice(2,7),
     goalText:sg.goalText,
     domain:sg.domain,
     objectives:sg.objectives.map(function(o){return {text:o.text,methods:o.methods,criteria:o.criteria,timeline:o.timeline,selected:true}}),
     refinementNotes:'', confirmed:false,
+    chatMessages:[{role:'assistant',content:initMsg}],
   });
   render();
 }
@@ -915,10 +976,79 @@ function updateGoalText(id, val) { var g=goals.find(function(x){return x.id===id
 function updateObj(gid,idx,field,val) { var g=goals.find(function(x){return x.id===gid}); if(g&&g.objectives[idx]) g.objectives[idx][field]=val; }
 function removeObj(gid,idx) { var g=goals.find(function(x){return x.id===gid}); if(g){g.objectives.splice(idx,1);render();} }
 function addObj(gid) { var g=goals.find(function(x){return x.id===gid}); if(g){g.objectives.push({text:'',methods:'',criteria:'',timeline:'',selected:true});render();} }
-function addCustomGoal(did) { goals.push({id:'g'+Math.random().toString(36).slice(2,7),goalText:'',domain:did,objectives:[{text:'',methods:'',criteria:'',timeline:'',selected:true}],refinementNotes:'',confirmed:false}); render(); }
+function addCustomGoal(did) { var initMsg=getInitialChat(did,''); goals.push({id:'g'+Math.random().toString(36).slice(2,7),goalText:'',domain:did,objectives:[{text:'',methods:'',criteria:'',timeline:'',selected:true}],refinementNotes:'',confirmed:false,chatMessages:[{role:'assistant',content:initMsg}]}); render(); }
 function updateRefinement(gid,val) { var g=goals.find(function(x){return x.id===gid}); if(g) g.refinementNotes=val; }
 function confirmGoal(gid) { var g=goals.find(function(x){return x.id===gid}); if(g){g.confirmed=true;render();} }
 function reopenGoal(gid) { var g=goals.find(function(x){return x.id===gid}); if(g){g.confirmed=false;render();} }
+
+function getInitialChat(domain, goalText) {
+  var q = {
+    cognitive:'מה הרמה הנוכחית של הילד בתחום? למשל, האם מזהה צבעים? סופר? האם המטרה כפי שהיא מנוסחת מתאימה לרמתו?',
+    behavioral:'ספרו לי עוד — באילו מצבים הקושי בולט ביותר? ומה כבר מצליח? כך נוכל לנסח מטרה מדויקת.',
+    social:'ספרו — האם הילד יוזם קשר? משחק עם ילדים? מה הפער בין המצב הנוכחי למטרה שבחרתם?',
+    motor:'ספרו על המצב הנוכחי — איך נראית האחיזה? התנועה? כדי שנוכל לוודא שהמטרה בגובה העיניים.',
+    communication:'מה רמת התקשורת הנוכחית? כמה מילים משתמש? האם המטרה מתאימה לפער הנוכחי?',
+    life_skills:'ספרו — מה הילד כבר עושה בעצמו? איפה צריך ליווי? כך נוכל לדייק.',
+  };
+  var intro = goalText ? 'בחרתם את המטרה "'+goalText+'". בואו נדייק אותה יחד.\n\n' : 'כתבו את המטרה למעלה ונדייק אותה יחד.\n\n';
+  return intro + (q[domain] || 'ספרו לי עוד על הרמה הנוכחית של הילד בתחום זה.');
+}
+
+async function sendChat(gid) {
+  var g = goals.find(function(x){return x.id===gid});
+  if(!g) return;
+  var inputEl = document.getElementById('chat-input-'+gid);
+  var text = inputEl.value.trim();
+  if(!text) return;
+
+  g.chatMessages.push({role:'user', content:text});
+  inputEl.value = '';
+
+  var msgsEl = document.getElementById('chat-msgs-'+gid);
+  var userDiv = document.createElement('div');
+  userDiv.className = 'pw-chat-msg user';
+  userDiv.textContent = text;
+  msgsEl.appendChild(userDiv);
+
+  var typingDiv = document.createElement('div');
+  typingDiv.className = 'pw-chat-typing';
+  typingDiv.textContent = 'חושב...';
+  msgsEl.appendChild(typingDiv);
+  msgsEl.scrollTop = msgsEl.scrollHeight;
+
+  var sendBtn = document.getElementById('chat-send-'+gid);
+  sendBtn.disabled = true;
+
+  try {
+    var notes = getNotes(g.domain);
+    var res = await fetch('/api/chat', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        messages:g.chatMessages,
+        domain:getDomainLabel(g.domain),
+        goalText:g.goalText,
+        childAge:childAge,
+        notes:notes,
+      }),
+    });
+    var data = await res.json();
+    if(data.error) throw new Error(data.error);
+
+    g.chatMessages.push({role:'assistant', content:data.content});
+    typingDiv.remove();
+
+    var aDiv = document.createElement('div');
+    aDiv.className = 'pw-chat-msg assistant';
+    aDiv.textContent = data.content;
+    msgsEl.appendChild(aDiv);
+  } catch(err) {
+    typingDiv.className = 'pw-chat-msg error';
+    typingDiv.textContent = err.message;
+  }
+  sendBtn.disabled = false;
+  msgsEl.scrollTop = msgsEl.scrollHeight;
+}
 
 function toggleObj(gid, idx) {
   var g = goals.find(function(x){return x.id===gid});
