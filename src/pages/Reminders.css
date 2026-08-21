@@ -109,3 +109,11 @@
 .rem-add-actions .btn {
   flex: 1;
 }
+
+.rem-add-hint {
+  margin-top: 10px;
+  font-size: 0.8rem;
+  color: var(--text-light);
+  line-height: 1.5;
+  text-align: center;
+}

@@ -27,7 +27,7 @@ const modules = [
   { path: '/qa', title: 'שאלות ותשובות', icon: '💬', desc: 'מענה מקצועי להורים', color: '#7EC8C8', bg: 'linear-gradient(135deg, #E0F4F4, #B5E0E0)' },
   { path: '/tasks', title: 'לוח משימות', icon: '🏆', desc: 'משימות יומיות ותגמולים', color: '#F5C6D0', bg: 'linear-gradient(135deg, #FCE4EC, #F5C6D0)' },
   { path: '/inspiration', title: 'רגע של השראה', icon: '✨', desc: 'חיזוק ותמיכה להורים', color: '#B8A9D4', bg: 'linear-gradient(135deg, #F3E5F5, #D4C9E8)' },
-  { path: '/schedule', title: 'סדר יום', icon: '📅', desc: 'תכנון וניהול היום', color: '#7EC8C8', bg: 'linear-gradient(135deg, #E0F7FA, #B5E0E0)' },
+  { path: '/now', title: 'עכשיו בגן', icon: '📌', desc: 'מה קורה בגן עכשיו', color: '#e8907a', bg: 'linear-gradient(135deg, #FFF5F3, #F8C8BC)' },
   { path: '/reminders', title: 'תזכורות', icon: '🔔', desc: 'תזכורות לטיפולים ומשימות', color: '#DDA0DD', bg: 'linear-gradient(135deg, #F8E8F8, #E8D0E8)' },
   { path: '/toolbox', title: 'ארגז כלים', icon: '🧰', desc: 'שעון חול, טיימר וקובייה', color: '#E8B87D', bg: 'linear-gradient(135deg, #FFF3E0, #FFE0B2)' },
   { path: '/about', title: 'מי אנחנו', icon: '👩‍🏫', desc: 'קצת עלינו ועל הגן', color: '#e8907a', bg: 'linear-gradient(135deg, #FFF5F3, #F4C7BA)' },
@@ -60,6 +60,20 @@ function getRandomTip() {
   return dailyTips[Math.floor(Math.random() * dailyTips.length)]
 }
 
+/* "יום שישי, 21 באוגוסט 2026" */
+function getTodayLabel() {
+  try {
+    return new Date().toLocaleDateString('he-IL', {
+      weekday: 'long',
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    })
+  } catch {
+    return ''
+  }
+}
+
 function getGreeting() {
   const hour = new Date().getHours()
   if (hour < 12) return 'בוקר טוב'
@@ -71,6 +85,7 @@ function getGreeting() {
 export default function Home() {
   const [tip] = useState(getRandomTip)
   const greeting = getGreeting()
+  const todayLabel = getTodayLabel()
   const [visible, setVisible] = useState(false)
   const [showNotification, setShowNotification] = useState(hasNewUpdates)
 
@@ -81,6 +96,7 @@ export default function Home() {
   return (
     <div className="page home-page">
       <div className={`home-header ${visible ? 'visible' : ''}`}>
+        {todayLabel && <p className="home-date">{todayLabel}</p>}
         <h1 className="home-title">{greeting}, גן דגנית</h1>
       </div>
 

@@ -1,5 +1,7 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './Reminders.css'
+
+const STORAGE_KEY = 'gandganit-reminders'
 
 const defaultReminders = [
   { id: 1, title: 'תרופה בוקר', time: '08:00', type: 'medication', active: true },
@@ -24,8 +26,27 @@ const typeLabels = {
   general: 'כללי',
 }
 
+/* טוען את התזכורות השמורות; בפעם הראשונה מחזיר את ברירת המחדל */
+function loadReminders() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY))
+    if (Array.isArray(saved)) return saved
+  } catch {
+    /* אם אין גישה ל-localStorage נופלים חזרה לברירת המחדל */
+  }
+  return defaultReminders
+}
+
 export default function Reminders() {
-  const [reminders, setReminders] = useState(defaultReminders)
+  const [reminders, setReminders] = useState(loadReminders)
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(reminders))
+    } catch {
+      /* אם אין גישה ל-localStorage פשוט לא שומרים */
+    }
+  }, [reminders])
   const [showAdd, setShowAdd] = useState(false)
   const [newReminder, setNewReminder] = useState({ title: '', time: '', type: 'general' })
 
@@ -42,8 +63,8 @@ export default function Reminders() {
       ...newReminder,
       active: true
     }].sort((a, b) => a.time.localeCompare(b.time)))
+    // משאירים את הטופס פתוח ומרוקן כדי שאפשר יהיה לרשום כמה תזכורות ברצף
     setNewReminder({ title: '', time: '', type: 'general' })
-    setShowAdd(false)
   }
 
   const deleteReminder = (id) => {
@@ -108,8 +129,9 @@ export default function Reminders() {
           </select>
           <div className="rem-add-actions">
             <button className="btn btn-primary" onClick={addReminder}>הוסף</button>
-            <button className="btn btn-secondary" onClick={() => setShowAdd(false)}>ביטול</button>
+            <button className="btn btn-secondary" onClick={() => setShowAdd(false)}>סיום</button>
           </div>
+          <p className="rem-add-hint">אפשר להוסיף עוד תזכורות בזו אחר זו — לחצו "סיום" כשתסיימו.</p>
         </div>
       )}
     </div>
