@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
+import { seasonalContent } from '../data/seasonalContent'
 import './Home.css'
 
 const GAN_UPDATES_STORAGE_KEY = 'gandganit-gan-updates'
@@ -27,7 +28,6 @@ const modules = [
   { path: '/qa', title: 'שאלות ותשובות', icon: '💬', desc: 'מענה מקצועי להורים', color: '#7EC8C8', bg: 'linear-gradient(135deg, #E0F4F4, #B5E0E0)' },
   { path: '/tasks', title: 'לוח משימות', icon: '🏆', desc: 'משימות יומיות ותגמולים', color: '#F5C6D0', bg: 'linear-gradient(135deg, #FCE4EC, #F5C6D0)' },
   { path: '/inspiration', title: 'רגע של השראה', icon: '✨', desc: 'חיזוק ותמיכה להורים', color: '#B8A9D4', bg: 'linear-gradient(135deg, #F3E5F5, #D4C9E8)' },
-  { path: '/now', title: 'עכשיו בגן', icon: '📌', desc: 'מה קורה בגן עכשיו', color: '#e8907a', bg: 'linear-gradient(135deg, #FFF5F3, #F8C8BC)' },
   { path: '/reminders', title: 'תזכורות', icon: '🔔', desc: 'תזכורות לטיפולים ומשימות', color: '#DDA0DD', bg: 'linear-gradient(135deg, #F8E8F8, #E8D0E8)' },
   { path: '/toolbox', title: 'ארגז כלים', icon: '🧰', desc: 'שעון חול, טיימר וקובייה', color: '#E8B87D', bg: 'linear-gradient(135deg, #FFF3E0, #FFE0B2)' },
   { path: '/about', title: 'מי אנחנו', icon: '👩‍🏫', desc: 'קצת עלינו ועל הגן', color: '#e8907a', bg: 'linear-gradient(135deg, #FFF5F3, #F4C7BA)' },
@@ -105,6 +105,15 @@ export default function Home() {
         <p className="quote-label">טיפ יומי</p>
         <p className="quote-text">{tip}</p>
       </div>
+
+      <Link to="/now" className={`now-banner ${visible ? 'visible' : ''}`}>
+        <span className="now-banner-icon">📌</span>
+        <span className="now-banner-body">
+          <span className="now-banner-label">עכשיו בגן</span>
+          <span className="now-banner-text">{seasonalContent.subtitle}</span>
+        </span>
+        <span className="now-banner-arrow">←</span>
+      </Link>
 
       <div className="modules-grid">
         {modules.map((mod, i) => (

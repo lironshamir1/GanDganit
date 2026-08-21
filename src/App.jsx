@@ -31,6 +31,11 @@ function App() {
     twemoji.parse(document.body, { folder: 'svg', ext: '.svg' })
   })
 
+  // מעבר לעמוד חדש תמיד מתחיל מראש העמוד ולא ממשיך את הגלילה הקודמת
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [location.pathname])
+
   return (
     <>
       <Routes>
