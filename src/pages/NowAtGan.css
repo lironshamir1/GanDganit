@@ -58,14 +58,6 @@
   background: linear-gradient(135deg, var(--coral-soft), #FFF8F0);
 }
 
-.now-hint {
-  font-size: 0.85rem;
-  color: var(--text-light);
-  line-height: 1.6;
-  margin-bottom: 12px;
-  padding-right: 2px;
-}
-
 /* ---------- כרטיסי הנחיות ---------- */
 .now-topic {
   border-right: 4px solid var(--topic-color, var(--coral));
@@ -120,213 +112,75 @@
   background: var(--topic-color, var(--coral));
 }
 
-/* ---------- התקדמות ---------- */
-.now-progress {
-  padding: 16px 18px;
+/* ---------- טבלת ה"ייאוש" שחולקה להורים ---------- */
+.now-handout {
+  padding: 20px;
 }
 
-.now-progress-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  margin-bottom: 10px;
+.now-handout-intro {
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: var(--text);
+  margin-bottom: 16px;
 }
 
-.now-progress-text {
-  font-size: 0.88rem;
-  font-weight: 600;
-  color: var(--text-light);
-}
-
-.now-reset-btn {
-  background: var(--coral-soft);
-  color: var(--coral-dark);
-  border-radius: 20px;
-  padding: 7px 14px;
-  font-size: 0.78rem;
-  font-weight: 700;
-  transition: all var(--transition);
-  flex-shrink: 0;
-}
-
-.now-reset-btn:hover {
-  background: #F4C7BA;
-}
-
-.now-reset-btn:active {
-  transform: scale(0.95);
-}
-
-.now-progress-bar {
-  height: 8px;
-  background: #f0f0f0;
-  border-radius: 4px;
+.now-handout-image {
+  display: block;
+  border-radius: var(--radius-sm);
   overflow: hidden;
+  border: 1px solid rgba(232, 144, 122, 0.25);
+  background: white;
+  transition: box-shadow var(--transition), transform var(--transition);
 }
 
-.now-progress-fill {
-  height: 100%;
-  border-radius: 4px;
-  background: linear-gradient(135deg, var(--coral), var(--accent-dark));
-  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+.now-handout-image:hover {
+  box-shadow: 0 6px 20px rgba(232, 144, 122, 0.22);
+  transform: translateY(-2px);
 }
 
-/* ---------- כרטיסי ימים ---------- */
-.now-days {
+.now-handout-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.now-handout-caption {
+  margin-top: 8px;
+  font-size: 0.78rem;
+  color: var(--text-light);
+  text-align: center;
+}
+
+.now-handout-benefits {
   list-style: none;
   display: flex;
   flex-direction: column;
   gap: 10px;
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(232, 144, 122, 0.18);
 }
 
-.now-day {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  text-align: right;
-  padding: 14px 16px;
-  margin-bottom: 0;
-  background: var(--bg-card);
-  border: 2px solid transparent;
-  transition: all var(--transition);
-}
-
-.now-day-date {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 2px;
-  min-width: 62px;
-  padding: 8px 6px;
-  border-radius: var(--radius-sm);
-  background: linear-gradient(135deg, var(--coral-soft), #FFF8F0);
-  flex-shrink: 0;
-}
-
-.now-day-num {
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: var(--coral-dark);
-  line-height: 1.1;
-}
-
-.now-day-weekday {
-  font-size: 0.68rem;
-  color: var(--text-light);
-  white-space: nowrap;
-}
-
-.now-day-body {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  flex: 1;
-  min-width: 0;
-}
-
-.now-day-task {
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-  font-size: 0.95rem;
-  line-height: 1.55;
-  font-weight: 600;
+.now-handout-benefits li {
+  position: relative;
+  padding-right: 22px;
+  font-size: 0.92rem;
+  line-height: 1.75;
   color: var(--text);
 }
 
-.now-day-icon {
-  font-size: 1.15rem;
-  line-height: 1.4;
-  flex-shrink: 0;
-}
-
-.now-day-note {
-  display: inline-block;
-  align-self: flex-start;
-  padding: 4px 12px;
-  border-radius: 20px;
-  background: linear-gradient(135deg, #EDE7F6, #D4C9E8);
-  color: #6B5B95;
-  font-size: 0.78rem;
-  font-weight: 700;
-  line-height: 1.5;
-}
-
-.now-day-today {
-  align-self: flex-start;
-  font-size: 0.72rem;
-  font-weight: 700;
+.now-handout-benefits li::before {
+  content: '✓';
+  position: absolute;
+  right: 0;
+  top: 0;
   color: var(--coral-dark);
-}
-
-.now-day-check {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  border: 2px solid var(--text-muted);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.9rem;
-  color: white;
-  flex-shrink: 0;
-  transition: all var(--transition);
-}
-
-.now-day-check.checked {
-  background: linear-gradient(135deg, var(--coral), var(--accent-dark));
-  border-color: var(--coral);
-}
-
-/* מצבים */
-.now-day.is-highlight {
-  border-color: rgba(184, 169, 212, 0.55);
-}
-
-.now-day.is-bigday {
-  background: linear-gradient(135deg, #FFF5F3, #FDEBD0);
-  border-color: rgba(232, 144, 122, 0.45);
-}
-
-.now-day.is-today {
-  border-color: var(--coral);
-  box-shadow: 0 4px 16px rgba(232, 144, 122, 0.22);
-}
-
-.now-day.is-done {
-  background: linear-gradient(135deg, #E8F5E9, #F1F8E9);
-  border-color: rgba(168, 213, 186, 0.7);
-}
-
-.now-day.is-done .now-day-task {
-  color: var(--text-light);
-  text-decoration: line-through;
-  text-decoration-color: rgba(107, 114, 128, 0.4);
-}
-
-.now-day.is-done .now-day-date {
-  background: rgba(255, 255, 255, 0.75);
-}
-
-.now-day.is-done .now-day-check {
-  background: linear-gradient(135deg, #7EC8C8, #5FB3B3);
-  border-color: #5FB3B3;
+  font-weight: 700;
 }
 
 @media (max-width: 380px) {
-  .now-day {
-    padding: 12px;
-    gap: 10px;
-  }
-  .now-day-date {
-    min-width: 54px;
-    padding: 6px 4px;
-  }
-  .now-day-task {
-    font-size: 0.9rem;
+  .now-handout {
+    padding: 16px;
   }
   .now-topic-icon {
     width: 42px;
