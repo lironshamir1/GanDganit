@@ -3,6 +3,7 @@ import './Navbar.css'
 
 const navItems = [
   { path: '/home', label: 'בית', icon: '🏠' },
+  { path: '/now', label: 'עכשיו בגן', icon: '📌' },
   { path: '/qa', label: 'שאלות', icon: '💬' },
   { path: '/activities', label: 'פעילויות', icon: '🎨' },
   { path: '/schedule', label: 'יומן', icon: '📅' },

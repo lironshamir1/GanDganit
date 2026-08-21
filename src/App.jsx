@@ -19,6 +19,7 @@ import Toolbox from './pages/Toolbox'
 import About from './pages/About'
 import Poster from './pages/Poster'
 import TipsCards from './pages/TipsCards'
+import NowAtGan from './pages/NowAtGan'
 
 function App() {
   const location = useLocation()
@@ -34,6 +35,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/home" element={<Home />} />
+        <Route path="/now" element={<NowAtGan />} />
         <Route path="/qa" element={<QandA />} />
         <Route path="/activities" element={<Activities />} />
         <Route path="/independence" element={<Independence />} />
