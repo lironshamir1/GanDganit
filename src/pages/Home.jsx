@@ -20,7 +20,6 @@ function hasNewUpdates() {
 }
 
 const modules = [
-  { path: '/gan-updates', title: 'עדכונים מהגן', icon: '📋', desc: 'הודעות ועדכונים שוטפים', color: '#A8D5BA', bg: 'linear-gradient(135deg, #E8F5E9, #A8D5BA)', hasNotification: true },
   { path: '/activities', title: 'רעיונות לפעילויות', icon: '🎨', desc: 'פעילויות מותאמות לילד', color: '#B8A9D4', bg: 'linear-gradient(135deg, #EDE7F6, #D4C9E8)' },
   { path: '/speech', title: 'אימוני שפה', icon: '🗣️', desc: 'תרגילים לפיתוח הדיבור', color: '#7EC8C8', bg: 'linear-gradient(135deg, #E0F4F4, #D4F5F5)' },
   { path: '/independence', title: 'בניית עצמאות', icon: '⭐', desc: 'מדריך שלב אחר שלב', color: '#F8C8A4', bg: 'linear-gradient(135deg, #FFF3E8, #F8C8A4)' },
@@ -93,6 +92,10 @@ export default function Home() {
     setVisible(true)
   }, [])
 
+  /* הסימון הקבוע נרשם בעמוד העדכונים עצמו; כאן רק מכבים
+     את הנקודה מיד בלחיצה כדי שהמשוב יהיה מיידי */
+  const markUpdatesSeen = () => setShowNotification(false)
+
   return (
     <div className="page home-page">
       <div className={`home-header ${visible ? 'visible' : ''}`}>
@@ -106,13 +109,29 @@ export default function Home() {
         <p className="quote-text">{tip}</p>
       </div>
 
-      <Link to="/now" className={`now-banner ${visible ? 'visible' : ''}`}>
-        <span className="now-banner-icon">📌</span>
-        <span className="now-banner-body">
-          <span className="now-banner-label">עכשיו בגן</span>
-          <span className="now-banner-text">{seasonalContent.subtitle}</span>
+      <Link
+        to="/gan-updates"
+        className={`home-banner home-banner-updates ${visible ? 'visible' : ''}`}
+        onClick={markUpdatesSeen}
+      >
+        <span className="home-banner-icon">
+          📋
+          {showNotification && <span className="notification-dot" />}
         </span>
-        <span className="now-banner-arrow">←</span>
+        <span className="home-banner-body">
+          <span className="home-banner-label">עדכונים מהגן</span>
+          <span className="home-banner-text">הודעות ועדכונים שוטפים</span>
+        </span>
+        <span className="home-banner-arrow">←</span>
+      </Link>
+
+      <Link to="/now" className={`home-banner home-banner-now ${visible ? 'visible' : ''}`}>
+        <span className="home-banner-icon">📌</span>
+        <span className="home-banner-body">
+          <span className="home-banner-label">עכשיו בגן</span>
+          <span className="home-banner-text">{seasonalContent.subtitle}</span>
+        </span>
+        <span className="home-banner-arrow">←</span>
       </Link>
 
       <div className="modules-grid">
@@ -126,22 +145,9 @@ export default function Home() {
               '--card-color': mod.color,
               animationDelay: `${i * 0.06}s`
             }}
-            onClick={() => {
-              if (mod.hasNotification) {
-                const saved = localStorage.getItem(GAN_UPDATES_STORAGE_KEY)
-                if (saved) {
-                  const updates = JSON.parse(saved)
-                  if (updates.length > 0) {
-                    localStorage.setItem('gandganit-updates-last-seen', updates[0]?.date + ' ' + updates[0]?.time)
-                  }
-                }
-                setShowNotification(false)
-              }
-            }}
           >
             <div className="module-icon-wrap" style={{ background: mod.bg }}>
               <span className="module-icon">{mod.icon}</span>
-              {mod.hasNotification && showNotification && <span className="notification-dot" />}
             </div>
             <h3 className="module-title">{mod.title}</h3>
             <p className="module-desc">{mod.desc}</p>

@@ -41,6 +41,18 @@ export default function GanUpdates() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(updates))
   }, [updates])
 
+  /* צפייה בעמוד מסמנת שהעדכון האחרון נראה, וכך הנקודה האדומה
+     במסך הבית נכבית. חייב לקרות כאן ולא במסך הבית: שם הנתונים
+     עדיין לא נשמרו ב-localStorage בכניסה הראשונה של הורה. */
+  useEffect(() => {
+    if (updates.length === 0) return
+    try {
+      localStorage.setItem('gandganit-updates-last-seen', updates[0]?.date + ' ' + updates[0]?.time)
+    } catch {
+      /* בלי גישה ל-localStorage פשוט לא מסמנים */
+    }
+  }, [updates])
+
   const addUpdate = () => {
     if (!newUpdate.title.trim()) return
     const update = {
