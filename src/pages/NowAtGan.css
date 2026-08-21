@@ -39,19 +39,6 @@
   color: var(--text-light);
   line-height: 1.6;
 }
-
-.now-pill {
-  display: inline-block;
-  margin-top: 12px;
-  padding: 8px 20px;
-  border-radius: 20px;
-  background: linear-gradient(135deg, var(--coral), var(--accent-dark));
-  color: white;
-  font-size: 0.9rem;
-  font-weight: 700;
-  box-shadow: 0 4px 12px rgba(232, 144, 122, 0.3);
-}
-
 /* ---------- מקטעים ---------- */
 .now-section {
   margin-bottom: 30px;

@@ -22,11 +22,6 @@ function shortDate(date) {
   return `${date.getDate()}/${date.getMonth() + 1}`
 }
 
-function daysBetween(from, to) {
-  const ms = parseDate(toKey(to)) - parseDate(toKey(from))
-  return Math.round(ms / 86400000)
-}
-
 function loadChecked(version) {
   try {
     const saved = JSON.parse(localStorage.getItem(STORAGE_KEY))
@@ -41,8 +36,7 @@ function loadChecked(version) {
 }
 
 export default function NowAtGan() {
-  const { badge, title, subtitle, intro, guideTitle, guideNote, guide, countdown, contentVersion } =
-    seasonalContent
+  const { badge, title, subtitle, intro, guideTitle, guide, countdown, contentVersion } = seasonalContent
 
   const [checked, setChecked] = useState(() => loadChecked(contentVersion))
 
@@ -70,11 +64,6 @@ export default function NowAtGan() {
     [countdown, today]
   )
 
-  const daysLeft = useMemo(() => {
-    if (!countdown?.targetDate) return null
-    return daysBetween(new Date(), parseDate(countdown.targetDate))
-  }, [countdown])
-
   const doneCount = days.filter((day) => checked.includes(day.date)).length
   const progress = days.length ? Math.round((doneCount / days.length) * 100) : 0
 
@@ -84,27 +73,17 @@ export default function NowAtGan() {
     )
   }
 
-  const countdownText = () => {
-    if (daysLeft === null) return null
-    if (daysLeft > 1) return `עוד ${daysLeft} ימים לתחילת השנה`
-    if (daysLeft === 1) return 'מחר מתחילה השנה!'
-    if (daysLeft === 0) return 'היום מתחילה השנה! 🎉'
-    return null
-  }
-
   return (
     <div className="page now-page">
       <header className="now-hero">
         {badge && <span className="now-badge">{badge}</span>}
         <h1 className="page-title now-title">{title}</h1>
         {subtitle && <p className="now-subtitle">{subtitle}</p>}
-        {countdownText() && <p className="now-pill">{countdownText()}</p>}
       </header>
 
       <section className="now-section">
         <h2 className="now-section-title">💛 {guideTitle}</h2>
         {intro && <p className="now-intro card">{intro}</p>}
-        {guideNote && <p className="now-hint">{guideNote}</p>}
 
         {guide.map((topic) => (
           <article key={topic.id} className="card now-topic" style={{ '--topic-color': topic.color }}>

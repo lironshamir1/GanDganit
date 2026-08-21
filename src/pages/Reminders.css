@@ -1,3 +1,11 @@
+.rem-summary {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-light);
+  margin-bottom: 10px;
+  padding-right: 2px;
+}
+
 .rem-list {
   display: flex;
   flex-direction: column;
@@ -10,38 +18,66 @@
   align-items: center;
   gap: 8px;
   padding: 14px 16px;
-}
-
-.rem-inactive {
-  opacity: 0.5;
+  border: 2px solid transparent;
+  transition: all var(--transition);
 }
 
 .rem-main {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
   flex: 1;
+  min-width: 0;
   cursor: pointer;
+  background: none;
+  padding: 0;
+  text-align: right;
+}
+
+.rem-check {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 0.9rem;
+  color: white;
+  transition: all var(--transition);
+}
+
+.rem-check.checked {
+  background: linear-gradient(135deg, #7EC8C8, #5FB3B3);
+  border-color: #5FB3B3;
 }
 
 .rem-emoji {
-  font-size: 1.6rem;
+  font-size: 1.5rem;
+  flex-shrink: 0;
 }
 
 .rem-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
   flex: 1;
+  min-width: 0;
 }
 
 .rem-title {
   font-size: 1rem;
   font-weight: 600;
-  margin-bottom: 4px;
+  color: var(--text);
+  line-height: 1.4;
 }
 
 .rem-meta {
   display: flex;
   align-items: center;
   gap: 8px;
+  flex-wrap: wrap;
 }
 
 .rem-time {
@@ -49,34 +85,29 @@
   color: var(--text-light);
 }
 
-.rem-toggle {
-  width: 44px;
-  height: 24px;
-  border-radius: 12px;
-  background: #ddd;
-  position: relative;
-  transition: background var(--transition);
-  flex-shrink: 0;
+.rem-tag {
+  background: #F0F4F4;
+  color: var(--text-light);
 }
 
-.rem-toggle.active {
-  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+/* תזכורת שבוצעה */
+.rem-done {
+  background: linear-gradient(135deg, #E8F5E9, #F1F8E9);
+  border-color: rgba(168, 213, 186, 0.7);
 }
 
-.rem-toggle-dot {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: white;
-  position: absolute;
-  top: 2px;
-  right: 2px;
-  transition: right var(--transition);
-  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+.rem-done .rem-title {
+  color: var(--text-light);
+  text-decoration: line-through;
+  text-decoration-color: rgba(107, 114, 128, 0.4);
 }
 
-.rem-toggle.active .rem-toggle-dot {
-  right: 22px;
+.rem-done .rem-emoji {
+  opacity: 0.55;
+}
+
+.rem-done .rem-tag {
+  background: rgba(255, 255, 255, 0.75);
 }
 
 .rem-delete {
@@ -84,11 +115,38 @@
   font-size: 1.1rem;
   padding: 4px;
   opacity: 0.4;
+  flex-shrink: 0;
   transition: opacity var(--transition);
 }
 
 .rem-delete:hover {
   opacity: 1;
+}
+
+/* מצב ריק */
+.rem-empty {
+  text-align: center;
+  padding: 32px 24px;
+  background: linear-gradient(135deg, #FFF5F3, #FFF8F0);
+}
+
+.rem-empty-icon {
+  font-size: 2.4rem;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.rem-empty-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+.rem-empty-text {
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: var(--text-light);
 }
 
 .rem-add-btn {
