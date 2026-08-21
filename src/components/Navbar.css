@@ -57,3 +57,29 @@
   font-size: 0.7rem;
   font-weight: 600;
 }
+
+/* התאמה למסכים צרים — שומר על כל פריטי התפריט בשורה אחת */
+@media (max-width: 480px) {
+  .nav-item {
+    padding: 8px 8px;
+  }
+  .nav-label {
+    font-size: 0.66rem;
+    white-space: nowrap;
+  }
+  .nav-icon {
+    font-size: 1.35rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .nav-item {
+    padding: 8px 5px;
+  }
+  .nav-label {
+    font-size: 0.6rem;
+  }
+  .nav-icon {
+    font-size: 1.25rem;
+  }
+}
