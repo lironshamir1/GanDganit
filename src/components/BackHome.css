@@ -1,0 +1,44 @@
+.back-home-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  padding: 10px 16px max(10px, env(safe-area-inset-bottom));
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 -2px 20px rgba(232, 144, 122, 0.12);
+  border-top: 1px solid rgba(232, 144, 122, 0.12);
+  direction: rtl;
+  z-index: 100;
+}
+
+.back-home-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 26px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #e8907a, var(--accent-dark));
+  color: white;
+  font-size: 0.95rem;
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba(232, 144, 122, 0.3);
+  transition: all var(--transition);
+}
+
+.back-home-btn:hover {
+  box-shadow: 0 6px 20px rgba(232, 144, 122, 0.4);
+  transform: translateY(-1px);
+}
+
+.back-home-btn:active {
+  transform: scale(0.96);
+}
+
+.back-home-icon {
+  font-size: 1.15rem;
+  line-height: 1;
+}

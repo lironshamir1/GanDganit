@@ -1,31 +1,18 @@
 import { useEffect, useState } from 'react'
 import './Reminders.css'
 
-/* v2: בלי תזכורות ברירת מחדל, ועם סימון "בוצעה" במקום מתג פעיל/כבוי.
-   המפתח שונה בכוונה כדי שתזכורות הדוגמה הישנות שנשמרו אצל הורים יימחקו. */
-const STORAGE_KEY = 'gandganit-reminders-v2'
-
-const typeEmoji = {
-  medication: '💊',
-  therapy: '🏥',
-  'self-care': '🫶',
-  activity: '🎯',
-  general: '🔔',
-}
-
-const typeLabels = {
-  medication: 'תרופות',
-  therapy: 'טיפול',
-  'self-care': 'דאגה עצמית',
-  activity: 'פעילות',
-  general: 'כללי',
-}
+/* v3: תזכורת היא שם בלבד — בלי שעה ובלי קטגוריה.
+   האפליקציה לא מצלצלת ולא שולחת התראות, ולכן שעה רק הטעתה.
+   המפתח שונה כדי שתזכורות בפורמט הישן לא ייגררו לכאן. */
+const STORAGE_KEY = 'gandganit-reminders-v3'
 
 function loadReminders() {
   try {
     const saved = JSON.parse(localStorage.getItem(STORAGE_KEY))
     if (Array.isArray(saved)) {
-      return saved.map((rem) => ({ ...rem, done: Boolean(rem.done) }))
+      return saved
+        .filter(rem => rem && typeof rem.title === 'string')
+        .map(rem => ({ id: rem.id, title: rem.title, done: Boolean(rem.done) }))
     }
   } catch {
     /* אם אין גישה ל-localStorage מתחילים מרשימה ריקה */
@@ -35,8 +22,9 @@ function loadReminders() {
 
 export default function Reminders() {
   const [reminders, setReminders] = useState(loadReminders)
-  const [showAdd, setShowAdd] = useState(false)
-  const [newReminder, setNewReminder] = useState({ title: '', time: '', type: 'general' })
+  const [formOpen, setFormOpen] = useState(false)
+  const [editingId, setEditingId] = useState(null)
+  const [draft, setDraft] = useState('')
 
   useEffect(() => {
     try {
@@ -52,22 +40,47 @@ export default function Reminders() {
     ))
   }
 
-  const addReminder = () => {
-    if (!newReminder.title.trim() || !newReminder.time) return
-    setReminders(prev => [...prev, {
-      id: Date.now(),
-      ...newReminder,
-      title: newReminder.title.trim(),
-      done: false,
-    }].sort((a, b) => a.time.localeCompare(b.time)))
-    // משאירים את הטופס פתוח ומרוקן כדי שאפשר יהיה לרשום כמה תזכורות ברצף
-    setNewReminder({ title: '', time: '', type: 'general' })
+  const openAdd = () => {
+    setEditingId(null)
+    setDraft('')
+    setFormOpen(true)
+  }
+
+  const openEdit = (rem) => {
+    setEditingId(rem.id)
+    setDraft(rem.title)
+    setFormOpen(true)
+  }
+
+  const closeForm = () => {
+    setFormOpen(false)
+    setEditingId(null)
+    setDraft('')
+  }
+
+  const saveDraft = () => {
+    const title = draft.trim()
+    if (!title) return
+
+    if (editingId !== null) {
+      setReminders(prev => prev.map(rem =>
+        rem.id === editingId ? { ...rem, title } : rem
+      ))
+      closeForm()
+      return
+    }
+
+    setReminders(prev => [...prev, { id: Date.now(), title, done: false }])
+    // בהוספה משאירים את הטופס פתוח ומרוקן כדי שאפשר יהיה לרשום כמה תזכורות ברצף
+    setDraft('')
   }
 
   const deleteReminder = (id) => {
     setReminders(prev => prev.filter(rem => rem.id !== id))
+    if (editingId === id) closeForm()
   }
 
+  const isEditing = editingId !== null
   const doneCount = reminders.filter(rem => rem.done).length
 
   return (
@@ -88,7 +101,10 @@ export default function Reminders() {
           <p className="rem-summary">{doneCount} מתוך {reminders.length} בוצעו</p>
           <div className="rem-list">
             {reminders.map((rem) => (
-              <div key={rem.id} className={`card rem-item ${rem.done ? 'rem-done' : ''}`}>
+              <div
+                key={rem.id}
+                className={`card rem-item ${rem.done ? 'rem-done' : ''} ${editingId === rem.id ? 'rem-editing' : ''}`}
+              >
                 <button
                   type="button"
                   className="rem-main"
@@ -98,62 +114,58 @@ export default function Reminders() {
                   <span className={`rem-check ${rem.done ? 'checked' : ''}`}>
                     {rem.done ? '✓' : ''}
                   </span>
-                  <span className="rem-emoji">{typeEmoji[rem.type]}</span>
-                  <span className="rem-info">
-                    <span className="rem-title">{rem.title}</span>
-                    <span className="rem-meta">
-                      <span className="rem-time">⏰ {rem.time}</span>
-                      <span className="tag rem-tag">{typeLabels[rem.type]}</span>
-                    </span>
-                  </span>
+                  <span className="rem-title">{rem.title}</span>
                 </button>
-                <button
-                  className="rem-delete"
-                  aria-label="מחיקת תזכורת"
-                  onClick={() => deleteReminder(rem.id)}
-                >
-                  🗑️
-                </button>
+                <div className="rem-actions">
+                  <button
+                    className="rem-icon-btn"
+                    aria-label="עריכת תזכורת"
+                    onClick={() => openEdit(rem)}
+                  >
+                    ✏️
+                  </button>
+                  <button
+                    className="rem-icon-btn"
+                    aria-label="מחיקת תזכורת"
+                    onClick={() => deleteReminder(rem.id)}
+                  >
+                    🗑️
+                  </button>
+                </div>
               </div>
             ))}
           </div>
         </>
       )}
 
-      {!showAdd ? (
-        <button className="btn btn-primary rem-add-btn" onClick={() => setShowAdd(true)}>
+      {!formOpen ? (
+        <button className="btn btn-primary rem-add-btn" onClick={openAdd}>
           + הוסיפו תזכורת
         </button>
       ) : (
         <div className="card rem-add-form">
+          <h2 className="rem-form-title">
+            {isEditing ? '✏️ עריכת תזכורת' : '+ תזכורת חדשה'}
+          </h2>
           <input
             className="input-field"
-            placeholder="שם התזכורת"
-            value={newReminder.title}
-            onChange={(e) => setNewReminder(prev => ({ ...prev, title: e.target.value }))}
+            placeholder="מה חשוב לזכור?"
+            value={draft}
+            autoFocus
+            onChange={(e) => setDraft(e.target.value)}
+            onKeyDown={(e) => { if (e.key === 'Enter') saveDraft() }}
           />
-          <input
-            type="time"
-            className="input-field"
-            value={newReminder.time}
-            onChange={(e) => setNewReminder(prev => ({ ...prev, time: e.target.value }))}
-          />
-          <select
-            className="input-field"
-            value={newReminder.type}
-            onChange={(e) => setNewReminder(prev => ({ ...prev, type: e.target.value }))}
-          >
-            <option value="general">כללי</option>
-            <option value="medication">תרופות</option>
-            <option value="therapy">טיפול</option>
-            <option value="self-care">דאגה עצמית</option>
-            <option value="activity">פעילות</option>
-          </select>
           <div className="rem-add-actions">
-            <button className="btn btn-primary" onClick={addReminder}>הוסף</button>
-            <button className="btn btn-secondary" onClick={() => setShowAdd(false)}>סיום</button>
+            <button className="btn btn-primary" onClick={saveDraft}>
+              {isEditing ? 'שמירה' : 'הוסף'}
+            </button>
+            <button className="btn btn-secondary" onClick={closeForm}>
+              {isEditing ? 'ביטול' : 'סיום'}
+            </button>
           </div>
-          <p className="rem-add-hint">אפשר להוסיף עוד תזכורות בזו אחר זו — לחצו "סיום" כשתסיימו.</p>
+          {!isEditing && (
+            <p className="rem-add-hint">אפשר להוסיף עוד תזכורות בזו אחר זו — לחצו "סיום" כשתסיימו.</p>
+          )}
         </div>
       )}
     </div>

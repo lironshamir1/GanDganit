@@ -2,7 +2,7 @@ import { Routes, Route, useLocation } from 'react-router-dom'
 import { useEffect } from 'react'
 import twemoji from '@twemoji/api'
 import './App.css'
-import Navbar from './components/Navbar'
+import BackHome from './components/BackHome'
 import Landing from './pages/Landing'
 import Home from './pages/Home'
 import QandA from './pages/QandA'
@@ -25,6 +25,7 @@ function App() {
   const location = useLocation()
   const isLanding = location.pathname === '/'
   const isPoster = location.pathname === '/poster' || location.pathname === '/tips-poster'
+  const isHome = location.pathname === '/home'
 
   useEffect(() => {
     twemoji.parse(document.body, { folder: 'svg', ext: '.svg' })
@@ -51,7 +52,7 @@ function App() {
         <Route path="/poster" element={<Poster />} />
         <Route path="/tips-poster" element={<TipsCards />} />
       </Routes>
-      {!isLanding && !isPoster && <Navbar />}
+      {!isLanding && !isPoster && !isHome && <BackHome />}
     </>
   )
 }
