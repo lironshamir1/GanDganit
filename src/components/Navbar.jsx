@@ -6,7 +6,6 @@ const navItems = [
   { path: '/now', label: 'עכשיו בגן', icon: '📌' },
   { path: '/qa', label: 'שאלות', icon: '💬' },
   { path: '/activities', label: 'פעילויות', icon: '🎨' },
-  { path: '/inspiration', label: 'השראה', icon: '✨' },
 ]
 
 export default function Navbar() {
