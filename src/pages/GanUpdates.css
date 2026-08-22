@@ -1,61 +1,11 @@
 /* Add button */
-.gan-add-btn {
-  width: 100%;
-  margin-bottom: 16px;
-  font-size: 1.05rem;
-}
 
 /* Add/edit form */
-.gan-add-form {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-bottom: 16px;
-}
 
-.gan-form-title {
-  font-size: 1.1rem;
-  text-align: center;
-}
 
-.gan-content-input {
-  resize: vertical;
-  min-height: 70px;
-}
 
-.gan-type-picker {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
 
-.gan-type-btn {
-  padding: 8px 14px;
-  border-radius: 20px;
-  font-size: 0.85rem;
-  font-weight: 500;
-  background: #f5f5f5;
-  transition: all var(--transition);
-}
 
-.gan-type-btn:hover {
-  background: #e8e8e8;
-}
-
-.gan-type-btn.selected {
-  background: var(--type-color);
-  color: white;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-}
-
-.gan-form-actions {
-  display: flex;
-  gap: 10px;
-}
-
-.gan-form-actions .btn {
-  flex: 1;
-}
 
 /* Empty state */
 .gan-empty {
@@ -128,22 +78,4 @@
   margin-bottom: 10px;
 }
 
-.gan-update-actions {
-  display: flex;
-  gap: 6px;
-  justify-content: flex-end;
-}
 
-.gan-action-btn {
-  background: none;
-  font-size: 0.85rem;
-  padding: 4px 8px;
-  opacity: 0.4;
-  transition: opacity var(--transition);
-  border-radius: 8px;
-}
-
-.gan-action-btn:hover {
-  opacity: 1;
-  background: rgba(0, 0, 0, 0.04);
-}
