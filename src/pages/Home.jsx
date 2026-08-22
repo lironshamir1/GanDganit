@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { seasonalContent } from '../data/seasonalContent'
+import TipSplash from '../components/TipSplash'
 import './Home.css'
 
 const GAN_UPDATES_STORAGE_KEY = 'gandganit-gan-updates'
@@ -98,6 +99,9 @@ export default function Home() {
 
   return (
     <div className="page home-page">
+      {/* שכבת הטיפ היומי — נפרסת על כל המסך בפתיחת האפליקציה */}
+      <TipSplash tip={tip} />
+
       <div className={`home-header ${visible ? 'visible' : ''}`}>
         {todayLabel && <p className="home-date">{todayLabel}</p>}
         <h1 className="home-title">{greeting}, גן דגנית</h1>

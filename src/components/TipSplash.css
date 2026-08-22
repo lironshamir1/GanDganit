@@ -1,0 +1,112 @@
+.tip-splash {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 28px;
+  direction: rtl;
+  cursor: pointer;
+  background: linear-gradient(160deg, #FFF8F0 0%, #FFF1EC 55%, #FDE4DC 100%);
+  animation: tipSplashIn 0.45s ease-out;
+}
+
+.tip-splash.leaving {
+  animation: tipSplashOut 0.45s ease-in forwards;
+}
+
+@keyframes tipSplashIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes tipSplashOut {
+  from { opacity: 1; }
+  to { opacity: 0; visibility: hidden; }
+}
+
+.tip-splash-inner {
+  width: 100%;
+  max-width: 460px;
+  text-align: center;
+  animation: tipSplashRise 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes tipSplashRise {
+  from { opacity: 0; transform: translateY(16px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.tip-splash-icon {
+  display: block;
+  font-size: 3.4rem;
+  line-height: 1;
+  margin-bottom: 16px;
+}
+
+.tip-splash-label {
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #d97a63;
+  margin-bottom: 18px;
+}
+
+.tip-splash-text {
+  font-size: 1.55rem;
+  font-weight: 500;
+  line-height: 1.65;
+  color: var(--text);
+}
+
+/* מראה כמה זמן נשאר, כדי שההמתנה לא תרגיש תקועה */
+.tip-splash-bar {
+  width: 120px;
+  height: 4px;
+  margin: 32px auto 0;
+  border-radius: 2px;
+  background: rgba(232, 144, 122, 0.22);
+  overflow: hidden;
+}
+
+.tip-splash-bar-fill {
+  height: 100%;
+  width: 100%;
+  border-radius: 2px;
+  background: linear-gradient(135deg, #e8907a, var(--accent-dark));
+  transform-origin: right center;
+  animation: tipSplashCountdown 5s linear forwards;
+}
+
+@keyframes tipSplashCountdown {
+  from { transform: scaleX(1); }
+  to { transform: scaleX(0); }
+}
+
+.tip-splash-skip {
+  margin-top: 14px;
+  font-size: 0.8rem;
+  color: var(--text-light);
+}
+
+@media (max-width: 380px) {
+  .tip-splash-text {
+    font-size: 1.35rem;
+  }
+  .tip-splash-icon {
+    font-size: 2.9rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tip-splash,
+  .tip-splash.leaving,
+  .tip-splash-inner {
+    animation-duration: 0.01ms;
+  }
+  .tip-splash-bar-fill {
+    animation: none;
+    transform: scaleX(0);
+  }
+}
