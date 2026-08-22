@@ -37,6 +37,16 @@
 
 export const ganUpdates = [
   {
+    id: '2026-08-26-asifat-horim',
+    title: 'אסיפת הורים בגן',
+    content:
+      'ביום רביעי, ה-26.8, בשעה 19:00 נקיים אסיפת הורים בגן. מצפות לראותכם!',
+    type: 'event',
+    date: '22.8.2026',
+    time: '23:20',
+    pinned: true,
+  },
+  {
     id: '2026-03-16-zoom-lilach',
     title: 'מפגש זום עם לילך הקלינאית',
     content:
@@ -44,7 +54,6 @@ export const ganUpdates = [
     type: 'event',
     date: '16.3.2026',
     time: '08:00',
-    pinned: true,
   },
 ]
 
