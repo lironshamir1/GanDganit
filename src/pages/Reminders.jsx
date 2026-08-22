@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { ganReminders, GAN_REMINDERS_DONE_KEY } from '../data/ganReminders'
 import './Reminders.css'
 
 /* v3: תזכורת היא שם בלבד — בלי שעה ובלי קטגוריה.
@@ -20,11 +21,23 @@ function loadReminders() {
   return []
 }
 
+/* תזכורות הגן עצמן מגיעות מהקוד; רק הסימון "בוצעה" הוא של ההורה */
+function loadGanDone() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(GAN_REMINDERS_DONE_KEY))
+    if (Array.isArray(saved)) return saved.filter(id => typeof id === 'string')
+  } catch {
+    /* אם אין גישה ל-localStorage מתחילים בלי סימונים */
+  }
+  return []
+}
+
 export default function Reminders() {
   const [reminders, setReminders] = useState(loadReminders)
   const [formOpen, setFormOpen] = useState(false)
   const [editingId, setEditingId] = useState(null)
   const [draft, setDraft] = useState('')
+  const [ganDone, setGanDone] = useState(loadGanDone)
 
   useEffect(() => {
     try {
@@ -33,6 +46,18 @@ export default function Reminders() {
       /* אם אין גישה ל-localStorage פשוט לא שומרים */
     }
   }, [reminders])
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(GAN_REMINDERS_DONE_KEY, JSON.stringify(ganDone))
+    } catch {
+      /* אם אין גישה ל-localStorage פשוט לא שומרים */
+    }
+  }, [ganDone])
+
+  const toggleGanDone = (id) => {
+    setGanDone(prev => prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id])
+  }
 
   const toggleDone = (id) => {
     setReminders(prev => prev.map(rem =>
@@ -86,6 +111,36 @@ export default function Reminders() {
   return (
     <div className="page">
       <h1 className="page-title">🔔 תזכורות</h1>
+
+      {ganReminders.length > 0 && (
+        <section className="rem-gan-section">
+          <h2 className="rem-section-title">📌 תזכורות מהגן</h2>
+          <div className="rem-list">
+            {ganReminders.map((rem) => {
+              const done = ganDone.includes(rem.id)
+              return (
+                <button
+                  key={rem.id}
+                  type="button"
+                  className={`card rem-item rem-gan-item ${done ? 'rem-done' : ''}`}
+                  aria-pressed={done}
+                  onClick={() => toggleGanDone(rem.id)}
+                >
+                  <span className={`rem-check ${done ? 'checked' : ''}`}>
+                    {done ? '✓' : ''}
+                  </span>
+                  <span className="rem-gan-text">
+                    <span className="rem-title">{rem.title}</span>
+                    {rem.note && <span className="rem-gan-note">{rem.note}</span>}
+                  </span>
+                </button>
+              )
+            })}
+          </div>
+        </section>
+      )}
+
+      <h2 className="rem-section-title">📝 התזכורות שלי</h2>
 
       {reminders.length === 0 ? (
         <div className="card rem-empty">

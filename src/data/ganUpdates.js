@@ -37,15 +37,6 @@
 
 export const ganUpdates = [
   {
-    id: '2026-08-22-mismachim-vedochot',
-    title: 'מסמכים ודוחות',
-    content:
-      'במידה ויש בידכם דוחות, אבחונים או מסמכים רפואיים חדשים, נשמח אם תוכלו להעביר לגן בהקדם.',
-    type: 'reminder',
-    date: '22.8.2026',
-    time: '23:40',
-  },
-  {
     id: '2026-08-26-asifat-horim',
     title: 'אסיפת הורים בגן',
     content:
