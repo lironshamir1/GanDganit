@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
+import { createPortal } from 'react-dom'
 import './Toolbox.css'
 
 function HourglassSVG({ progress, running }) {
@@ -313,44 +314,74 @@ const tools = [
   { id: 'dice', title: 'קובייה', icon: '🎲', component: Dice },
 ]
 
-export default function Toolbox() {
-  const [visible, setVisible] = useState(false)
+/* ארגז הכלים אינו עמוד אלא פופ-אפ שנפתח מאייקון קבוע בפינה
+   הימנית העליונה, כדי שהכלים יהיו זמינים מכל מקום באפליקציה. */
+function ToolboxPopup({ onClose }) {
   const [activeTool, setActiveTool] = useState(null)
 
   useEffect(() => {
-    setVisible(true)
-  }, [])
+    const onKey = (e) => { if (e.key === 'Escape') onClose() }
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
+  }, [onClose])
 
   const ActiveComponent = activeTool ? tools.find(t => t.id === activeTool)?.component : null
 
-  if (ActiveComponent) {
-    return (
-      <div className="toolbox-fullscreen">
-        <button className="toolbox-back" onClick={() => setActiveTool(null)}>
-          ← חזרה לארגז כלים
-        </button>
-        <ActiveComponent />
+  return createPortal(
+    <div className="toolbox-overlay" onClick={onClose}>
+      <div className="toolbox-sheet" onClick={(e) => e.stopPropagation()}>
+        <div className="toolbox-sheet-bar">
+          {ActiveComponent ? (
+            <button type="button" className="toolbox-sheet-back" onClick={() => setActiveTool(null)}>
+              → לכל הכלים
+            </button>
+          ) : (
+            <span className="toolbox-sheet-title">🧰 ארגז כלים</span>
+          )}
+          <button type="button" className="toolbox-sheet-close" onClick={onClose} aria-label="סגירת ארגז הכלים">
+            ✕
+          </button>
+        </div>
+
+        <div className="toolbox-sheet-body">
+          {ActiveComponent ? (
+            <ActiveComponent />
+          ) : (
+            <div className="toolbox-grid visible">
+              {tools.map(tool => (
+                <button
+                  key={tool.id}
+                  type="button"
+                  className="toolbox-item"
+                  onClick={() => setActiveTool(tool.id)}
+                >
+                  <span className="toolbox-item-icon">{tool.icon}</span>
+                  <span className="toolbox-item-title">{tool.title}</span>
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
-    )
-  }
+    </div>,
+    document.body
+  )
+}
+
+export default function ToolboxButton() {
+  const [open, setOpen] = useState(false)
 
   return (
-    <div className="page toolbox-page">
-      <div className={`toolbox-header ${visible ? 'visible' : ''}`}>
-        <h1 className="toolbox-title">🧰 ארגז כלים</h1>
-      </div>
-      <div className={`toolbox-grid ${visible ? 'visible' : ''}`}>
-        {tools.map(tool => (
-          <button
-            key={tool.id}
-            className="toolbox-item"
-            onClick={() => setActiveTool(tool.id)}
-          >
-            <span className="toolbox-item-icon">{tool.icon}</span>
-            <span className="toolbox-item-title">{tool.title}</span>
-          </button>
-        ))}
-      </div>
-    </div>
+    <>
+      <button
+        type="button"
+        className="toolbox-fab"
+        onClick={() => setOpen(true)}
+        aria-label="ארגז כלים"
+      >
+        🧰
+      </button>
+      {open && <ToolboxPopup onClose={() => setOpen(false)} />}
+    </>
   )
 }

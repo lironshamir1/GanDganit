@@ -1,27 +1,6 @@
-.toolbox-page {
-  padding-top: 30px;
-}
 
-.toolbox-header {
-  text-align: center;
-  margin-bottom: 28px;
-  opacity: 0;
-  transform: translateY(-10px);
-  transition: all 0.5s ease;
-}
 
-.toolbox-header.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
 
-.toolbox-title {
-  font-size: 2rem;
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
 
 .toolbox-grid {
   display: flex;
@@ -80,32 +59,14 @@
 }
 
 /* Fullscreen tool view */
-.toolbox-fullscreen {
-  position: fixed;
-  inset: 0;
-  background: linear-gradient(180deg, #f8f6ff, #e8f4f4);
-  z-index: 1000;
-  display: flex;
-  flex-direction: column;
-}
 
-.toolbox-back {
-  background: none;
-  border: none;
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: var(--primary-dark);
-  padding: 16px 20px;
-  cursor: pointer;
-  text-align: right;
-  font-family: inherit;
-}
+
 
 .fullscreen-tool {
-  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
+  min-height: 320px;
 }
 
 /* Shared button styles */
@@ -266,4 +227,117 @@
   font-size: 2.2rem;
   font-weight: 800;
   color: var(--primary-dark);
+}
+
+/* ---------- אייקון קבוע בפינה הימנית העליונה ---------- */
+.toolbox-fab {
+  position: fixed;
+  top: max(14px, env(safe-area-inset-top));
+  right: 14px;
+  z-index: 150;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 3px 14px rgba(0, 0, 0, 0.13);
+  font-size: 1.4rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.toolbox-fab:hover {
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.18);
+  transform: translateY(-1px);
+}
+
+.toolbox-fab:active {
+  transform: scale(0.92);
+}
+
+/* ---------- הפופ-אפ ---------- */
+.toolbox-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 250;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  direction: rtl;
+  background: rgba(45, 35, 32, 0.5);
+  animation: toolboxFade 0.25s ease-out;
+}
+
+@keyframes toolboxFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.toolbox-sheet {
+  width: 100%;
+  max-width: 600px;
+  max-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  border-radius: 24px 24px 0 0;
+  box-shadow: 0 -6px 30px rgba(0, 0, 0, 0.25);
+  animation: toolboxRise 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes toolboxRise {
+  from { transform: translateY(28px); }
+  to { transform: translateY(0); }
+}
+
+.toolbox-sheet-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 18px 12px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+  flex-shrink: 0;
+}
+
+.toolbox-sheet-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.toolbox-sheet-back {
+  background: none;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--primary-dark);
+  padding: 4px 0;
+}
+
+.toolbox-sheet-close {
+  background: rgba(0, 0, 0, 0.06);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: 0.95rem;
+  color: var(--text-light);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.toolbox-sheet-close:active {
+  transform: scale(0.9);
+}
+
+.toolbox-sheet-body {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 18px 18px max(18px, env(safe-area-inset-bottom));
 }
