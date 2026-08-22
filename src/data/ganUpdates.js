@@ -37,6 +37,15 @@
 
 export const ganUpdates = [
   {
+    id: '2026-08-22-mismachim-vedochot',
+    title: 'מסמכים ודוחות',
+    content:
+      'במידה ויש בידכם דוחות, אבחונים או מסמכים רפואיים חדשים, נשמח אם תוכלו להעביר לגן בהקדם.',
+    type: 'reminder',
+    date: '22.8.2026',
+    time: '23:40',
+  },
+  {
     id: '2026-08-26-asifat-horim',
     title: 'אסיפת הורים בגן',
     content:
@@ -45,15 +54,6 @@ export const ganUpdates = [
     date: '22.8.2026',
     time: '23:20',
     pinned: true,
-  },
-  {
-    id: '2026-03-16-zoom-lilach',
-    title: 'מפגש זום עם לילך הקלינאית',
-    content:
-      'מחר ה-17/3 בשעה 10:00 ניפגש בזום עם לילך הקלינאית. נבקש מכל ילד להביא בובת חיה למפגש. מצפות לפגוש אתכם!',
-    type: 'event',
-    date: '16.3.2026',
-    time: '08:00',
   },
 ]
 
