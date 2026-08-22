@@ -162,6 +162,9 @@
 
 .now-handout-image {
   display: block;
+  width: 100%;
+  padding: 0;
+  cursor: pointer;
   border-radius: var(--radius-sm);
   overflow: hidden;
   border: 1px solid rgba(232, 144, 122, 0.25);
@@ -233,4 +236,68 @@
   .now-handout-benefits li {
     font-size: 0.97rem;
   }
+}
+
+/* ---------- תצוגת הטבלה בגודל מלא, בתוך האפליקציה ---------- */
+.table-viewer {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: flex;
+  flex-direction: column;
+  direction: rtl;
+  background: #2D2320;
+  animation: tableViewerIn 0.25s ease-out;
+}
+
+@keyframes tableViewerIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.table-viewer-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: max(12px, env(safe-area-inset-top)) 16px 12px;
+  flex-shrink: 0;
+}
+
+.table-viewer-close {
+  background: rgba(255, 255, 255, 0.95);
+  color: var(--text);
+  border-radius: 20px;
+  padding: 10px 20px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.table-viewer-close:active {
+  transform: scale(0.96);
+}
+
+.table-viewer-hint {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.75);
+  text-align: left;
+}
+
+/* הטבלה רחבה ושכובה — מוצגת בגודל קריא וניתנת להזזה הצידה */
+.table-viewer-scroll {
+  flex: 1;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  display: flex;
+  align-items: center;
+  padding: 0 16px max(16px, env(safe-area-inset-bottom));
+}
+
+.table-viewer-scroll img {
+  min-width: 880px;
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  background: white;
 }

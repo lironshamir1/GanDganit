@@ -1,8 +1,38 @@
+import { useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { seasonalContent } from '../data/seasonalContent'
 import './NowAtGan.css'
 
+/* הטבלה נפתחת בתוך האפליקציה ולא בכתובת חיצונית: באפליקציה
+   מותקנת (standalone) אין כפתור "חזור" של הדפדפן, והורה שנפתחה
+   לו התמונה בכתובת נפרדת נשאר תקוע בלי דרך חזרה. */
+function TableViewer({ image, alt, onClose }) {
+  useEffect(() => {
+    const onKey = (e) => { if (e.key === 'Escape') onClose() }
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
+  }, [onClose])
+
+  return createPortal(
+    <div className="table-viewer" onClick={onClose}>
+      <div className="table-viewer-bar">
+        <button type="button" className="table-viewer-close" onClick={onClose}>
+          ✕ סגירה
+        </button>
+        <span className="table-viewer-hint">אפשר להזיז את הטבלה הצידה</span>
+      </div>
+
+      <div className="table-viewer-scroll" onClick={(e) => e.stopPropagation()}>
+        <img src={image} alt={alt} />
+      </div>
+    </div>,
+    document.body
+  )
+}
+
 export default function NowAtGan() {
   const { badge, title, subtitle, intro, guideTitle, guide, handout } = seasonalContent
+  const [viewerOpen, setViewerOpen] = useState(false)
 
   return (
     <div className="page now-page">
@@ -26,8 +56,8 @@ export default function NowAtGan() {
               <span className="now-topic-step">{idx + 1}/{guide.length}</span>
             </div>
             <ul className="now-topic-list">
-              {topic.items.map((item, idx) => (
-                <li key={idx}>{item}</li>
+              {topic.items.map((item, i) => (
+                <li key={i}>{item}</li>
               ))}
             </ul>
           </article>
@@ -42,14 +72,13 @@ export default function NowAtGan() {
             {handout.intro && <p className="now-handout-intro">{handout.intro}</p>}
 
             {handout.image && (
-              <a
+              <button
+                type="button"
                 className="now-handout-image"
-                href={handout.image}
-                target="_blank"
-                rel="noopener noreferrer"
+                onClick={() => setViewerOpen(true)}
               >
                 <img src={handout.image} alt={handout.imageAlt || handout.title} />
-              </a>
+              </button>
             )}
             {handout.caption && <p className="now-handout-caption">{handout.caption}</p>}
 
@@ -62,6 +91,14 @@ export default function NowAtGan() {
             )}
           </div>
         </section>
+      )}
+
+      {viewerOpen && handout?.image && (
+        <TableViewer
+          image={handout.image}
+          alt={handout.imageAlt || handout.title}
+          onClose={() => setViewerOpen(false)}
+        />
       )}
     </div>
   )
