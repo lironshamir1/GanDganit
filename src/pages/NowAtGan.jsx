@@ -13,16 +13,17 @@ export default function NowAtGan() {
       </header>
 
       <section className="now-section">
-        <h2 className="now-section-title">💛 {guideTitle}</h2>
-        {intro && <p className="now-intro card">{intro}</p>}
+        <h2 className="now-section-title"><span aria-hidden>💛</span> {guideTitle}</h2>
+        {intro && <p className="now-intro">{intro}</p>}
 
-        {guide.map((topic) => (
+        {guide.map((topic, idx) => (
           <article key={topic.id} className="card now-topic" style={{ '--topic-color': topic.color }}>
             <div className="now-topic-header">
               <span className="now-topic-icon" style={{ background: topic.bg }}>
                 {topic.icon}
               </span>
               <h3 className="now-topic-title">{topic.title}</h3>
+              <span className="now-topic-step">{idx + 1}/{guide.length}</span>
             </div>
             <ul className="now-topic-list">
               {topic.items.map((item, idx) => (
@@ -35,7 +36,7 @@ export default function NowAtGan() {
 
       {handout && (
         <section className="now-section">
-          <h2 className="now-section-title">🗓️ {handout.title}</h2>
+          <h2 className="now-section-title"><span aria-hidden>🗓️</span> {handout.title}</h2>
 
           <div className="card now-handout">
             {handout.intro && <p className="now-handout-intro">{handout.intro}</p>}
