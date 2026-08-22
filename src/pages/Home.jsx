@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { seasonalContent } from '../data/seasonalContent'
 import { latestUpdateId, UPDATES_SEEN_KEY } from '../data/ganUpdates'
+import { ganReminders } from '../data/ganReminders'
 import TipSplash from '../components/TipSplash'
 import './Home.css'
 
@@ -147,7 +148,23 @@ export default function Home() {
         <Link to="/reminders" className="bottom-card bottom-card-reminders">
           <span className="bottom-card-icon">🔔</span>
           <span className="bottom-card-title">תזכורות</span>
-          <span className="bottom-card-text">מה שחשוב לזכור</span>
+
+          {/* התזכורות של הגן מוצגות כאן במלואן, כדי שההורה יראה
+              אותן בלי להיכנס לעמוד */}
+          {ganReminders.length > 0 ? (
+            <span className="bottom-card-reminders-list">
+              {ganReminders.map((rem) => (
+                <span key={rem.id} className="bottom-card-reminder">
+                  <span className="bottom-card-reminder-title">📌 {rem.title}</span>
+                  {rem.note && (
+                    <span className="bottom-card-reminder-note">{rem.note}</span>
+                  )}
+                </span>
+              ))}
+            </span>
+          ) : (
+            <span className="bottom-card-text">אין כרגע תזכורות מהגן</span>
+          )}
         </Link>
       </div>
     </div>

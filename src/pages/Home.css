@@ -273,3 +273,36 @@
   line-height: 1.45;
   color: var(--text-light);
 }
+
+/* תזכורות הגן על הכרטיס עצמו — כדי לקרוא אותן בלי להיכנס לעמוד */
+.bottom-card-reminders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  margin-top: 6px;
+}
+
+.bottom-card-reminder {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(221, 160, 221, 0.3);
+}
+
+.bottom-card-reminder-title {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #6B5B95;
+  line-height: 1.4;
+}
+
+.bottom-card-reminder-note {
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: var(--text-light);
+  word-break: break-word;
+}
