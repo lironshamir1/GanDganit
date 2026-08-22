@@ -1,3 +1,51 @@
+/* כותרת מקטע — מפרידה בין תזכורות הגן לתזכורות של ההורה */
+.rem-section-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 10px;
+  padding-right: 2px;
+}
+
+.rem-gan-section {
+  margin-bottom: 22px;
+}
+
+/* תזכורת שהגן פרסם: ההורה יכול לסמן שבוצעה, אבל לא לערוך או למחוק —
+   ולכן כל הכרטיס הוא הכפתור, בלי שורת הפעולות שיש לתזכורת אישית. */
+.rem-gan-item {
+  width: 100%;
+  gap: 12px;
+  align-items: flex-start;
+  cursor: pointer;
+  text-align: right;
+  background: linear-gradient(135deg, #FFF6F2, #FFF1EC);
+  border-color: rgba(232, 144, 122, 0.35);
+}
+
+.rem-gan-item .rem-check {
+  margin-top: 2px;
+}
+
+.rem-gan-text {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  flex: 1;
+  min-width: 0;
+}
+
+.rem-gan-note {
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: var(--text-light);
+  word-break: break-word;
+}
+
+.rem-gan-item.rem-done .rem-gan-note {
+  color: var(--text-muted);
+}
+
 .rem-summary {
   font-size: 0.85rem;
   font-weight: 600;
