@@ -1,20 +1,14 @@
 import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { seasonalContent } from '../data/seasonalContent'
+import { latestUpdateId, UPDATES_SEEN_KEY } from '../data/ganUpdates'
 import TipSplash from '../components/TipSplash'
 import './Home.css'
 
-const GAN_UPDATES_STORAGE_KEY = 'gandganit-gan-updates'
-
 function hasNewUpdates() {
+  if (!latestUpdateId) return false
   try {
-    const lastSeen = localStorage.getItem('gandganit-updates-last-seen')
-    const saved = localStorage.getItem(GAN_UPDATES_STORAGE_KEY)
-    if (!saved) return true
-    const updates = JSON.parse(saved)
-    if (updates.length === 0) return false
-    const latestDate = updates[0]?.date + ' ' + updates[0]?.time
-    return !lastSeen || lastSeen !== latestDate
+    return localStorage.getItem(UPDATES_SEEN_KEY) !== latestUpdateId
   } catch {
     return false
   }
