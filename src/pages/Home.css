@@ -252,3 +252,62 @@
   font-weight: 500;
   margin-bottom: 6px;
 }
+
+/* שורת התחתית: תזכורות ורגע לעצמי, מחוץ לרשת הכרטיסיות */
+.home-bottom-row {
+  display: grid;
+  gap: 14px;
+  margin-top: 20px;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.5s ease 0.4s;
+}
+
+.home-bottom-row.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.bottom-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  padding: 20px 14px;
+  border-radius: var(--radius);
+  text-align: center;
+  transition: box-shadow var(--transition), transform var(--transition);
+}
+
+.bottom-card:active {
+  transform: scale(0.97);
+}
+
+.bottom-card-reminders {
+  background: linear-gradient(135deg, #F8E8F8, #EBDCEF);
+  border: 1px solid rgba(221, 160, 221, 0.35);
+}
+
+.bottom-card-reminders:hover {
+  box-shadow: 0 6px 20px rgba(221, 160, 221, 0.28);
+}
+
+
+
+.bottom-card-icon {
+  font-size: 1.9rem;
+  line-height: 1;
+  margin-bottom: 2px;
+}
+
+.bottom-card-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #6B5B95;
+}
+
+.bottom-card-text {
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: var(--text-light);
+}

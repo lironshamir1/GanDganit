@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { seasonalContent } from '../data/seasonalContent'
+import TipSplash from '../components/TipSplash'
 import './Home.css'
 
 const GAN_UPDATES_STORAGE_KEY = 'gandganit-gan-updates'
@@ -26,8 +27,6 @@ const modules = [
   { path: '/boundaries', title: 'הצבת גבולות', icon: '🛡️', desc: 'גבולות באהבה ובעקביות', color: '#F2A07B', bg: 'linear-gradient(135deg, #FDEBD0, #F2A07B)' },
   { path: '/qa', title: 'שאלות ותשובות', icon: '💬', desc: 'מענה מקצועי להורים', color: '#7EC8C8', bg: 'linear-gradient(135deg, #E0F4F4, #B5E0E0)' },
   { path: '/tasks', title: 'לוח משימות', icon: '🏆', desc: 'משימות יומיות ותגמולים', color: '#F5C6D0', bg: 'linear-gradient(135deg, #FCE4EC, #F5C6D0)' },
-  { path: '/inspiration', title: 'רגע של השראה', icon: '✨', desc: 'חיזוק ותמיכה להורים', color: '#B8A9D4', bg: 'linear-gradient(135deg, #F3E5F5, #D4C9E8)' },
-  { path: '/reminders', title: 'תזכורות', icon: '🔔', desc: 'תזכורות לטיפולים ומשימות', color: '#DDA0DD', bg: 'linear-gradient(135deg, #F8E8F8, #E8D0E8)' },
   { path: '/toolbox', title: 'ארגז כלים', icon: '🧰', desc: 'שעון חול, טיימר וקובייה', color: '#E8B87D', bg: 'linear-gradient(135deg, #FFF3E0, #FFE0B2)' },
   { path: '/about', title: 'מי אנחנו', icon: '👩‍🏫', desc: 'קצת עלינו ועל הגן', color: '#e8907a', bg: 'linear-gradient(135deg, #FFF5F3, #F4C7BA)' },
 ]
@@ -98,6 +97,9 @@ export default function Home() {
 
   return (
     <div className="page home-page">
+      {/* שכבת הטיפ היומי — נפרסת על כל המסך בפתיחת האפליקציה */}
+      <TipSplash tip={tip} />
+
       <div className={`home-header ${visible ? 'visible' : ''}`}>
         {todayLabel && <p className="home-date">{todayLabel}</p>}
         <h1 className="home-title">{greeting}, גן דגנית</h1>
@@ -153,6 +155,14 @@ export default function Home() {
             <p className="module-desc">{mod.desc}</p>
           </Link>
         ))}
+      </div>
+
+      <div className={`home-bottom-row ${visible ? 'visible' : ''}`}>
+        <Link to="/reminders" className="bottom-card bottom-card-reminders">
+          <span className="bottom-card-icon">🔔</span>
+          <span className="bottom-card-title">תזכורות</span>
+          <span className="bottom-card-text">מה שחשוב לזכור</span>
+        </Link>
       </div>
     </div>
   )
