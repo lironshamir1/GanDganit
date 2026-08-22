@@ -9,16 +9,12 @@
   direction: rtl;
   cursor: pointer;
   background: linear-gradient(160deg, #FFF8F0 0%, #FFF1EC 55%, #FDE4DC 100%);
-  animation: tipSplashIn 0.45s ease-out;
+  /* בלי הנפשת כניסה על הרקע: בזמן שהוא היה שקוף, האייקונים
+     הקבועים בפינות הבהבו מבעד לשכבה. התוכן עדיין נכנס ברכות. */
 }
 
 .tip-splash.leaving {
   animation: tipSplashOut 0.45s ease-in forwards;
-}
-
-@keyframes tipSplashIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
 }
 
 @keyframes tipSplashOut {
@@ -100,7 +96,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .tip-splash,
   .tip-splash.leaving,
   .tip-splash-inner {
     animation-duration: 0.01ms;
