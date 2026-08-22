@@ -27,7 +27,6 @@ const modules = [
   { path: '/boundaries', title: 'הצבת גבולות', icon: '🛡️', desc: 'גבולות באהבה ובעקביות', color: '#F2A07B', bg: 'linear-gradient(135deg, #FDEBD0, #F2A07B)' },
   { path: '/qa', title: 'שאלות ותשובות', icon: '💬', desc: 'מענה מקצועי להורים', color: '#7EC8C8', bg: 'linear-gradient(135deg, #E0F4F4, #B5E0E0)' },
   { path: '/tasks', title: 'לוח משימות', icon: '🏆', desc: 'משימות יומיות ותגמולים', color: '#F5C6D0', bg: 'linear-gradient(135deg, #FCE4EC, #F5C6D0)' },
-  { path: '/about', title: 'מי אנחנו', icon: '👩‍🏫', desc: 'קצת עלינו ועל הגן', color: '#e8907a', bg: 'linear-gradient(135deg, #FFF5F3, #F4C7BA)' },
 ]
 
 const dailyTips = [
