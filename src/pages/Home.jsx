@@ -105,12 +105,6 @@ export default function Home() {
         <h1 className="home-title">{greeting}, גן דגנית</h1>
       </div>
 
-      <div className={`quote-card ${visible ? 'visible' : ''}`}>
-        <span className="quote-icon">💡</span>
-        <p className="quote-label">טיפ יומי</p>
-        <p className="quote-text">{tip}</p>
-      </div>
-
       <Link
         to="/gan-updates"
         className={`home-banner home-banner-updates ${visible ? 'visible' : ''}`}

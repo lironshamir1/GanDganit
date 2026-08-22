@@ -38,45 +38,7 @@
   font-weight: 300;
 }
 
-/* Quote card */
-.quote-card {
-  background: linear-gradient(135deg, #E0F4F4, #EDE7F6);
-  border-radius: var(--radius);
-  padding: 24px;
-  margin-bottom: 28px;
-  text-align: center;
-  position: relative;
-  opacity: 0;
-  transform: translateY(10px);
-  transition: all 0.5s ease 0.15s;
-}
-
-.quote-card.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.quote-icon {
-  font-size: 1.5rem;
-  display: block;
-  margin-bottom: 8px;
-}
-
-.quote-label {
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: var(--primary-dark);
-  margin-bottom: 6px;
-}
-
-.quote-text {
-  font-size: 1.05rem;
-  line-height: 1.8;
-  color: var(--text);
-  font-weight: 400;
-}
-
-/* באנרים בולטים מתחת לטיפ היומי — עדכונים מהגן ואחריו עכשיו בגן */
+/* באנרים בולטים בראש מסך הבית — עדכונים מהגן ואחריו עכשיו בגן */
 .home-banner {
   display: flex;
   align-items: center;
