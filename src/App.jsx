@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 import twemoji from '@twemoji/api'
 import './App.css'
 import BackHome from './components/BackHome'
+import ToolboxButton from './components/Toolbox'
 import Landing from './pages/Landing'
 import Home from './pages/Home'
 import QandA from './pages/QandA'
@@ -14,7 +15,6 @@ import Schedule from './pages/Schedule'
 import Reminders from './pages/Reminders'
 import SpeechTraining from './pages/SpeechTraining'
 import GanUpdates from './pages/GanUpdates'
-import Toolbox from './pages/Toolbox'
 import About from './pages/About'
 import Poster from './pages/Poster'
 import TipsCards from './pages/TipsCards'
@@ -50,11 +50,11 @@ function App() {
         <Route path="/reminders" element={<Reminders />} />
         <Route path="/speech" element={<SpeechTraining />} />
         <Route path="/gan-updates" element={<GanUpdates />} />
-        <Route path="/toolbox" element={<Toolbox />} />
         <Route path="/about" element={<About />} />
         <Route path="/poster" element={<Poster />} />
         <Route path="/tips-poster" element={<TipsCards />} />
       </Routes>
+      {!isLanding && !isPoster && <ToolboxButton />}
       {!isLanding && !isPoster && !isHome && <BackHome />}
     </>
   )
