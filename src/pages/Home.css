@@ -76,32 +76,47 @@
   font-weight: 400;
 }
 
-/* באנר "עכשיו בגן" — כניסה בולטת מתחת לטיפ היומי */
-.now-banner {
+/* באנרים בולטים מתחת לטיפ היומי — עדכונים מהגן ואחריו עכשיו בגן */
+.home-banner {
   display: flex;
   align-items: center;
   gap: 14px;
   padding: 18px 20px;
-  margin-bottom: 24px;
+  margin-bottom: 12px;
   border-radius: var(--radius);
-  background: linear-gradient(135deg, #e8907a, #F0A875);
-  box-shadow: 0 6px 20px rgba(232, 144, 122, 0.32);
   color: white;
   opacity: 0;
   transform: translateY(10px);
   transition: all 0.5s ease 0.25s;
 }
 
-.now-banner.visible {
+.home-banner.visible {
   opacity: 1;
   transform: translateY(0);
 }
 
-.now-banner:active {
+.home-banner:active {
   transform: scale(0.98);
 }
 
-.now-banner-icon {
+/* השני בתור נכנס מעט אחריו, והוא זה שמפריד מהרשת */
+.home-banner-now {
+  transition-delay: 0.33s;
+  margin-bottom: 24px;
+}
+
+.home-banner-updates {
+  background: linear-gradient(135deg, #6FB98A, #A8D5BA);
+  box-shadow: 0 6px 20px rgba(111, 185, 138, 0.3);
+}
+
+.home-banner-now {
+  background: linear-gradient(135deg, #e8907a, #F0A875);
+  box-shadow: 0 6px 20px rgba(232, 144, 122, 0.32);
+}
+
+.home-banner-icon {
+  position: relative;
   width: 52px;
   height: 52px;
   border-radius: 16px;
@@ -113,7 +128,7 @@
   flex-shrink: 0;
 }
 
-.now-banner-body {
+.home-banner-body {
   display: flex;
   flex-direction: column;
   gap: 3px;
@@ -121,19 +136,19 @@
   min-width: 0;
 }
 
-.now-banner-label {
+.home-banner-label {
   font-size: 1.2rem;
   font-weight: 700;
   line-height: 1.2;
 }
 
-.now-banner-text {
+.home-banner-text {
   font-size: 0.85rem;
   line-height: 1.45;
   opacity: 0.92;
 }
 
-.now-banner-arrow {
+.home-banner-arrow {
   font-size: 1.3rem;
   opacity: 0.85;
   flex-shrink: 0;
