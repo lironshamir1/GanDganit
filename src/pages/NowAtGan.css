@@ -41,91 +41,130 @@
 }
 /* ---------- מקטעים ---------- */
 .now-section {
-  margin-bottom: 30px;
+  margin-bottom: 38px;
 }
 
 .now-section-title {
-  font-size: 1.15rem;
+  font-size: 1.3rem;
+  line-height: 1.4;
   color: var(--text);
-  margin-bottom: 12px;
+  margin-bottom: 6px;
   padding-right: 2px;
 }
 
+.now-section-title span {
+  margin-left: 4px;
+}
+
+/* קו קצר מתחת לכותרת — מפריד בין המקטעים בלי קו מלא וכבד */
+.now-section-title::after {
+  content: '';
+  display: block;
+  width: 46px;
+  height: 3px;
+  margin-top: 10px;
+  border-radius: 2px;
+  background: linear-gradient(135deg, var(--coral), var(--accent-dark));
+}
+
+/* פסקת פתיחה — פתק חם, לא גוש טקסט */
 .now-intro {
-  font-size: 0.98rem;
-  line-height: 1.85;
-  color: var(--text-light);
-  background: linear-gradient(135deg, var(--coral-soft), #FFF8F0);
+  position: relative;
+  margin: 18px 0 22px;
+  padding: 0 18px 0 4px;
+  font-size: 1.05rem;
+  line-height: 1.95;
+  color: var(--text);
+  border-right: 3px solid rgba(232, 144, 122, 0.4);
 }
 
 /* ---------- כרטיסי הנחיות ---------- */
 .now-topic {
+  padding: 22px 20px;
+  margin-bottom: 14px;
   border-right: 4px solid var(--topic-color, var(--coral));
 }
 
 .now-topic-header {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 12px;
+  gap: 13px;
+  padding-bottom: 14px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
 }
 
 .now-topic-icon {
-  width: 46px;
-  height: 46px;
-  border-radius: 14px;
+  width: 50px;
+  height: 50px;
+  border-radius: 15px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   flex-shrink: 0;
 }
 
 .now-topic-title {
-  font-size: 1.05rem;
+  flex: 1;
+  min-width: 0;
+  font-size: 1.15rem;
+  line-height: 1.35;
   color: var(--text);
+}
+
+/* מונה קטן — מראה שמדובר בשלושה דברים בלבד */
+.now-topic-step {
+  flex-shrink: 0;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
 }
 
 .now-topic-list {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 15px;
 }
 
 .now-topic-list li {
   position: relative;
-  padding-right: 20px;
-  font-size: 0.95rem;
-  line-height: 1.75;
+  padding-right: 24px;
+  font-size: 1rem;
+  line-height: 1.85;
   color: var(--text);
 }
 
 .now-topic-list li::before {
   content: '';
   position: absolute;
-  right: 4px;
-  top: 0.72em;
-  width: 7px;
-  height: 7px;
+  right: 5px;
+  top: 0.75em;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
   background: var(--topic-color, var(--coral));
 }
 
 /* ---------- טבלת ה"ייאוש" שחולקה להורים ---------- */
 .now-handout {
-  padding: 20px;
+  padding: 22px 20px;
 }
 
 .now-handout-intro {
-  font-size: 0.95rem;
-  line-height: 1.8;
+  font-size: 1.02rem;
+  line-height: 1.9;
   color: var(--text);
-  margin-bottom: 16px;
+  margin-bottom: 18px;
 }
 
 .now-handout-image {
   display: block;
+  width: 100%;
+  padding: 0;
+  cursor: pointer;
   border-radius: var(--radius-sm);
   overflow: hidden;
   border: 1px solid rgba(232, 144, 122, 0.25);
@@ -145,8 +184,8 @@
 }
 
 .now-handout-caption {
-  margin-top: 8px;
-  font-size: 0.78rem;
+  margin-top: 10px;
+  font-size: 0.82rem;
   color: var(--text-light);
   text-align: center;
 }
@@ -155,17 +194,17 @@
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  margin-top: 18px;
-  padding-top: 16px;
+  gap: 15px;
+  margin-top: 22px;
+  padding-top: 20px;
   border-top: 1px solid rgba(232, 144, 122, 0.18);
 }
 
 .now-handout-benefits li {
   position: relative;
-  padding-right: 22px;
-  font-size: 0.92rem;
-  line-height: 1.75;
+  padding-right: 28px;
+  font-size: 1rem;
+  line-height: 1.85;
   color: var(--text);
 }
 
@@ -173,18 +212,92 @@
   content: '✓';
   position: absolute;
   right: 0;
-  top: 0;
+  top: 0.1em;
+  font-size: 0.95rem;
   color: var(--coral-dark);
   font-weight: 700;
 }
 
 @media (max-width: 380px) {
-  .now-handout {
-    padding: 16px;
+  .now-handout,
+  .now-topic {
+    padding: 18px 16px;
   }
   .now-topic-icon {
-    width: 42px;
-    height: 42px;
-    font-size: 1.3rem;
+    width: 44px;
+    height: 44px;
+    font-size: 1.4rem;
   }
+  .now-topic-title {
+    font-size: 1.08rem;
+  }
+  .now-intro,
+  .now-topic-list li,
+  .now-handout-benefits li {
+    font-size: 0.97rem;
+  }
+}
+
+/* ---------- תצוגת הטבלה בגודל מלא, בתוך האפליקציה ---------- */
+.table-viewer {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: flex;
+  flex-direction: column;
+  direction: rtl;
+  background: #2D2320;
+  animation: tableViewerIn 0.25s ease-out;
+}
+
+@keyframes tableViewerIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.table-viewer-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: max(12px, env(safe-area-inset-top)) 16px 12px;
+  flex-shrink: 0;
+}
+
+.table-viewer-close {
+  background: rgba(255, 255, 255, 0.95);
+  color: var(--text);
+  border-radius: 20px;
+  padding: 10px 20px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.table-viewer-close:active {
+  transform: scale(0.96);
+}
+
+.table-viewer-hint {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.75);
+  text-align: left;
+}
+
+/* הטבלה רחבה ושכובה — מוצגת בגודל קריא וניתנת להזזה הצידה */
+.table-viewer-scroll {
+  flex: 1;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  display: flex;
+  align-items: center;
+  padding: 0 16px max(16px, env(safe-area-inset-bottom));
+}
+
+.table-viewer-scroll img {
+  min-width: 880px;
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  background: white;
 }
