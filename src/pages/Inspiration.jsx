@@ -3,7 +3,8 @@ import { dailyQuotes, breathingExercise, successStories } from '../data/inspirat
 import './Inspiration.css'
 
 export default function Inspiration() {
-  const [activeTab, setActiveTab] = useState('quote')
+  // נכנסים לכאן מ"רגע לעצמי" במסך הבית, ולכן נפתח ישר בתרגיל הנשימות
+  const [activeTab, setActiveTab] = useState('breathe')
   const [breathingStep, setBreathingStep] = useState(-1)
   const [timer, setTimer] = useState(0)
   const intervalRef = useRef(null)
@@ -39,7 +40,7 @@ export default function Inspiration() {
 
   return (
     <div className="page">
-      <h1 className="page-title">✨ רגע בשבילך</h1>
+      <h1 className="page-title">🌬️ רגע לעצמי</h1>
 
       <div className="bnd-tabs">
         <button className={`bnd-tab ${activeTab === 'quote' ? 'active' : ''}`} onClick={() => setActiveTab('quote')}>

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
 import './TipSplash.css'
 
 /* מוצג פעם אחת בכל פתיחה של האפליקציה, לא בכל חזרה למסך הבית —
@@ -42,7 +43,10 @@ export default function TipSplash({ tip }) {
 
   if (phase === 'done' || !tip) return null
 
-  return (
+  /* דרך document.body: ל-.page יש אנימציה עם transform, והוא הופך
+     containing block ל-position:fixed — מה שהיה ממקם את השכבה
+     ביחס לעמוד הנגלל במקום ביחס למסך. */
+  return createPortal(
     <div
       className={`tip-splash ${phase === 'leaving' ? 'leaving' : ''}`}
       onClick={() => setPhase('leaving')}
@@ -60,6 +64,7 @@ export default function TipSplash({ tip }) {
         </div>
         <p className="tip-splash-skip">לחצו לדילוג</p>
       </div>
-    </div>
+    </div>,
+    document.body
   )
 }
