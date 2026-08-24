@@ -16,5 +16,9 @@
       "sizes": "512x512",
       "type": "image/png"
     }
-  ]
+  ],
+  "description": "אפליקציית ההורים של גן דגנית, חדרה",
+  "lang": "he",
+  "dir": "rtl",
+  "scope": "/"
 }
