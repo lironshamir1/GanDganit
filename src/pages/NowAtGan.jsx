@@ -89,7 +89,9 @@ export default function NowAtGan() {
       </header>
 
       <section className="now-section">
-        <h2 className="now-section-title"><span aria-hidden>💛</span> {guideTitle}</h2>
+        {guideTitle && (
+          <h2 className="now-section-title"><span aria-hidden>💛</span> {guideTitle}</h2>
+        )}
         {intro && <p className="now-intro">{intro}</p>}
 
         {guide.map((topic, idx) => (
@@ -133,7 +135,9 @@ export default function NowAtGan() {
 
       {learning?.length > 0 && (
         <section className="now-section">
-          <h2 className="now-section-title"><span aria-hidden>✨</span> {learningTitle}</h2>
+          {learningTitle && (
+            <h2 className="now-section-title"><span aria-hidden>✨</span> {learningTitle}</h2>
+          )}
           {learningIntro && <p className="now-intro">{learningIntro}</p>}
 
           {learning.map((topic, idx) => (
