@@ -300,7 +300,6 @@
   text-align: left;
 }
 
-/* הטבלה רחבה ושכובה — מוצגת בגודל קריא וניתנת להזזה הצידה */
 .table-viewer-scroll {
   flex: 1;
   overflow: auto;
@@ -311,11 +310,21 @@
 }
 
 .table-viewer-scroll img {
-  min-width: 880px;
   width: 100%;
   height: auto;
   border-radius: 10px;
   background: white;
+}
+
+/* תמונה רחבה ושכובה (טבלה) — מוגדלת לרוחב קריא וניתנת להזזה הצידה.
+   תמונה לגובה (דף מתכון) נשארת ברוחב המסך ונגללת למטה, אחרת היה
+   צריך להזיז אותה הצידה כדי לקרוא כל שורה. */
+.table-viewer-scroll.landscape img {
+  min-width: 880px;
+}
+
+.table-viewer-scroll.portrait {
+  align-items: flex-start;
 }
 
 /* ברכת הסיום של הצוות — הכרטיס החם שסוגר את העמוד */

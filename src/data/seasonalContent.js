@@ -91,11 +91,11 @@ export const seasonalContent = {
       'היום אפינו בגן מאפינס דבש לכבוד ראש השנה! אתם מוזמנים להכין אותם שוב בבית עם הילד/ה — זו הזדמנות נהדרת ללמוד, להתפתח, ופשוט ליהנות יחד.',
     images: [
       {
-        src: '/recipe-honey-1-ingredients.png',
+        src: '/recipe-honey-1-ingredients.jpg',
         alt: 'מתכון מאפינס דבש — המרכיבים והכלים הדרושים',
       },
       {
-        src: '/recipe-honey-2-steps.png',
+        src: '/recipe-honey-2-steps.jpg',
         alt: 'מתכון מאפינס דבש — שלבי ההכנה',
       },
     ],
