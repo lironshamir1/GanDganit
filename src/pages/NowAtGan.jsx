@@ -7,6 +7,10 @@ import './NowAtGan.css'
    מותקנת (standalone) אין כפתור "חזור" של הדפדפן, והורה שנפתחה
    לו התמונה בכתובת נפרדת נשאר תקוע בלי דרך חזרה. */
 function ImageViewer({ image, alt, onClose }) {
+  /* תמונה שכובה מוצגת מוגדלת וזזה הצידה; תמונה לגובה נשארת ברוחב
+     המסך ונגללת למטה. נקבע לפי המידות האמיתיות של הקובץ. */
+  const [shape, setShape] = useState('portrait')
+
   useEffect(() => {
     const onKey = (e) => { if (e.key === 'Escape') onClose() }
     document.addEventListener('keydown', onKey)
@@ -19,11 +23,22 @@ function ImageViewer({ image, alt, onClose }) {
         <button type="button" className="table-viewer-close" onClick={onClose}>
           ✕ סגירה
         </button>
-        <span className="table-viewer-hint">אפשר להזיז את התמונה הצידה</span>
+        <span className="table-viewer-hint">
+          {shape === 'landscape' ? 'אפשר להזיז את התמונה הצידה' : 'אפשר לקרב באצבעות כדי להגדיל'}
+        </span>
       </div>
 
-      <div className="table-viewer-scroll" onClick={(e) => e.stopPropagation()}>
-        <img src={image} alt={alt} />
+      <div
+        className={`table-viewer-scroll ${shape}`}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <img
+          src={image}
+          alt={alt}
+          onLoad={(e) => setShape(
+            e.target.naturalWidth > e.target.naturalHeight ? 'landscape' : 'portrait'
+          )}
+        />
       </div>
     </div>,
     document.body
