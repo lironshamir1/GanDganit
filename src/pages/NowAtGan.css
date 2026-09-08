@@ -183,11 +183,27 @@
   height: auto;
 }
 
+/* כשיש כמה תמונות במקטע — רווח נושם ביניהן */
+.now-handout-image + .now-handout-image {
+  margin-top: 14px;
+}
+
 .now-handout-caption {
   margin-top: 10px;
   font-size: 0.82rem;
   color: var(--text-light);
   text-align: center;
+}
+
+/* קרדיט — קטן ועדין, לא מתחרה בתוכן */
+.now-handout-credit {
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(232, 144, 122, 0.18);
+  font-size: 0.8rem;
+  line-height: 1.7;
+  color: var(--text-light);
+  font-style: italic;
 }
 
 .now-handout-benefits {
@@ -300,4 +316,36 @@
   height: auto;
   border-radius: 10px;
   background: white;
+}
+
+/* ברכת הסיום של הצוות — הכרטיס החם שסוגר את העמוד */
+.now-closing {
+  margin-top: 34px;
+  text-align: center;
+  padding: 26px 22px;
+  background: linear-gradient(135deg, #FFF5F3, #F8DDD4);
+  border: 1px solid rgba(232, 144, 122, 0.4);
+}
+
+.now-closing-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--coral-dark, #d97a63);
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+
+.now-closing-text {
+  font-size: 1rem;
+  line-height: 1.9;
+  color: var(--text);
+}
+
+@media (max-width: 380px) {
+  .now-closing {
+    padding: 22px 18px;
+  }
+  .now-closing-title {
+    font-size: 1.05rem;
+  }
 }

@@ -3,10 +3,10 @@ import { createPortal } from 'react-dom'
 import { seasonalContent } from '../data/seasonalContent'
 import './NowAtGan.css'
 
-/* הטבלה נפתחת בתוך האפליקציה ולא בכתובת חיצונית: באפליקציה
+/* התמונה נפתחת בתוך האפליקציה ולא בכתובת חיצונית: באפליקציה
    מותקנת (standalone) אין כפתור "חזור" של הדפדפן, והורה שנפתחה
    לו התמונה בכתובת נפרדת נשאר תקוע בלי דרך חזרה. */
-function TableViewer({ image, alt, onClose }) {
+function ImageViewer({ image, alt, onClose }) {
   useEffect(() => {
     const onKey = (e) => { if (e.key === 'Escape') onClose() }
     document.addEventListener('keydown', onKey)
@@ -19,7 +19,7 @@ function TableViewer({ image, alt, onClose }) {
         <button type="button" className="table-viewer-close" onClick={onClose}>
           ✕ סגירה
         </button>
-        <span className="table-viewer-hint">אפשר להזיז את הטבלה הצידה</span>
+        <span className="table-viewer-hint">אפשר להזיז את התמונה הצידה</span>
       </div>
 
       <div className="table-viewer-scroll" onClick={(e) => e.stopPropagation()}>
@@ -30,9 +30,40 @@ function TableViewer({ image, alt, onClose }) {
   )
 }
 
+/* כרטיס נושא — משמש את שני מקטעי הכרטיסים בעמוד */
+function TopicCard({ topic, index, total }) {
+  return (
+    <article className="card now-topic" style={{ '--topic-color': topic.color }}>
+      <div className="now-topic-header">
+        <span className="now-topic-icon" style={{ background: topic.bg }}>
+          {topic.icon}
+        </span>
+        <h3 className="now-topic-title">{topic.title}</h3>
+        <span className="now-topic-step">{index + 1}/{total}</span>
+      </div>
+      <ul className="now-topic-list">
+        {topic.items.map((item, i) => (
+          <li key={i}>{item}</li>
+        ))}
+      </ul>
+    </article>
+  )
+}
+
 export default function NowAtGan() {
-  const { badge, title, subtitle, intro, guideTitle, guide, handout } = seasonalContent
-  const [viewerOpen, setViewerOpen] = useState(false)
+  const {
+    badge, title, subtitle, intro,
+    guideTitle, guide,
+    handout,
+    learningTitle, learningIntro, learning,
+    closing,
+  } = seasonalContent
+  const [viewerImage, setViewerImage] = useState(null)
+
+  /* תמיכה גם בתמונה בודדת (image) וגם בכמה תמונות (images) */
+  const handoutImages = handout?.images ?? (
+    handout?.image ? [{ src: handout.image, alt: handout.imageAlt || handout.title }] : []
+  )
 
   return (
     <div className="page now-page">
@@ -47,40 +78,30 @@ export default function NowAtGan() {
         {intro && <p className="now-intro">{intro}</p>}
 
         {guide.map((topic, idx) => (
-          <article key={topic.id} className="card now-topic" style={{ '--topic-color': topic.color }}>
-            <div className="now-topic-header">
-              <span className="now-topic-icon" style={{ background: topic.bg }}>
-                {topic.icon}
-              </span>
-              <h3 className="now-topic-title">{topic.title}</h3>
-              <span className="now-topic-step">{idx + 1}/{guide.length}</span>
-            </div>
-            <ul className="now-topic-list">
-              {topic.items.map((item, i) => (
-                <li key={i}>{item}</li>
-              ))}
-            </ul>
-          </article>
+          <TopicCard key={topic.id} topic={topic} index={idx} total={guide.length} />
         ))}
       </section>
 
       {handout && (
         <section className="now-section">
-          <h2 className="now-section-title"><span aria-hidden>🗓️</span> {handout.title}</h2>
+          <h2 className="now-section-title">{handout.title}</h2>
 
           <div className="card now-handout">
             {handout.intro && <p className="now-handout-intro">{handout.intro}</p>}
 
-            {handout.image && (
+            {handoutImages.map((img) => (
               <button
+                key={img.src}
                 type="button"
                 className="now-handout-image"
-                onClick={() => setViewerOpen(true)}
+                onClick={() => setViewerImage(img)}
               >
-                <img src={handout.image} alt={handout.imageAlt || handout.title} />
+                <img src={img.src} alt={img.alt} />
               </button>
+            ))}
+            {handout.caption && handoutImages.length > 0 && (
+              <p className="now-handout-caption">{handout.caption}</p>
             )}
-            {handout.caption && <p className="now-handout-caption">{handout.caption}</p>}
 
             {handout.benefits?.length > 0 && (
               <ul className="now-handout-benefits">
@@ -89,15 +110,35 @@ export default function NowAtGan() {
                 ))}
               </ul>
             )}
+
+            {handout.credit && <p className="now-handout-credit">{handout.credit}</p>}
           </div>
         </section>
       )}
 
-      {viewerOpen && handout?.image && (
-        <TableViewer
-          image={handout.image}
-          alt={handout.imageAlt || handout.title}
-          onClose={() => setViewerOpen(false)}
+      {learning?.length > 0 && (
+        <section className="now-section">
+          <h2 className="now-section-title"><span aria-hidden>✨</span> {learningTitle}</h2>
+          {learningIntro && <p className="now-intro">{learningIntro}</p>}
+
+          {learning.map((topic, idx) => (
+            <TopicCard key={topic.id} topic={topic} index={idx} total={learning.length} />
+          ))}
+        </section>
+      )}
+
+      {closing && (
+        <section className="card now-closing">
+          {closing.title && <p className="now-closing-title">{closing.title}</p>}
+          {closing.text && <p className="now-closing-text">{closing.text}</p>}
+        </section>
+      )}
+
+      {viewerImage && (
+        <ImageViewer
+          image={viewerImage.src}
+          alt={viewerImage.alt}
+          onClose={() => setViewerImage(null)}
         />
       )}
     </div>
