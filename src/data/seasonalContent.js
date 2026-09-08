@@ -106,7 +106,7 @@ export const seasonalContent = {
     credit: 'המתכון באדיבות עירית פולק לוי, קלינאית תקשורת — מתוך "לבשל שפה".',
   },
 
-  learningTitle: 'איך הופכים את האפייה ללמידה — בקלות',
+  learningTitle: 'איך הופכים את האפייה ללמידה',
   learningIntro: 'לא צריך לעשות הכול. בחרו מה שמתאים לכם:',
 
   learning: [
@@ -123,11 +123,11 @@ export const seasonalContent = {
     {
       id: 'count',
       icon: '🔢',
-      title: 'סופרים יחד',
+      title: 'מונים יחד',
       color: '#7EC8C8',
       bg: 'linear-gradient(135deg, #E0F4F4, #B5E0E0)',
       items: [
-        '"ביצה אחת… שתיים… שלוש". סופרים ביצים, סופרים כפות.',
+        '"ביצה אחת… שתיים… שלוש". מונים ביצים, מונים כפות.',
       ],
     },
     {
