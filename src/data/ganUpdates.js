@@ -37,6 +37,26 @@
 
 export const ganUpdates = [
   {
+    id: '2026-09-10-tapuach-rosh-hashana',
+    title: 'חוגגים ראש השנה בגן',
+    content:
+      'ביום חמישי, ה-10.9, נחגוג את ראש השנה בגן. נבקש שתשלחו עם הילד/ה תפוח אחד שלם, שטוף, בשקית.',
+    type: 'event',
+    date: '8.9.2026',
+    time: '21:00',
+    pinned: true,
+  },
+  {
+    id: '2026-09-11-chufshat-hachag',
+    title: 'חופשת החג',
+    content:
+      'בתאריכים 11.9–13.9 הגן סגור לרגל חופשת החג. נחזור לגן ביום שני, ה-14.9.',
+    type: 'general',
+    date: '8.9.2026',
+    time: '21:00',
+    pinned: true,
+  },
+  {
     id: '2026-08-26-asifat-horim',
     title: 'אסיפת הורים בגן',
     content:
@@ -44,7 +64,6 @@ export const ganUpdates = [
     type: 'event',
     date: '22.8.2026',
     time: '23:20',
-    pinned: true,
   },
 ]
 
