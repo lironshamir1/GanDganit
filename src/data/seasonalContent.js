@@ -123,16 +123,6 @@ export const seasonalContent = {
         'סמנו מראש עד לאן מותר, ואיפה עוצרים.',
       ],
     },
-    {
-      id: 'pace',
-      icon: '💛',
-      title: 'בקצב של הילד/ה',
-      color: '#B8A9D4',
-      bg: 'linear-gradient(135deg, #EDE7F6, #D4C9E8)',
-      items: [
-        'בלי לחץ, בלי השוואות. ההנאה חשובה מהמהירות.',
-      ],
-    },
   ],
 
   closing: {
