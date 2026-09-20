@@ -90,7 +90,7 @@ export default function NowAtGan() {
 
       <section className="now-section">
         {guideTitle && (
-          <h2 className="now-section-title"><span aria-hidden>💛</span> {guideTitle}</h2>
+          <h2 className="now-section-title">{guideTitle}</h2>
         )}
         {intro && <p className="now-intro">{intro}</p>}
 
@@ -136,7 +136,7 @@ export default function NowAtGan() {
       {learning?.length > 0 && (
         <section className="now-section">
           {learningTitle && (
-            <h2 className="now-section-title"><span aria-hidden>✨</span> {learningTitle}</h2>
+            <h2 className="now-section-title">{learningTitle}</h2>
           )}
           {learningIntro && <p className="now-intro">{learningIntro}</p>}
 
