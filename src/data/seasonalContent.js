@@ -88,9 +88,9 @@ export const seasonalContent = {
 
   handout: null,
 
-  learningTitle: '🚲 רוכבים בבטחה',
+  learningTitle: '🚲 רוכבים? עושים זאת בבטחה',
   learningIntro:
-    'יום כיפור הוא זמן מושלם לרכיבה על אופניים ברחובות השקטים — אבל בטיחות קודמת לכול:',
+    'משפחות שנוהגות לרכב על אופניים ביום כיפור — הנה כמה דגשים חשובים:',
 
   learning: [
     {
