@@ -30,6 +30,75 @@
   color: var(--text-light);
 }
 
+/* מדריך הקטגוריה — מודגש בצבעוניות החמה כדי שייקרא לפני הפעילויות */
+.act-guide {
+  margin-bottom: 18px;
+  background: linear-gradient(135deg, #FFF5F3, #FFF1EC);
+  border: 1px solid rgba(232, 144, 122, 0.35);
+}
+
+.act-guide-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #d97a63;
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+
+.act-guide-intro {
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+
+/* תמונה רחבה ממלאת את הרוחב; תמונה צרה וגבוהה מוגבלת בגובה וממורכזת,
+   אחרת מתיחה לרוחב מלא הייתה הופכת אותה לענקית ודוחקת את שאר המדריך. */
+.act-guide-image {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 360px;
+  margin: 0 auto;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(232, 144, 122, 0.25);
+  background: white;
+}
+
+.act-guide-image + .act-guide-image {
+  margin-top: 12px;
+}
+
+.act-guide-points {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(232, 144, 122, 0.22);
+}
+
+.act-guide-points li {
+  position: relative;
+  padding-right: 26px;
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: var(--text);
+}
+
+.act-guide-points li::before {
+  content: '•';
+  position: absolute;
+  right: 0;
+  top: 0;
+  color: #d97a63;
+  font-weight: 700;
+  font-size: 1.2rem;
+  line-height: 1.4;
+}
+
 .act-card {
   cursor: pointer;
 }
