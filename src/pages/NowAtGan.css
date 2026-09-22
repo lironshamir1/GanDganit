@@ -368,3 +368,25 @@
     font-size: 1.05rem;
   }
 }
+
+/* קישור מכרטיס נושא לעמוד אחר באפליקציה */
+.now-topic-link {
+  display: inline-block;
+  margin-top: 14px;
+  padding: 9px 18px;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--coral-dark, #d97a63);
+  background: rgba(232, 144, 122, 0.12);
+  border: 1px solid rgba(232, 144, 122, 0.4);
+  transition: all var(--transition);
+}
+
+.now-topic-link:hover {
+  background: rgba(232, 144, 122, 0.24);
+}
+
+.now-topic-link:active {
+  transform: scale(0.97);
+}
