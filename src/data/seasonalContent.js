@@ -102,8 +102,8 @@ export const seasonalContent = {
   learning: [],
 
   closing: {
-    title: 'באהבה, צוות גן דגנית 🌿',
-    text: 'חג שמח, ויצירה מהנה יחד!',
+    title: 'חג שמח, צוות גן דגנית 🌿',
+    text: 'יצירה מהנה!',
   },
 }
 
