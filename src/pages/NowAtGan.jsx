@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
+import { Link } from 'react-router-dom'
 import { seasonalContent } from '../data/seasonalContent'
 import './NowAtGan.css'
 
@@ -54,13 +55,19 @@ function TopicCard({ topic, index, total }) {
           {topic.icon}
         </span>
         <h3 className="now-topic-title">{topic.title}</h3>
-        <span className="now-topic-step">{index + 1}/{total}</span>
+        {/* מונה שלבים רק כשיש יותר מכרטיס אחד — "1/1" לא אומר כלום */}
+        {total > 1 && <span className="now-topic-step">{index + 1}/{total}</span>}
       </div>
       <ul className="now-topic-list">
         {topic.items.map((item, i) => (
           <li key={i}>{item}</li>
         ))}
       </ul>
+      {topic.link && (
+        <Link className="now-topic-link" to={topic.link.to}>
+          {topic.link.label} ←
+        </Link>
+      )}
     </article>
   )
 }
