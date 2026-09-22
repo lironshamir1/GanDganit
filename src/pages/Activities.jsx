@@ -5,6 +5,7 @@ import './Activities.css'
 export default function Activities() {
   const [selectedCat, setSelectedCat] = useState(null)
   const [expandedActivity, setExpandedActivity] = useState(null)
+  const [guideOpen, setGuideOpen] = useState(false)
 
   const difficultyColor = { 'קל': '#A8D5BA', 'בינוני': '#F4B942', 'קשה': '#F2A07B' }
 
@@ -29,34 +30,50 @@ export default function Activities() {
         </div>
       ) : (
         <div>
-          <button className="back-btn" onClick={() => { setSelectedCat(null); setExpandedActivity(null) }}>
+          <button className="back-btn" onClick={() => { setSelectedCat(null); setExpandedActivity(null); setGuideOpen(false) }}>
             → חזרה לקטגוריות
           </button>
           <h2 className="qa-section-title">{selectedCat.icon} {selectedCat.title}</h2>
 
-          {/* מדריך הקטגוריה — פתוח תמיד, כי הוא הסבר ולא פעילות לבחירה */}
+          {/* חלונית הדגשים של הקטגוריה — נפתחת בלחיצה, מעל הפעילויות */}
           {selectedCat.guide && (
             <section className="card act-guide">
-              <h3 className="act-guide-title">{selectedCat.guide.title}</h3>
-              {selectedCat.guide.intro && (
-                <p className="act-guide-intro">{selectedCat.guide.intro}</p>
-              )}
+              <button
+                type="button"
+                className="act-guide-toggle"
+                aria-expanded={guideOpen}
+                onClick={() => setGuideOpen(open => !open)}
+              >
+                <span className="act-guide-label">{selectedCat.guide.label}</span>
+                <span className={`act-guide-chevron ${guideOpen ? 'open' : ''}`} aria-hidden>
+                  ⌄
+                </span>
+              </button>
 
-              {selectedCat.guide.images?.map((img) => (
-                <img
-                  key={img.src}
-                  className="act-guide-image"
-                  src={img.src}
-                  alt={img.alt}
-                />
-              ))}
+              {guideOpen && (
+                <div className="act-guide-body">
+                  <h3 className="act-guide-title">{selectedCat.guide.title}</h3>
+                  {selectedCat.guide.intro && (
+                    <p className="act-guide-intro">{selectedCat.guide.intro}</p>
+                  )}
 
-              {selectedCat.guide.points?.length > 0 && (
-                <ul className="act-guide-points">
-                  {selectedCat.guide.points.map((point, i) => (
-                    <li key={i}>{point}</li>
+                  {selectedCat.guide.images?.map((img) => (
+                    <img
+                      key={img.src}
+                      className="act-guide-image"
+                      src={img.src}
+                      alt={img.alt}
+                    />
                   ))}
-                </ul>
+
+                  {selectedCat.guide.points?.length > 0 && (
+                    <ul className="act-guide-points">
+                      {selectedCat.guide.points.map((point, i) => (
+                        <li key={i}>{point}</li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
               )}
             </section>
           )}

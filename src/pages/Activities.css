@@ -37,10 +37,49 @@
   border: 1px solid rgba(232, 144, 122, 0.35);
 }
 
-.act-guide-title {
-  font-size: 1.1rem;
+/* הכותרת של החלונית — כל השורה היא הכפתור שפותח וסוגר */
+.act-guide-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  text-align: right;
+}
+
+.act-guide-label {
+  font-size: 1.05rem;
   font-weight: 700;
   color: #d97a63;
+  line-height: 1.5;
+}
+
+.act-guide-chevron {
+  font-size: 1.3rem;
+  line-height: 1;
+  color: #d97a63;
+  flex-shrink: 0;
+  transition: transform var(--transition);
+}
+
+.act-guide-chevron.open {
+  transform: rotate(180deg);
+}
+
+.act-guide-body {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(232, 144, 122, 0.22);
+  animation: actSlide 0.3s ease;
+}
+
+.act-guide-title {
+  font-size: 1.02rem;
+  font-weight: 700;
+  color: var(--text);
   line-height: 1.5;
   margin-bottom: 10px;
 }
