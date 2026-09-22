@@ -390,3 +390,33 @@
 .now-topic-link:active {
   transform: scale(0.97);
 }
+
+/* הדגשה במסגרת בתוך כרטיס נושא — הטקסט והקישור יחד */
+.now-topic-note {
+  margin-top: 16px;
+  padding: 14px 16px 16px;
+  border: 2px solid var(--coral-dark, #d97a63);
+  border-radius: var(--radius-sm);
+  background: rgba(232, 144, 122, 0.08);
+}
+
+.now-topic-note-text {
+  font-size: 0.97rem;
+  line-height: 1.85;
+  color: var(--text);
+}
+
+/* הקישור שבתוך המסגרת — מלא ומודגש, לא רק מתאר */
+.now-topic-link-strong {
+  margin-top: 12px;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: white;
+  background: linear-gradient(135deg, var(--coral, #e8907a), var(--coral-dark, #d97a63));
+  border-color: transparent;
+  box-shadow: 0 3px 10px rgba(232, 144, 122, 0.35);
+}
+
+.now-topic-link-strong:hover {
+  background: linear-gradient(135deg, var(--coral-dark, #d97a63), var(--coral-dark, #d97a63));
+}
