@@ -68,6 +68,17 @@ function TopicCard({ topic, index, total }) {
           {topic.link.label} ←
         </Link>
       )}
+      {/* הדגשה במסגרת — הטקסט והקישור שלו יושבים יחד */}
+      {topic.note && (
+        <aside className="now-topic-note">
+          <p className="now-topic-note-text">{topic.note.text}</p>
+          {topic.note.link && (
+            <Link className="now-topic-link now-topic-link-strong" to={topic.note.link.to}>
+              {topic.note.link.label} ←
+            </Link>
+          )}
+        </aside>
+      )}
     </article>
   )
 }
