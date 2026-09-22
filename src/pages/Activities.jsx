@@ -1,11 +1,19 @@
 import { useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { activityCategories } from '../data/activitiesData'
 import './Activities.css'
 
 export default function Activities() {
-  const [selectedCat, setSelectedCat] = useState(null)
+  /* אפשר להגיע ישר לקטגוריה ולחלונית הדגשים הפתוחה, למשל
+     /activities?cat=fine-motor&guide=1 — כך קישור מעמוד אחר
+     מוביל את ההורה ישירות למדריך ולא לרשימת הקטגוריות. */
+  const [searchParams] = useSearchParams()
+
+  const [selectedCat, setSelectedCat] = useState(
+    () => activityCategories.find(cat => cat.id === searchParams.get('cat')) ?? null
+  )
   const [expandedActivity, setExpandedActivity] = useState(null)
-  const [guideOpen, setGuideOpen] = useState(false)
+  const [guideOpen, setGuideOpen] = useState(() => searchParams.get('guide') === '1')
 
   const difficultyColor = { 'קל': '#A8D5BA', 'בינוני': '#F4B942', 'קשה': '#F2A07B' }
 
