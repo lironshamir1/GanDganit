@@ -33,6 +33,34 @@ export default function Activities() {
             → חזרה לקטגוריות
           </button>
           <h2 className="qa-section-title">{selectedCat.icon} {selectedCat.title}</h2>
+
+          {/* מדריך הקטגוריה — פתוח תמיד, כי הוא הסבר ולא פעילות לבחירה */}
+          {selectedCat.guide && (
+            <section className="card act-guide">
+              <h3 className="act-guide-title">{selectedCat.guide.title}</h3>
+              {selectedCat.guide.intro && (
+                <p className="act-guide-intro">{selectedCat.guide.intro}</p>
+              )}
+
+              {selectedCat.guide.images?.map((img) => (
+                <img
+                  key={img.src}
+                  className="act-guide-image"
+                  src={img.src}
+                  alt={img.alt}
+                />
+              ))}
+
+              {selectedCat.guide.points?.length > 0 && (
+                <ul className="act-guide-points">
+                  {selectedCat.guide.points.map((point, i) => (
+                    <li key={i}>{point}</li>
+                  ))}
+                </ul>
+              )}
+            </section>
+          )}
+
           {selectedCat.activities.map((act, idx) => (
             <div key={idx} className="card act-card" onClick={() => setExpandedActivity(expandedActivity === idx ? null : idx)}>
               <div className="act-header">
