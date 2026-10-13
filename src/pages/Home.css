@@ -61,9 +61,13 @@
   transform: scale(0.98);
 }
 
-/* השני בתור נכנס מעט אחריו, והוא זה שמפריד מהרשת */
+/* כל באנר נכנס מעט אחרי הקודם; האחרון הוא זה שמפריד מהרשת */
 .home-banner-now {
   transition-delay: 0.33s;
+}
+
+.home-banner-projects {
+  transition-delay: 0.41s;
   margin-bottom: 24px;
 }
 
@@ -75,6 +79,11 @@
 .home-banner-now {
   background: linear-gradient(135deg, #e8907a, #F0A875);
   box-shadow: 0 6px 20px rgba(232, 144, 122, 0.32);
+}
+
+.home-banner-projects {
+  background: linear-gradient(135deg, #9B8AC4, #C3B6E0);
+  box-shadow: 0 6px 20px rgba(155, 138, 196, 0.32);
 }
 
 .home-banner-icon {

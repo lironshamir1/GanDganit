@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import { seasonalContent } from '../data/seasonalContent'
 import { latestUpdateId, UPDATES_SEEN_KEY } from '../data/ganUpdates'
 import { ganReminders } from '../data/ganReminders'
+import { projects } from '../data/projectsData'
 import TipSplash from '../components/TipSplash'
 import './Home.css'
 
@@ -119,6 +120,17 @@ export default function Home() {
         <span className="home-banner-body">
           <span className="home-banner-label">עכשיו בגן</span>
           <span className="home-banner-text">{seasonalContent.subtitle}</span>
+        </span>
+        <span className="home-banner-arrow">←</span>
+      </Link>
+
+      <Link to="/projects" className={`home-banner home-banner-projects ${visible ? 'visible' : ''}`}>
+        <span className="home-banner-icon">🧩</span>
+        <span className="home-banner-body">
+          <span className="home-banner-label">פרויקטים</span>
+          <span className="home-banner-text">
+            {projects[0]?.title || 'הפרויקטים שלנו בגן'}
+          </span>
         </span>
         <span className="home-banner-arrow">←</span>
       </Link>

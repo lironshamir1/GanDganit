@@ -1,0 +1,133 @@
+/* ================================================================
+   פרויקטים — התוכן מגיע מ-src/data/projectsData.js
+   ================================================================ */
+
+.projects-page {
+  --project-color: #9B8AC4;
+  --project-soft: #F3EFFA;
+}
+
+.projects-empty {
+  text-align: center;
+  color: var(--text-muted);
+}
+
+.project-card {
+  margin-bottom: 22px;
+  border-right: 4px solid var(--project-color);
+}
+
+.project-header {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.project-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #EDE7F6, #D4C9E8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.project-title {
+  font-size: 1.3rem;
+  line-height: 1.35;
+  color: var(--text);
+  flex: 1;
+  min-width: 0;
+}
+
+.project-status {
+  padding: 4px 12px;
+  border-radius: 20px;
+  background: var(--project-soft);
+  color: var(--project-color);
+  font-size: 0.75rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.project-text {
+  font-size: 1rem;
+  line-height: 1.9;
+  color: var(--text);
+  margin-bottom: 12px;
+}
+
+.project-tips {
+  margin-top: 20px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(155, 138, 196, 0.25);
+}
+
+.project-tips-title {
+  font-size: 1.12rem;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+.project-tips-intro {
+  font-size: 0.97rem;
+  line-height: 1.8;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+}
+
+.project-tips-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.project-tip {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: var(--project-soft);
+}
+
+.project-tip-icon {
+  font-size: 1.35rem;
+  line-height: 1.5;
+  flex-shrink: 0;
+}
+
+.project-tip-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.project-tip-title {
+  font-size: 1rem;
+  color: var(--text);
+}
+
+.project-tip-text {
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: var(--text);
+}
+
+@media (max-width: 380px) {
+  .project-text,
+  .project-tip-title {
+    font-size: 0.97rem;
+  }
+
+  .project-tip-text {
+    font-size: 0.92rem;
+  }
+}
