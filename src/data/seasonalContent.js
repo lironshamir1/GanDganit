@@ -47,112 +47,25 @@
    ========================================================================== */
 
 export const seasonalContent = {
-  contentVersion: 'chaver-ba-levaker-2026',
+  contentVersion: 'empty-2026-10',
 
-  badge: 'תקופה נוכחית · פרויקט חדש',
-  title: '🌸 חבר בא לבקר',
-  subtitle: 'מפגשים בין ילדי הגן גם אחר הצהריים',
-  intro:
-    "הורים יקרים, אנחנו שמחות לפתוח בגן פרויקט חדש — 'חבר בא לבקר': מפגשים בין ילדי הגן גם אחר הצהריים, כדי לחזק את הקשרים החברתיים ואת תחושת השייכות של כל ילד וילדה.",
+  badge: '',
+  title: 'עכשיו בגן',
+  subtitle: 'בקרוב יעלה כאן תוכן חדש',
+  intro: '',
 
   guideTitle: '',
 
-  guide: [
-    {
-      id: 'home-world',
-      icon: '🏡',
-      title: 'המקום המיוחד שלי',
-      color: '#e8907a',
-      bg: 'linear-gradient(135deg, #FFF5F3, #F4C7BA)',
-      items: [
-        'כחלק מהפרויקט, נצפה יחד בגן בתמונות מהעולם הביתי של כל ילד/ה — פינת המשחק, החדר, או חפץ אהוב. כל ילד וילדה יציגו לחברים את המקום המיוחד שלהם, ומשם נתחיל להכיר, להתארח ולהתחבר.',
-      ],
-    },
-  ],
+  guide: [],
 
   handout: null,
 
-  learningTitle: '💡 כמה טיפים למפגש מוצלח',
-  learningIntro:
-    'היום יוצא לדרך פרויקט "חבר בא לבקר"! מפגשים מחוץ לגן הם הזדמנות נהדרת לחזק קשרים, לתרגל משחק משותף ולהרגיש שייכות.',
+  learningTitle: '',
+  learningIntro: '',
 
-  learning: [
-    {
-      id: 'short',
-      icon: '🕐',
-      title: 'קצר ומתוק',
-      color: '#e8907a',
-      bg: 'linear-gradient(135deg, #FFF5F3, #F4C7BA)',
-      items: [
-        'שעה עד שעה וחצי מספיקות. עדיף לסיים כשכולם עוד נהנים.',
-      ],
-    },
-    {
-      id: 'prepare',
-      icon: '🗣️',
-      title: 'הכנה מראש',
-      color: '#B8A9D4',
-      bg: 'linear-gradient(135deg, #EDE7F6, #D4C9E8)',
-      items: [
-        'ספרו לילד מי מגיע ומה תעשו, ואפשר להראות תמונה של החבר.',
-      ],
-    },
-    {
-      id: 'games',
-      icon: '🧸',
-      title: 'הכנת המשחקים',
-      color: '#7EC8C8',
-      bg: 'linear-gradient(135deg, #E0F4F4, #B5E0E0)',
-      items: [
-        'בחרו מראש 2–3 משחקים שאפשר לשחק בהם יחד (הרכבה, יצירה, משחק קופסה פשוט). צעצועים שקשה לילד לחלוק, עדיף לשים בצד לפני המפגש.',
-      ],
-    },
-    {
-      id: 'adult',
-      icon: '👀',
-      title: 'מבוגר בסביבה',
-      color: '#e8907a',
-      bg: 'linear-gradient(135deg, #FFF5F3, #F4C7BA)',
-      items: [
-        'הישארו קרובים, עזרו להתחיל משחק ולפתור ויכוחים, ותנו לילדים להוביל כשזה עובד.',
-      ],
-    },
-    {
-      id: 'snack',
-      icon: '🍎',
-      title: 'כיבוד פשוט',
-      color: '#B8A9D4',
-      bg: 'linear-gradient(135deg, #EDE7F6, #D4C9E8)',
-      items: [
-        'כיבוד פשוט הוא חלק כיפי מהאירוח, וגם הזדמנות לתרגל "בבקשה" ו"תודה".',
-      ],
-    },
-    {
-      id: 'ending',
-      icon: '⏳',
-      title: 'הכנה לסיום',
-      color: '#7EC8C8',
-      bg: 'linear-gradient(135deg, #E0F4F4, #B5E0E0)',
-      items: [
-        'הודיעו כמה דקות לפני: "עוד משחק אחד ואז נפרדים".',
-      ],
-    },
-    {
-      id: 'share',
-      icon: '📸',
-      title: 'שתפו אותנו!',
-      color: '#e8907a',
-      bg: 'linear-gradient(135deg, #FFF5F3, #F4C7BA)',
-      items: [
-        'שלחו תמונה מהמפגש ונספר עליו בגן.',
-      ],
-    },
-  ],
+  learning: [],
 
-  closing: {
-    title: 'תודה על השותפות,',
-    text: 'צוות הגן 🌸',
-  },
+  closing: null,
 }
 
 export default seasonalContent
