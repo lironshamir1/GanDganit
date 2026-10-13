@@ -129,7 +129,7 @@ export default function Home() {
         <span className="home-banner-body">
           <span className="home-banner-label">פרויקטים</span>
           <span className="home-banner-text">
-            {projects[0]?.title || 'הפרויקטים שלנו בגן'}
+            {projects.map((project) => project.title).join(' · ') || 'הפרויקטים שלנו בגן'}
           </span>
         </span>
         <span className="home-banner-arrow">←</span>
