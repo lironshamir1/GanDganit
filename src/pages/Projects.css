@@ -62,6 +62,42 @@
   margin-bottom: 12px;
 }
 
+/* כרטיס מודגש אחרי התיאור */
+.project-spotlight {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-top: 6px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #FFF5F3, #F8DDD4);
+  border: 1px solid rgba(232, 144, 122, 0.35);
+}
+
+.project-spotlight-icon {
+  font-size: 1.5rem;
+  line-height: 1.4;
+  flex-shrink: 0;
+}
+
+.project-spotlight-body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.project-spotlight-title {
+  font-size: 1.05rem;
+  color: var(--text);
+}
+
+.project-spotlight-text {
+  font-size: 0.97rem;
+  line-height: 1.85;
+  color: var(--text);
+}
+
 .project-tips {
   margin-top: 20px;
   padding-top: 18px;
@@ -77,7 +113,7 @@
 .project-tips-intro {
   font-size: 0.97rem;
   line-height: 1.8;
-  color: var(--text-muted);
+  color: var(--text);
   margin-bottom: 14px;
 }
 
@@ -118,6 +154,30 @@
 .project-tip-text {
   font-size: 0.95rem;
   line-height: 1.75;
+  color: var(--text);
+}
+
+/* ברכת הסיום — בצבעוניות החמה של "עכשיו בגן" */
+.project-closing {
+  margin-top: 22px;
+  padding: 22px 18px;
+  border-radius: 14px;
+  text-align: center;
+  background: linear-gradient(135deg, #FFF5F3, #F8DDD4);
+  border: 1px solid rgba(232, 144, 122, 0.4);
+}
+
+.project-closing-title {
+  font-size: 1.12rem;
+  font-weight: 700;
+  color: #d97a63;
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+
+.project-closing-text {
+  font-size: 1rem;
+  line-height: 1.8;
   color: var(--text);
 }
 
