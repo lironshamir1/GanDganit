@@ -144,7 +144,7 @@ export const seasonalContent = {
       color: '#e8907a',
       bg: 'linear-gradient(135deg, #FFF5F3, #F4C7BA)',
       items: [
-        'שלחו תמונה מהמפגש ונספר עליו בגן במפגש.',
+        'שלחו תמונה מהמפגש ונספר עליו בגן.',
       ],
     },
   ],
