@@ -19,6 +19,7 @@ import GanUpdates from './pages/GanUpdates'
 import Poster from './pages/Poster'
 import TipsCards from './pages/TipsCards'
 import NowAtGan from './pages/NowAtGan'
+import Projects from './pages/Projects'
 
 function App() {
   const location = useLocation()
@@ -41,6 +42,7 @@ function App() {
         <Route path="/" element={<Landing />} />
         <Route path="/home" element={<Home />} />
         <Route path="/now" element={<NowAtGan />} />
+        <Route path="/projects" element={<Projects />} />
         <Route path="/qa" element={<QandA />} />
         <Route path="/activities" element={<Activities />} />
         <Route path="/independence" element={<Independence />} />
