@@ -24,6 +24,16 @@ export default function Projects() {
               <p key={idx} className="project-text">{paragraph}</p>
             ))}
 
+            {project.spotlight && (
+              <aside className="project-spotlight">
+                <span className="project-spotlight-icon">{project.spotlight.icon}</span>
+                <span className="project-spotlight-body">
+                  <strong className="project-spotlight-title">{project.spotlight.title}</strong>
+                  <span className="project-spotlight-text">{project.spotlight.text}</span>
+                </span>
+              </aside>
+            )}
+
             {project.tips?.length > 0 && (
               <section className="project-tips">
                 {project.tipsTitle && <h3 className="project-tips-title">{project.tipsTitle}</h3>}
@@ -40,6 +50,13 @@ export default function Projects() {
                   ))}
                 </ul>
               </section>
+            )}
+
+            {project.closing && (
+              <footer className="project-closing">
+                {project.closing.title && <p className="project-closing-title">{project.closing.title}</p>}
+                {project.closing.text && <p className="project-closing-text">{project.closing.text}</p>}
+              </footer>
             )}
           </article>
         ))
