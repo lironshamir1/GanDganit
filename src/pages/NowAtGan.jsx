@@ -63,7 +63,13 @@ function TopicCard({ topic, index, total }) {
           <li key={i}>{item}</li>
         ))}
       </ul>
-      {topic.link && (
+      {/* קישור חיצוני (href) נפתח בכרטיסייה חדשה; קישור פנימי (to) נשאר באפליקציה */}
+      {topic.link?.href && (
+        <a className="now-topic-link" href={topic.link.href} target="_blank" rel="noopener noreferrer">
+          {topic.link.label} ←
+        </a>
+      )}
+      {topic.link?.to && (
         <Link className="now-topic-link" to={topic.link.to}>
           {topic.link.label} ←
         </Link>
