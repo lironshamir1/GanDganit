@@ -135,7 +135,7 @@ export const seasonalContent = {
   ],
 
   closing: {
-    title: 'באהבה, צוות גן דגנית 🍂',
+    title: 'צוות גן דגנית 🍂',
     text: 'שיהיה סתיו נעים ולמידה מהנה יחד!',
   },
 }
