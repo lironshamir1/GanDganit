@@ -420,3 +420,148 @@
 .now-topic-link-strong:hover {
   background: linear-gradient(135deg, var(--coral-dark, #d97a63), var(--coral-dark, #d97a63));
 }
+
+/* ================================================================
+   ארכיון התיקיות — כל נושא הוא כרטיס נפתח (accordion)
+   ================================================================ */
+.now-archive-hint {
+  font-size: 0.95rem;
+  color: var(--text-light);
+  line-height: 1.6;
+}
+
+.now-folders {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.now-folder {
+  padding: 0;
+  margin-bottom: 0;
+  overflow: hidden;
+  border-right: 4px solid rgba(232, 144, 122, 0.35);
+}
+
+.now-folder.is-open {
+  border-right-color: var(--coral);
+}
+
+.now-folder-heading {
+  margin: 0;
+  font-size: inherit;
+}
+
+.now-folder-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 18px;
+  text-align: right;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.now-folder.is-open .now-folder-toggle {
+  background: linear-gradient(135deg, var(--coral-soft), #FFF8F0);
+}
+
+.now-folder-emoji {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  flex-shrink: 0;
+  background: linear-gradient(135deg, var(--coral-soft), #F4C7BA);
+}
+
+.now-folder-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.now-folder-title {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.now-folder-new {
+  padding: 2px 10px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--coral), var(--coral-dark));
+  color: white;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.now-folder-subtitle {
+  font-size: 0.9rem;
+  color: var(--text-light);
+  line-height: 1.5;
+}
+
+.now-folder-chevron {
+  font-size: 1.4rem;
+  line-height: 1;
+  color: var(--coral-dark);
+  flex-shrink: 0;
+  transition: transform var(--transition);
+}
+
+.now-folder.is-open .now-folder-chevron {
+  transform: rotate(180deg);
+}
+
+.now-folder-body {
+  padding: 22px 16px 20px;
+  animation: now-folder-in 0.25s ease-out;
+}
+
+.now-folder-body .now-section:last-child {
+  margin-bottom: 0;
+}
+
+.now-folder-body .now-closing {
+  margin-top: 24px;
+}
+
+@keyframes now-folder-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* תמונה בתוך כרטיס נושא — ברוחב מלא */
+.now-topic-image {
+  margin-top: 14px;
+}
+
+@media (max-width: 380px) {
+  .now-folder-toggle {
+    padding: 15px 14px;
+    gap: 11px;
+  }
+  .now-folder-emoji {
+    width: 42px;
+    height: 42px;
+    font-size: 1.35rem;
+  }
+  .now-folder-title {
+    font-size: 1.08rem;
+  }
+  .now-folder-body {
+    padding: 18px 10px 16px;
+  }
+}
