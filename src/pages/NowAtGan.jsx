@@ -197,9 +197,8 @@ function EntryBody({ entry, onOpenImage }) {
 }
 
 export default function NowAtGan() {
-  const { title, entries } = seasonalContent
-  /* הפריט הראשון הוא הנושא הנוכחי ומוצג ישירות; כל השאר עוברים לארכיון */
-  const [current, ...past] = entries
+  /* הנושא הנוכחי מוצג ישירות; כל השאר בארכיון (החלוקה נעשית בקובץ התוכן) */
+  const { title, current, archive: past, emptyText } = seasonalContent
   const [viewerImage, setViewerImage] = useState(null)
   /* תיקיות הארכיון סגורות כברירת מחדל ונפתחות בלחיצה */
   const [openIds, setOpenIds] = useState([])
@@ -220,7 +219,11 @@ export default function NowAtGan() {
         {current?.subtitle && <p className="now-archive-hint">{current.subtitle}</p>}
       </header>
 
-      {current && <EntryBody entry={current} onOpenImage={setViewerImage} />}
+      {current ? (
+        <EntryBody entry={current} onOpenImage={setViewerImage} />
+      ) : (
+        <p className="card now-empty">{emptyText}</p>
+      )}
 
       {past.length > 0 && (
         <section className="now-archive">

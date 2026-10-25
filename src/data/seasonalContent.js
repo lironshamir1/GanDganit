@@ -9,6 +9,10 @@
      (לפני כל הפריטים הקיימים). הנושא שהיה נוכחי עובר מעצמו לארכיון.
      לא מוחקים ולא משנים את הפריטים הישנים.
 
+   ★ archived: true — מעביר את הפריט לארכיון גם כשהוא ראשון במערך.
+     כך אפשר לפנות את ראש העמוד לפני שיש תוכן חדש: עד שיתווסף נושא
+     חדש בראש המערך, בראש העמוד תוצג הודעה ש"תוכן חדש יעלה בקרוב".
+
    מבנה של פריט:
      {
        id:         מזהה ייחודי באנגלית, למשל 'hanukkah-2026',
@@ -61,7 +65,7 @@ export const entries = [
     id: 'autumn-2026',
     emoji: '🍂',
     title: 'סתיו',
-    homeBanner: 'עונת הסתיו 🍂',
+    archived: true,
 
     intro:
       'הורים יקרים, הסתיו הגיע! מזג האוויר מתקרר, יורדים הגשמים הראשונים, ומשהו מסביבנו משתנה. זו עונה נפלאה לעצור, להסתכל יחד, ולהרגיש את השינוי. הנה כמה רעיונות פשוטים לעשייה משותפת בבית.',
@@ -446,12 +450,19 @@ export const entries = [
   },
 ]
 
-const latest = entries[0]
+/* הנושא הנוכחי — הפריט הראשון, אלא אם סומן archived */
+export const current = entries[0] && !entries[0].archived ? entries[0] : null
+export const archive = current ? entries.slice(1) : entries
 
 export const seasonalContent = {
   title: 'עכשיו בגן',
-  /* הטקסט בכרטיס "עכשיו בגן" במסך הבית — תמיד מהתיקייה החדשה ביותר */
-  subtitle: latest?.homeBanner || latest?.subtitle || latest?.title || '',
+  /* הטקסט בכרטיס "עכשיו בגן" במסך הבית — מהנושא הנוכחי */
+  subtitle: current
+    ? current.homeBanner || current.subtitle || current.title
+    : 'תוכן חדש בקרוב 💛',
+  emptyText: 'תוכן חדש יעלה כאן בקרוב 💛 בינתיים, אפשר להציץ במה שכבר היה בגן.',
+  current,
+  archive,
   entries,
 }
 
