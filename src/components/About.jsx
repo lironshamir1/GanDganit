@@ -34,7 +34,7 @@ function AboutPopup({ onClose }) {
               <li><strong>רינת שמיר</strong> — גננת ומנהלת הגן</li>
               <li><strong>סמדר אברג׳יל</strong> — סייעת</li>
               <li><strong>סופיה</strong> — סייעת מתגברת</li>
-              <li><strong>אור</strong> — בת שירות</li>
+              <li><strong>אור צ׳אקול</strong> — בת שירות</li>
               <li><strong>מורן אושרי</strong> — גננת משלימה</li>
               <li><strong>גלי אהרון לוי</strong> — מרפאה בעיסוק</li>
               <li><strong>לילך כספרי</strong> — קלינאית תקשורת</li>
