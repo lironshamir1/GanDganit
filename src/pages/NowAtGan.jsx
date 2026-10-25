@@ -1,8 +1,9 @@
 /* ============================================================================
-   עמוד "עכשיו בגן" — ארכיון של תיקיות נפתחות, מהחדשה לישנה.
+   עמוד "עכשיו בגן" — הנושא הנוכחי מוצג למעלה במלואו (בלי תיקייה),
+   ומתחתיו "מה כבר היה בגן": ארכיון של תיקיות סגורות, מהחדשה לישנה.
    כדי להוסיף נושא חדש בעתיד — מוסיפים פריט חדש בראש המערך entries
-   בקובץ src/data/seasonalContent.js. אין צורך לשנות את הקובץ הזה.
-   התיקייה הראשונה במערך נפתחת אוטומטית, והשאר סגורות.
+   בקובץ src/data/seasonalContent.js. אין צורך לשנות את הקובץ הזה:
+   הנושא הקודם עובר מעצמו לתיקייה בארכיון.
    ========================================================================== */
 
 import { useEffect, useState } from 'react'
@@ -106,7 +107,7 @@ function TopicCard({ topic, index, total, onOpenImage }) {
   )
 }
 
-/* התוכן של תיקייה אחת — אותם מקטעים שהיו בעמוד העונתי */
+/* התוכן של נושא אחד — אותם מקטעים שהיו בעמוד העונתי */
 function EntryBody({ entry, onOpenImage }) {
   const { intro, guideTitle, guide, handout, learningTitle, learningIntro, learning, closing } = entry
 
@@ -197,9 +198,11 @@ function EntryBody({ entry, onOpenImage }) {
 
 export default function NowAtGan() {
   const { title, entries } = seasonalContent
+  /* הפריט הראשון הוא הנושא הנוכחי ומוצג ישירות; כל השאר עוברים לארכיון */
+  const [current, ...past] = entries
   const [viewerImage, setViewerImage] = useState(null)
-  /* התיקייה הראשונה (החדשה ביותר) פתוחה כברירת מחדל */
-  const [openIds, setOpenIds] = useState(() => (entries[0] ? [entries[0].id] : []))
+  /* תיקיות הארכיון סגורות כברירת מחדל ונפתחות בלחיצה */
+  const [openIds, setOpenIds] = useState([])
 
   const toggle = (id) => {
     setOpenIds((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]))
@@ -209,47 +212,60 @@ export default function NowAtGan() {
     <div className="page now-page">
       <header className="now-hero">
         <h1 className="page-title now-title">{title}</h1>
-        <p className="now-archive-hint">מהחדש לישן · לחצו על נושא כדי לפתוח</p>
+        {current && (
+          <p className="now-subtitle">
+            {current.emoji} {current.title}
+          </p>
+        )}
+        {current?.subtitle && <p className="now-archive-hint">{current.subtitle}</p>}
       </header>
 
-      <div className="now-folders">
-        {entries.map((entry, idx) => {
-          const isOpen = openIds.includes(entry.id)
-          const panelId = `now-folder-${entry.id}`
-          return (
-            <section
-              key={entry.id}
-              className={`card now-folder${isOpen ? ' is-open' : ''}`}
-            >
-              <h2 className="now-folder-heading">
-                <button
-                  type="button"
-                  className="now-folder-toggle"
-                  aria-expanded={isOpen}
-                  aria-controls={panelId}
-                  onClick={() => toggle(entry.id)}
-                >
-                  <span className="now-folder-emoji" aria-hidden="true">{entry.emoji}</span>
-                  <span className="now-folder-text">
-                    <span className="now-folder-title">
-                      {entry.title}
-                      {idx === 0 && <span className="now-folder-new">חדש</span>}
-                    </span>
-                    {entry.subtitle && <span className="now-folder-subtitle">{entry.subtitle}</span>}
-                  </span>
-                  <span className="now-folder-chevron" aria-hidden="true">⌄</span>
-                </button>
-              </h2>
+      {current && <EntryBody entry={current} onOpenImage={setViewerImage} />}
 
-              {isOpen && (
-                <div id={panelId} className="now-folder-body">
-                  <EntryBody entry={entry} onOpenImage={setViewerImage} />
-                </div>
-              )}
-            </section>
-          )
-        })}
-      </div>
+      {past.length > 0 && (
+        <section className="now-archive">
+          <h2 className="now-section-title">📂 מה כבר היה בגן</h2>
+          <p className="now-archive-hint now-archive-intro">
+            מהחדש לישן · לחצו על תיקייה כדי לפתוח
+          </p>
+
+          <div className="now-folders">
+            {past.map((entry) => {
+              const isOpen = openIds.includes(entry.id)
+              const panelId = `now-folder-${entry.id}`
+              return (
+                <section
+                  key={entry.id}
+                  className={`card now-folder${isOpen ? ' is-open' : ''}`}
+                >
+                  <h3 className="now-folder-heading">
+                    <button
+                      type="button"
+                      className="now-folder-toggle"
+                      aria-expanded={isOpen}
+                      aria-controls={panelId}
+                      onClick={() => toggle(entry.id)}
+                    >
+                      <span className="now-folder-emoji" aria-hidden="true">{entry.emoji}</span>
+                      <span className="now-folder-text">
+                        <span className="now-folder-title">{entry.title}</span>
+                        {entry.subtitle && <span className="now-folder-subtitle">{entry.subtitle}</span>}
+                      </span>
+                      <span className="now-folder-chevron" aria-hidden="true">⌄</span>
+                    </button>
+                  </h3>
+
+                  {isOpen && (
+                    <div id={panelId} className="now-folder-body">
+                      <EntryBody entry={entry} onOpenImage={setViewerImage} />
+                    </div>
+                  )}
+                </section>
+              )
+            })}
+          </div>
+        </section>
+      )}
 
       {viewerImage && (
         <ImageViewer

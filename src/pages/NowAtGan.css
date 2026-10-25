@@ -498,15 +498,6 @@
   line-height: 1.4;
 }
 
-.now-folder-new {
-  padding: 2px 10px;
-  border-radius: 999px;
-  background: linear-gradient(135deg, var(--coral), var(--coral-dark));
-  color: white;
-  font-size: 0.72rem;
-  font-weight: 700;
-}
-
 .now-folder-subtitle {
   font-size: 0.9rem;
   color: var(--text-light);
@@ -564,4 +555,13 @@
   .now-folder-body {
     padding: 18px 10px 16px;
   }
+}
+
+/* ארכיון "מה כבר היה בגן" — מתחת לנושא הנוכחי */
+.now-archive {
+  margin-top: 44px;
+}
+
+.now-archive-intro {
+  margin: 14px 0 16px;
 }
