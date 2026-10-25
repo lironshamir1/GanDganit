@@ -1,3 +1,11 @@
+/* ============================================================================
+   עמוד "עכשיו בגן" — הנושא הנוכחי מוצג למעלה במלואו (בלי תיקייה),
+   ומתחתיו "מה כבר היה בגן": ארכיון של תיקיות סגורות, מהחדשה לישנה.
+   כדי להוסיף נושא חדש בעתיד — מוסיפים פריט חדש בראש המערך entries
+   בקובץ src/data/seasonalContent.js. אין צורך לשנות את הקובץ הזה:
+   הנושא הקודם עובר מעצמו לתיקייה בארכיון.
+   ========================================================================== */
+
 import { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { Link } from 'react-router-dom'
@@ -47,7 +55,7 @@ function ImageViewer({ image, alt, onClose }) {
 }
 
 /* כרטיס נושא — משמש את שני מקטעי הכרטיסים בעמוד */
-function TopicCard({ topic, index, total }) {
+function TopicCard({ topic, index, total, onOpenImage }) {
   return (
     <article className="card now-topic" style={{ '--topic-color': topic.color }}>
       <div className="now-topic-header">
@@ -63,6 +71,16 @@ function TopicCard({ topic, index, total }) {
           <li key={i}>{item}</li>
         ))}
       </ul>
+      {topic.images?.map((img) => (
+        <button
+          key={img.src}
+          type="button"
+          className="now-handout-image now-topic-image"
+          onClick={() => onOpenImage(img)}
+        >
+          <img src={img.src} alt={img.alt} loading="lazy" />
+        </button>
+      ))}
       {/* קישור חיצוני (href) נפתח בכרטיסייה חדשה; קישור פנימי (to) נשאר באפליקציה */}
       {topic.link?.href && (
         <a className="now-topic-link" href={topic.link.href} target="_blank" rel="noopener noreferrer">
@@ -89,15 +107,9 @@ function TopicCard({ topic, index, total }) {
   )
 }
 
-export default function NowAtGan() {
-  const {
-    badge, title, subtitle, intro,
-    guideTitle, guide,
-    handout,
-    learningTitle, learningIntro, learning,
-    closing,
-  } = seasonalContent
-  const [viewerImage, setViewerImage] = useState(null)
+/* התוכן של נושא אחד — אותם מקטעים שהיו בעמוד העונתי */
+function EntryBody({ entry, onOpenImage }) {
+  const { intro, guideTitle, guide, handout, learningTitle, learningIntro, learning, closing } = entry
 
   /* תמיכה גם בתמונה בודדת (image) וגם בכמה תמונות (images) */
   const handoutImages = handout?.images ?? (
@@ -105,27 +117,27 @@ export default function NowAtGan() {
   )
 
   return (
-    <div className="page now-page">
-      <header className="now-hero">
-        {badge && <span className="now-badge">{badge}</span>}
-        <h1 className="page-title now-title">{title}</h1>
-        {subtitle && <p className="now-subtitle">{subtitle}</p>}
-      </header>
+    <>
+      {(guideTitle || intro || guide?.length > 0) && (
+        <section className="now-section">
+          {guideTitle && <h3 className="now-section-title">{guideTitle}</h3>}
+          {intro && <p className="now-intro">{intro}</p>}
 
-      <section className="now-section">
-        {guideTitle && (
-          <h2 className="now-section-title">{guideTitle}</h2>
-        )}
-        {intro && <p className="now-intro">{intro}</p>}
-
-        {guide.map((topic, idx) => (
-          <TopicCard key={topic.id} topic={topic} index={idx} total={guide.length} />
-        ))}
-      </section>
+          {guide?.map((topic, idx) => (
+            <TopicCard
+              key={topic.id}
+              topic={topic}
+              index={idx}
+              total={guide.length}
+              onOpenImage={onOpenImage}
+            />
+          ))}
+        </section>
+      )}
 
       {handout && (
         <section className="now-section">
-          <h2 className="now-section-title">{handout.title}</h2>
+          <h3 className="now-section-title">{handout.title}</h3>
 
           <div className="card now-handout">
             {handout.intro && <p className="now-handout-intro">{handout.intro}</p>}
@@ -135,9 +147,9 @@ export default function NowAtGan() {
                 key={img.src}
                 type="button"
                 className="now-handout-image"
-                onClick={() => setViewerImage(img)}
+                onClick={() => onOpenImage(img)}
               >
-                <img src={img.src} alt={img.alt} />
+                <img src={img.src} alt={img.alt} loading="lazy" />
               </button>
             ))}
             {handout.caption && handoutImages.length > 0 && (
@@ -159,13 +171,17 @@ export default function NowAtGan() {
 
       {learning?.length > 0 && (
         <section className="now-section">
-          {learningTitle && (
-            <h2 className="now-section-title">{learningTitle}</h2>
-          )}
+          {learningTitle && <h3 className="now-section-title">{learningTitle}</h3>}
           {learningIntro && <p className="now-intro">{learningIntro}</p>}
 
           {learning.map((topic, idx) => (
-            <TopicCard key={topic.id} topic={topic} index={idx} total={learning.length} />
+            <TopicCard
+              key={topic.id}
+              topic={topic}
+              index={idx}
+              total={learning.length}
+              onOpenImage={onOpenImage}
+            />
           ))}
         </section>
       )}
@@ -174,6 +190,80 @@ export default function NowAtGan() {
         <section className="card now-closing">
           {closing.title && <p className="now-closing-title">{closing.title}</p>}
           {closing.text && <p className="now-closing-text">{closing.text}</p>}
+        </section>
+      )}
+    </>
+  )
+}
+
+export default function NowAtGan() {
+  const { title, entries } = seasonalContent
+  /* הפריט הראשון הוא הנושא הנוכחי ומוצג ישירות; כל השאר עוברים לארכיון */
+  const [current, ...past] = entries
+  const [viewerImage, setViewerImage] = useState(null)
+  /* תיקיות הארכיון סגורות כברירת מחדל ונפתחות בלחיצה */
+  const [openIds, setOpenIds] = useState([])
+
+  const toggle = (id) => {
+    setOpenIds((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]))
+  }
+
+  return (
+    <div className="page now-page">
+      <header className="now-hero">
+        <h1 className="page-title now-title">{title}</h1>
+        {current && (
+          <p className="now-subtitle">
+            {current.emoji} {current.title}
+          </p>
+        )}
+        {current?.subtitle && <p className="now-archive-hint">{current.subtitle}</p>}
+      </header>
+
+      {current && <EntryBody entry={current} onOpenImage={setViewerImage} />}
+
+      {past.length > 0 && (
+        <section className="now-archive">
+          <h2 className="now-section-title">📂 מה כבר היה בגן</h2>
+          <p className="now-archive-hint now-archive-intro">
+            מהחדש לישן · לחצו על תיקייה כדי לפתוח
+          </p>
+
+          <div className="now-folders">
+            {past.map((entry) => {
+              const isOpen = openIds.includes(entry.id)
+              const panelId = `now-folder-${entry.id}`
+              return (
+                <section
+                  key={entry.id}
+                  className={`card now-folder${isOpen ? ' is-open' : ''}`}
+                >
+                  <h3 className="now-folder-heading">
+                    <button
+                      type="button"
+                      className="now-folder-toggle"
+                      aria-expanded={isOpen}
+                      aria-controls={panelId}
+                      onClick={() => toggle(entry.id)}
+                    >
+                      <span className="now-folder-emoji" aria-hidden="true">{entry.emoji}</span>
+                      <span className="now-folder-text">
+                        <span className="now-folder-title">{entry.title}</span>
+                        {entry.subtitle && <span className="now-folder-subtitle">{entry.subtitle}</span>}
+                      </span>
+                      <span className="now-folder-chevron" aria-hidden="true">⌄</span>
+                    </button>
+                  </h3>
+
+                  {isOpen && (
+                    <div id={panelId} className="now-folder-body">
+                      <EntryBody entry={entry} onOpenImage={setViewerImage} />
+                    </div>
+                  )}
+                </section>
+              )
+            })}
+          </div>
         </section>
       )}
 
