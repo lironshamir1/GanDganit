@@ -108,8 +108,42 @@ function TopicCard({ topic, index, total, onOpenImage }) {
 }
 
 /* התוכן של נושא אחד — אותם מקטעים שהיו בעמוד העונתי */
+/* סיפור על פעילות בגן — פסקאות ומתחתן גלריית תמונות.
+   תמונה שהקובץ שלה עדיין לא נמצא ב-public מוסתרת, במקום להציג תמונה שבורה. */
+function StoryCard({ story, onOpenImage }) {
+  const [missing, setMissing] = useState([])
+  const images = (story.images || []).filter((img) => !missing.includes(img.src))
+
+  return (
+    <article className="card now-story">
+      {story.paragraphs?.map((text, i) => (
+        <p key={i} className="now-story-text">{text}</p>
+      ))}
+      {images.length > 0 && (
+        <div className={`now-story-gallery${images.length > 1 ? ' is-multi' : ''}`}>
+          {images.map((img) => (
+            <button
+              key={img.src}
+              type="button"
+              className="now-handout-image"
+              onClick={() => onOpenImage(img)}
+            >
+              <img
+                src={img.src}
+                alt={img.alt}
+                loading="lazy"
+                onError={() => setMissing((prev) => [...prev, img.src])}
+              />
+            </button>
+          ))}
+        </div>
+      )}
+    </article>
+  )
+}
+
 function EntryBody({ entry, onOpenImage }) {
-  const { intro, guideTitle, guide, handout, learningTitle, learningIntro, learning, closing } = entry
+  const { intro, story, guideTitle, guide, handout, learningTitle, learningIntro, learning, closing } = entry
 
   /* תמיכה גם בתמונה בודדת (image) וגם בכמה תמונות (images) */
   const handoutImages = handout?.images ?? (
@@ -118,6 +152,12 @@ function EntryBody({ entry, onOpenImage }) {
 
   return (
     <>
+      {story && (
+        <section className="now-section">
+          <StoryCard story={story} onOpenImage={onOpenImage} />
+        </section>
+      )}
+
       {(guideTitle || intro || guide?.length > 0) && (
         <section className="now-section">
           {guideTitle && <h3 className="now-section-title">{guideTitle}</h3>}
