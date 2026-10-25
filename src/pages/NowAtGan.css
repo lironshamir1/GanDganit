@@ -576,3 +576,41 @@
   background: linear-gradient(135deg, var(--coral-soft), #FFF8F0);
   border: 1px dashed rgba(232, 144, 122, 0.5);
 }
+
+/* סיפור על פעילות בגן — פסקאות ומתחתן גלריית תמונות */
+.now-story {
+  padding: 22px 20px;
+  border-right: 4px solid var(--coral);
+}
+
+.now-story-text {
+  font-size: 1.05rem;
+  line-height: 1.95;
+  color: var(--text);
+}
+
+.now-story-text + .now-story-text {
+  margin-top: 14px;
+}
+
+.now-story-gallery {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  margin-top: 20px;
+}
+
+@media (min-width: 560px) {
+  .now-story-gallery.is-multi {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 380px) {
+  .now-story {
+    padding: 18px 16px;
+  }
+  .now-story-text {
+    font-size: 1rem;
+  }
+}
