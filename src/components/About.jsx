@@ -36,10 +36,11 @@ function AboutPopup({ onClose }) {
               <li><strong>מורן אושרי</strong> — גננת משלימה</li>
               <li><strong>גלי אהרון לוי</strong> — מרפאה בעיסוק</li>
               <li><strong>לילך כספרי</strong> — קלינאית תקשורת</li>
-              <li><strong>דיאנה שדה</strong> — מטפלת רגשית במוסיקה</li>
               <li><strong>קארין סגל בן מיכה</strong> — מנתחת התנהגות</li>
               <li><strong>שירן עמוסי</strong> — פסיכולוג</li>
               <li><strong>מורן לוקצקי</strong> — מתנדבת</li>
+              <li><strong>נטע טרומר</strong> — מתנדבת</li>
+              <li><strong>אור</strong> — בת שירות</li>
             </ul>
           </div>
         </div>
