@@ -43,7 +43,7 @@ export const ganUpdates = [
       'ביום שלישי, ה-27.10, יום הבחירות לכנסת, הוא יום שבתון. הגן יהיה סגור.',
     type: 'general',
     date: '26.10.2026',
-    time: '07:40',
+    time: '17:10',
     pinned: true,
   },
   {
