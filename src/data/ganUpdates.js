@@ -37,6 +37,16 @@
 
 export const ganUpdates = [
   {
+    id: '2026-10-27-yom-habchirot',
+    title: 'יום הבחירות — הגן סגור',
+    content:
+      'ביום שלישי, ה-27.10, יום הבחירות לכנסת, הוא יום שבתון. הגן יהיה סגור.',
+    type: 'general',
+    date: '26.10.2026',
+    time: '17:10',
+    pinned: true,
+  },
+  {
     id: '2026-09-10-tapuach-rosh-hashana',
     title: 'חוגגים ראש השנה בגן',
     content:
