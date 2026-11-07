@@ -1,0 +1,26 @@
+---
+layout: base.njk
+page_kind: home
+permalink: /
+---
+<section class="pick"><div class="wrap">
+  <h2>איזה מעבר לפניכם?</h2>
+  {% set current = "" %}
+  {% include "chips.njk" %}
+  <p class="lead small">הבחירה נשמרת רק בטלפון שלכם, ובפעם הבאה האתר ייפתח ישר בה. האתר לא שואל שם או פרטים על הילד.</p>
+</div></section>
+
+<section class="pick find" id="find"><div class="wrap">
+  <form class="search" id="search" role="search" autocomplete="off" novalidate>
+    <label for="q"><b>באיזה שלב אתם?</b> אפשר לכתוב גיל, כיתה או מילה</label>
+    <div class="row">
+      <input id="q" type="search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="go" placeholder="למשל: 5, כיתה ו, אבחון">
+      <button type="submit">מצאו לי</button>
+    </div>
+    <p class="result" id="result" aria-live="polite"></p>
+    <p class="lead small">מה שכותבים כאן לא נשמר בשום מקום, גם לא בטלפון.</p>
+  </form>
+</div></section>
+
+<script type="application/json" id="search-table">{{ pp.search | json | safe }}</script>
+<script type="application/json" id="transition-labels">{{ pp.labels | json | safe }}</script>

@@ -1,0 +1,16 @@
+# רשימת המעברים, לפי הסדר שבו הכפתורים מופיעים בעמוד הבית.
+# folder: שם התיקייה בתוך content/transitions (באנגלית, בלי רווחים). זה גם הכתובת של העמוד.
+# label: מה כתוב על הכפתור.
+# מעבר שאין בתיקייה שלו את ארבעת הקבצים מופיע כ"בקרוב".
+- folder: aleph
+  label: לכיתה א'
+- folder: diagnosis
+  label: אבחון ראשון
+- folder: middle
+  label: לחטיבה
+- folder: high
+  label: לתיכון
+- folder: graduation
+  label: סיום בית ספר
+- folder: between
+  label: בין מסגרות

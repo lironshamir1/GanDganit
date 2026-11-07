@@ -1,0 +1,219 @@
+<title>פרה פרה</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700&family=Karantina:wght@700&display=swap">
+<style>
+/* Layout: one phone-width column. The parent picks a transition, then scrolls through four short blocks: timeline, checklist, tools, contacts. Everything the parent marks stays in their own browser. */
+:root{
+  --bg:#f6f4ef; --surface:#ffffff; --fg:#26302c; --muted:#6a746f;
+  --line:#e2ddd3; --accent:#3f6f5e; --accent-soft:#e4efe9; --mark:#f3e2c0; --mark-fg:#6b4d12;
+  --display:"Karantina","Heebo",system-ui,sans-serif; --body:"Heebo",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --bg:#171a18; --surface:#202623; --fg:#e9ebe8; --muted:#a3aca7; --line:#323b36; --accent:#8cc4ad; --accent-soft:#213a31; --mark:#3b3118; --mark-fg:#f0d9a3; color-scheme:dark } }
+:root[data-theme="dark"]{ --bg:#171a18; --surface:#202623; --fg:#e9ebe8; --muted:#a3aca7; --line:#323b36; --accent:#8cc4ad; --accent-soft:#213a31; --mark:#3b3118; --mark-fg:#f0d9a3; color-scheme:dark }
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:18px;line-height:1.55;direction:rtl}
+.wrap{max-width:560px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{text-wrap:balance;line-height:1.2;margin:0}
+p{margin:0}
+a{color:var(--accent)}
+.draft{background:var(--mark);color:var(--mark-fg);font-size:14px;font-weight:500}
+.draft .wrap{padding-block:8px}
+.todo{background:var(--mark);color:var(--mark-fg);border-radius:5px;padding:0 5px;font-size:15px;font-weight:500}
+
+header .wrap{padding-block:28px 10px;display:grid;gap:4px}
+.brand{font-family:var(--display);font-size:56px;line-height:1;color:var(--accent);letter-spacing:.01em}
+.tag{color:var(--muted);font-size:16px}
+
+.pick .wrap{padding-block:12px 20px;display:grid;gap:10px}
+.pick h2{font-size:22px;font-weight:700}
+.chips{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.chip{font:inherit;font-size:16px;font-weight:500;padding:12px 10px;border-radius:12px;border:1.5px solid var(--line);background:var(--surface);color:var(--fg);cursor:pointer;text-align:center;min-height:52px}
+.chip.is-on{background:var(--accent);border-color:var(--accent);color:#fff}
+.chip.soon{color:var(--muted);border-style:dashed}
+.chip.soon small{display:block;font-size:12px}
+
+section.block{border-top:1px solid var(--line)}
+section.block .wrap{padding-block:26px;display:grid;gap:14px}
+.eyebrow{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+section.block h2{font-size:26px;font-weight:700}
+.lead{color:var(--muted)}
+
+.tl{list-style:none;margin:0;padding:0;display:grid;gap:0;position:relative}
+.tl::before{content:"";position:absolute;top:14px;bottom:14px;right:7px;width:2px;background:var(--line)}
+.tl li{display:grid;grid-template-columns:16px 1fr;gap:12px;padding-block:8px;align-items:start}
+.tl .dot{width:16px;height:16px;border-radius:50%;background:var(--surface);border:3px solid var(--accent);margin-top:6px;position:relative;z-index:1}
+.tl li.now .dot{background:var(--accent)}
+.tl b{display:block;font-weight:700}
+.tl span{color:var(--muted);font-size:16px}
+.tl .when{font-size:14px;font-weight:700;color:var(--accent);display:block}
+
+.checks{display:grid;gap:8px}
+.check{display:grid;grid-template-columns:28px 1fr;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;cursor:pointer}
+.check input{width:24px;height:24px;margin:2px 0 0;accent-color:var(--accent)}
+.check b{display:block;font-weight:500}
+.check span{display:block;color:var(--muted);font-size:15px}
+.check.done b{text-decoration:line-through;color:var(--muted)}
+.progress{font-size:15px;color:var(--muted)}
+
+.tabs{display:flex;gap:6px;border-bottom:1px solid var(--line)}
+.tab{font:inherit;font-size:16px;font-weight:500;padding:10px 12px;border:0;background:none;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-1px}
+.tab.is-on{color:var(--accent);border-bottom-color:var(--accent);font-weight:700}
+.tools{display:grid;gap:10px}
+.tool{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:grid;gap:4px}
+.tool b{font-weight:700}
+.tool p{font-size:16px}
+.tools[hidden]{display:none}
+
+.who{display:grid;gap:8px}
+.org{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:grid;gap:2px}
+.org b{font-weight:700}
+.org span{font-size:15px;color:var(--muted)}
+.org .tel{font-size:18px;font-variant-numeric:tabular-nums;user-select:all;color:var(--accent);font-weight:500}
+
+.card{background:var(--accent-soft);border-radius:12px;padding:14px 16px;display:grid;gap:6px}
+.card b{font-weight:700}
+.card p{font-size:16px}
+
+footer .wrap{padding-block:24px 40px;color:var(--muted);font-size:14px;display:grid;gap:6px;border-top:1px solid var(--line)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+</style>
+
+<div class="draft"><div class="wrap">טיוטה לצוות ההורים. מועדים ופרטים מקומיים מסומנים ב"לבדוק".</div></div>
+
+<header><div class="wrap">
+  <div class="brand">פרה פרה</div>
+  <p class="tag">מדריך מעשי להורים במעברים בחינוך המיוחד. צעד אחד בכל פעם.</p>
+</div></header>
+
+<section class="pick"><div class="wrap">
+  <h2>איזה מעבר לפניכם?</h2>
+  <div class="chips" id="chips">
+    <button type="button" class="chip is-on" data-t="aleph">לכיתה א'</button>
+    <button type="button" class="chip soon" disabled>אבחון ראשון<small>בקרוב</small></button>
+    <button type="button" class="chip soon" disabled>לחטיבה<small>בקרוב</small></button>
+    <button type="button" class="chip soon" disabled>לתיכון<small>בקרוב</small></button>
+    <button type="button" class="chip soon" disabled>סיום בית ספר<small>בקרוב</small></button>
+    <button type="button" class="chip soon" disabled>בין מסגרות<small>בקרוב</small></button>
+  </div>
+  <p class="lead" style="font-size:15px">הבחירה נשמרת רק בטלפון שלכם. האתר לא שואל שם, גיל או פרטים על הילד.</p>
+</div></section>
+
+<section class="block" id="timeline"><div class="wrap">
+  <div class="eyebrow">מה קורה ומתי</div>
+  <h2>השנה של המעבר לכיתה א'</h2>
+  <p class="lead">מועדים משתנים משנה לשנה. אלה המועדים לשנת הלימודים הקרובה. <span class="todo">לבדוק: כל התאריכים מול העירייה</span></p>
+  <ol class="tl">
+    <li><div class="dot"></div><div><span class="when">נובמבר–דצמבר</span><b>מפגש מעברים בעירייה</b><span>האחראית על החינוך המיוחד מציגה את המסגרות האפשריות ואת הוועדות. מגיעים גם נציגה מהמתי"א ופסיכולוג. <span class="todo">לבדוק: מועד</span></span></div></li>
+    <li><div class="dot"></div><div><span class="when">ינואר–פברואר</span><b>רישום לכיתה א'</b><span>רישום רגיל בעירייה, גם לילד עם זכאות. <span class="todo">לבדוק: תאריכי הרישום</span></span></div></li>
+    <li><div class="dot"></div><div><span class="when">עד מאי</span><b>ועדת זכאות ואפיון</b><span>אם הזכאות מסתיימת או שרוצים לשנות סוג מסגרת. אם הזכאות ממשיכה, אין צורך בוועדה חדשה. <span class="todo">לבדוק: ניסוח מול המתי"א</span></span></div></li>
+    <li><div class="dot"></div><div><span class="when">יוני–יולי</span><b>הודעה על שיבוץ</b><span>העירייה מודיעה באיזה בית ספר הילד ילמד. זה הזמן לבקר שם.</span></div></li>
+    <li><div class="dot"></div><div><span class="when">ספטמבר</span><b>תחילת שנה, ואחריה פילוח תמיכות</b><span>בבית הספר נקבע מה הילד יקבל בפועל. הטיפולים מתחילים אחרי הפילוח, לא ב-1 בספטמבר.</span></div></li>
+  </ol>
+</div></section>
+
+<section class="block" id="checklist"><div class="wrap">
+  <div class="eyebrow">מה עושים</div>
+  <h2>הרשימה שלכם</h2>
+  <p class="progress" id="progress"></p>
+  <div class="checks" id="checks">
+    <label class="check"><input type="checkbox" id="c1"><div><b>נרשמנו לכיתה א' בעירייה</b><span>גם ילד עם זכאות צריך רישום רגיל.</span></div></label>
+    <label class="check"><input type="checkbox" id="c2"><div><b>בדקנו אם הזכאות ממשיכה או שצריך ועדה</b><span>לשאול את הגננת או את נציגת המתי"א.</span></div></label>
+    <label class="check"><input type="checkbox" id="c3"><div><b>היינו במפגש המעברים</b><span>ואם לא, ביקשנו את הדף שחולק בו.</span></div></label>
+    <label class="check"><input type="checkbox" id="c4"><div><b>ביקרנו בבית הספר, רצוי עם הילד</b><span>לראות את הכיתה, החצר, השירותים. לצלם, כדי להראות לילד בבית.</span></div></label>
+    <label class="check"><input type="checkbox" id="c5"><div><b>ביקשנו מהגן את התוכנית האישית וסיכומי הטיפולים</b><span>זה מה שעובר איתכם לבית הספר. לא כל דבר עובר לבד.</span></div></label>
+    <label class="check"><input type="checkbox" id="c6"><div><b>שאלנו מי רכזת השילוב בבית הספר</b><span>היא הכתובת שלכם בשנה הראשונה.</span></div></label>
+    <label class="check"><input type="checkbox" id="c7"><div><b>הכנו דף "על הילד שלי" למחנכת</b><span>עמוד אחד: מה עוזר לו, מה מרגיע אותו, מה לשים לב אליו. ראו בכלים למטה.</span></div></label>
+    <label class="check"><input type="checkbox" id="c8"><div><b>פגשנו את המחנכת לפני תחילת השנה</b><span>אם אפשר. גם שיחת טלפון קצרה עוזרת.</span></div></label>
+  </div>
+  <p class="lead" style="font-size:15px">הסימונים נשמרים בטלפון הזה בלבד.</p>
+</div></section>
+
+<section class="block" id="tools"><div class="wrap">
+  <div class="eyebrow">כלים קצרים</div>
+  <h2>מה עוזר, לפי הניסיון</h2>
+  <p class="lead">דברים שעוזרים להרבה ילדים ולהרבה הורים. לא כל כלי מתאים לכל ילד. אם משהו לא עובד, זה הזמן לדבר עם המטפלת או עם הגננת.</p>
+  <div class="tabs" role="tablist">
+    <button type="button" class="tab is-on" data-g="child">עם הילד</button>
+    <button type="button" class="tab" data-g="home">בבית</button>
+    <button type="button" class="tab" data-g="parent">בשבילכם</button>
+  </div>
+  <div class="tools" data-g="child">
+    <div class="tool"><b>לדבר על זה, קצר ושוב</b><p>לא שיחה אחת גדולה, אלא משפט אחד בכל פעם: "אחרי הקיץ תלך לבית ספר. יש שם כיתה וחצר." לחזור על זה בשקט, בלי הרבה פרטים.</p></div>
+    <div class="tool"><b>לראות לפני</b><p>לבקר בבית הספר, לצלם את השער, הכיתה והחצר, ולהסתכל על התמונות יחד בבית. מה שמוכר פחות מפחיד.</p></div>
+    <div class="tool"><b>לשחק "יום בבית הספר"</b><p>בובות או דמויות: צלצול, יושבים, הפסקה, אוכלים, חוזרים הביתה. הילד לומד את הסדר דרך משחק.</p></div>
+    <div class="tool"><b>ספר על כיתה א'</b><p>כל ספר ילדים על התחלת בית ספר. לקרוא כמה פעמים בקיץ. <span class="todo">לבדוק: שם ספר מומלץ</span></p></div>
+    <div class="tool"><b>להכין את הילקוט יחד</b><p>לתת לילד לבחור ילקוט, ולארוז יחד כמה פעמים לפני. כשהוא יודע מה יש בפנים, הוא פחות תלוי.</p></div>
+  </div>
+  <div class="tools" data-g="home" hidden>
+    <div class="tool"><b>שגרת בוקר, שבועיים לפני</b><p>להתחיל לקום בשעה של בית הספר כבר באוגוסט. אותו סדר כל יום: קמים, שירותים, אוכלים, מתלבשים. רצוי עם לוח תמונות.</p></div>
+    <div class="tool"><b>שעת שינה</b><p>ילד עייף בכיתה א' מתקשה בכול. להזיז את שעת השינה בהדרגה, רבע שעה כל כמה ימים.</p></div>
+    <div class="tool"><b>עצמאות קטנה</b><p>לפתוח לבד קופסת אוכל ובקבוק, ללכת לשירותים לבד, לנעול נעליים. לתרגל בקיץ, בלי לחץ.</p></div>
+    <div class="tool"><b>עשר דקות ליד שולחן</b><p>כל יום, משהו קצר ונעים ליד שולחן: ציור, הדבקה, משחק. לא שיעורי בית, רק להתרגל לשבת.</p></div>
+    <div class="tool"><b>מקום קבוע לדברים</b><p>וו לילקוט, מגירה לקלמר. כשיש מקום קבוע, הבוקר עובר בלי חיפושים.</p></div>
+  </div>
+  <div class="tools" data-g="parent" hidden>
+    <div class="tool"><b>הדאגה שלכם עוברת אליו</b><p>ילדים קולטים את המתח של ההורים. זה בסדר לדאוג, אבל לדבר עם הילד בשקט, ואת הדאגות לשמור לשיחה עם מבוגר.</p></div>
+    <div class="tool"><b>החודש הראשון קשה, וזה צפוי</b><p>בכי בבוקר, עייפות, התפרצויות בבית. רוב הילדים מתייצבים אחרי כמה שבועות. אם זה נמשך מעבר לחודש, לדבר עם המחנכת.</p></div>
+    <div class="tool"><b>כתובת אחת</b><p>בשנה הראשונה, מספיק לדעת מי רכזת השילוב ואיך מגיעים אליה. לא צריך להכיר את כולם.</p></div>
+    <div class="tool"><b>דף "על הילד שלי"</b><p>עמוד אחד למחנכת: מה עוזר לו, מה מרגיע, מה לשים לב אליו, איך הוא מתקשר. זה החלק הכי חשוב שאתם יכולים להעביר. <span class="todo">תבנית תתווסף</span></p></div>
+    <div class="tool"><b>מותר לשאול</b><p>הורים חוששים להיות "ההורה שמציק". לשאול שאלה ברורה פעם בכמה שבועות זה לא להציק, זה שותפות.</p></div>
+  </div>
+</div></section>
+
+<section class="block" id="who"><div class="wrap">
+  <div class="eyebrow">למי פונים</div>
+  <h2>בשלב הזה, שלוש כתובות</h2>
+  <div class="who">
+    <div class="org"><b>הגננת ונציגת המתי"א בגן</b><span>על הילד, על הזכאות, ועל מה עובר לבית הספר</span><span class="tel">הטלפון של הגן</span></div>
+    <div class="org"><b>חינוך מיוחד, עיריית חדרה</b><span>רישום, ועדות, שיבוץ, הסעות</span><span class="tel"><span class="todo">לבדוק: טלפון</span></span></div>
+    <div class="org"><b>רכזת השילוב בבית הספר החדש</b><span>מהרגע שיש שיבוץ: ביקור, קליטה, הפילוח</span><span class="tel">דרך מזכירות בית הספר</span></div>
+  </div>
+  <div class="card"><b>לא בטוחים?</b><p>תתחילו מהגננת. היא מכירה את הילד ואת הדרך, ותדע להפנות.</p></div>
+</div></section>
+
+<section class="block"><div class="wrap">
+  <div class="card"><b>רוצים את זה בטלפון?</b><p>שמרו את העמוד למסך הבית: באייפון, שיתוף ואז "הוספה למסך הבית". באנדרואיד, תפריט ואז "הוספה למסך הבית".</p></div>
+</div></section>
+
+<footer><div class="wrap">
+  <p>נכתב על ידי צוות ההורים: אנשי חינוך וטיפול בחדרה.</p>
+  <p>האתר לא אוסף ולא שומר שום פרט עליכם או על הילד. מה שסימנתם נשאר בטלפון שלכם.</p>
+  <p>עודכן: נובמבר 2026</p>
+</div></footer>
+
+<script>
+(function(){
+  var KEY='parapara-aleph';
+  var state={};
+  try{ state=JSON.parse(localStorage.getItem(KEY)||'{}')||{}; }catch(e){ state={}; }
+  var boxes=document.querySelectorAll('#checks input');
+  function render(){
+    var done=0;
+    boxes.forEach(function(b){
+      b.checked=!!state[b.id];
+      b.closest('.check').classList.toggle('done',b.checked);
+      if(b.checked) done++;
+    });
+    var total=boxes.length;
+    document.getElementById('progress').textContent = done===0 ? 'עוד לא סימנתם כלום. זה בסדר, זו ההתחלה.' : (done===total ? 'סימנתם הכול. מוכנים לספטמבר.' : 'סימנתם '+done+' מתוך '+total+'.');
+  }
+  boxes.forEach(function(b){
+    b.addEventListener('change',function(){
+      state[b.id]=b.checked;
+      try{ localStorage.setItem(KEY,JSON.stringify(state)); }catch(e){}
+      render();
+    });
+  });
+  render();
+  document.querySelectorAll('.tab').forEach(function(t){
+    t.addEventListener('click',function(){
+      document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('is-on')});
+      t.classList.add('is-on');
+      var g=t.getAttribute('data-g');
+      document.querySelectorAll('.tools').forEach(function(x){ x.hidden = x.getAttribute('data-g')!==g; });
+    });
+  });
+})();
+</script>

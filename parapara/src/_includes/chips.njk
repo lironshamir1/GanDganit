@@ -1,0 +1,9 @@
+<div class="chips" id="chips">
+{% for t in pp.transitions %}
+  {% if t.ready %}
+  <a class="chip{% if current == t.folder %} is-on{% endif %}" href="{{ t.url }}" data-folder="{{ t.folder }}"{% if current == t.folder %} aria-current="page"{% endif %}>{{ t.label }}</a>
+  {% else %}
+  <span class="chip soon" aria-disabled="true">{{ t.label }}<small>בקרוב</small></span>
+  {% endif %}
+{% endfor %}
+</div>

@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="he" dir="rtl" data-page="{{ page_kind }}" data-env="{{ 'production' if pp.isProduction else 'development' }}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>{% if pageTitle %}{{ pageTitle }} · {% endif %}{{ pp.site.name }}</title>
+<meta name="description" content="{{ pp.site.tagline }}">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="{{ 'index,follow' if pp.isProduction else 'noindex' }}">
+<meta name="theme-color" content="#3f6f5e">
+<meta name="pp-ready" content="{{ pp.readyFolders | join(',') }}">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" href="/icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-title" content="{{ pp.site.name }}">
+<link rel="preload" href="/assets/fonts/heebo-hebrew-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/css/site.css">
+<script src="/assets/js/boot.js"></script>
+<script src="/assets/js/match.js" defer></script>
+<script src="/assets/js/app.js" defer></script>
+</head>
+<body>
+{% if not pp.isProduction %}
+<div class="draft"><div class="wrap">{{ pp.site.draftNote }}{% if pp.todoCount %} נשארו {{ pp.todoCount }} סימונים.{% endif %}</div></div>
+{% endif %}
+
+<header><div class="wrap">
+  <a class="brand" href="/?choose=1">{{ pp.site.name }}</a>
+  <p class="tag">{{ pp.site.tagline }}</p>
+</div></header>
+
+<main>
+{{ content | safe }}
+
+<section class="block"><div class="wrap">
+  <div class="card"><b>רוצים את זה בטלפון?</b><p>שמרו את העמוד למסך הבית: באייפון, שיתוף ואז "הוספה למסך הבית". באנדרואיד, תפריט ואז "הוספה למסך הבית". אחרי זה הוא עובד גם בלי אינטרנט.</p></div>
+</div></section>
+</main>
+
+<footer><div class="wrap">
+  <p>{{ pp.site.credit }}</p>
+  <p>{{ pp.site.privacy }}</p>
+  <div class="clear">
+    <button type="button" class="ghost" id="clear-all">לנקות הכול</button>
+    <span class="clear-note" id="clear-note" aria-live="polite">מוחק מהטלפון את הבחירה ואת הסימונים.</span>
+  </div>
+  <p>עודכן: {{ pp.updated }}</p>
+</div></footer>
+</body>
+</html>

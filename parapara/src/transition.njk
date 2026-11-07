@@ -1,0 +1,80 @@
+---
+layout: base.njk
+page_kind: transition
+pagination:
+  data: pp.ready
+  size: 1
+  alias: t
+permalink: "/{{ t.folder }}/"
+eleventyComputed:
+  pageTitle: "{{ t.label }}"
+---
+<div data-folder="{{ t.folder }}" id="transition">
+
+<section class="pick"><div class="wrap">
+  <h2>איזה מעבר לפניכם?</h2>
+  {% set current = t.folder %}
+  {% include "chips.njk" %}
+  <p class="lead small">הבחירה נשמרת רק בטלפון שלכם. <a href="/?choose=1#find">חיפוש לפי גיל או כיתה</a></p>
+</div></section>
+
+<section class="block" id="timeline"><div class="wrap">
+  <div class="eyebrow">מה קורה ומתי</div>
+  <h2>{{ t.timeline.title | safe }}</h2>
+  {% if t.timeline.lead %}<p class="lead">{{ t.timeline.lead | safe }}</p>{% endif %}
+  <ol class="tl">
+  {% for it in t.timeline.items %}
+    <li{% if it.from %} data-from="{{ it.from }}" data-to="{{ it.to }}"{% endif %}><div class="dot"></div><div>
+      <span class="when">{{ it.when | safe }}<span class="here" hidden></span></span>
+      <b>{{ it.title | safe }}</b>
+      <span>{{ it.text | safe }}</span>
+      {% if it.calendarDate %}<a class="cal" href="/{{ t.folder }}/cal/{{ it.id }}.ics" download="{{ t.folder }}-{{ loop.index }}.ics" aria-label="הוסף ליומן: {{ it.titlePlain }}">הוסף ליומן</a>{% endif %}
+    </div></li>
+  {% endfor %}
+  </ol>
+</div></section>
+
+<section class="block" id="checklist"><div class="wrap">
+  <div class="eyebrow">מה עושים</div>
+  <h2>{{ t.checklist.title | safe }}</h2>
+  {% if t.checklist.lead %}<p class="lead">{{ t.checklist.lead | safe }}</p>{% endif %}
+  <p class="progress" id="progress" data-empty="{{ t.checklist.empty }}" data-done="{{ t.checklist.done }}"></p>
+  <div class="bar" aria-hidden="true"><i id="bar"></i></div>
+  <div class="checks" id="checks">
+  {% for c in t.checklist.items %}
+    <label class="check"><input type="checkbox" data-id="{{ c.id }}"><div><b>{{ c.title | safe }}</b>{% if c.text %}<span>{{ c.text | safe }}</span>{% endif %}</div></label>
+  {% endfor %}
+  </div>
+  <p class="lead small">הסימונים נשמרים בטלפון הזה בלבד.</p>
+</div></section>
+
+<section class="block" id="tools"><div class="wrap">
+  <div class="eyebrow">כלים קצרים</div>
+  <h2>{{ t.tools.title | safe }}</h2>
+  {% if t.tools.lead %}<p class="lead">{{ t.tools.lead | safe }}</p>{% endif %}
+  <div class="tabs" role="tablist" aria-label="קבוצות כלים">
+  {% for g in t.tools.groups %}
+    <button type="button" role="tab" class="tab{% if loop.first %} is-on{% endif %}" id="tab-{{ g.key }}" aria-controls="panel-{{ g.key }}" aria-selected="{{ 'true' if loop.first else 'false' }}" tabindex="{{ '0' if loop.first else '-1' }}" data-g="{{ g.key }}">{{ g.label }}</button>
+  {% endfor %}
+  </div>
+  {% for g in t.tools.groups %}
+  <div class="tools" role="tabpanel" id="panel-{{ g.key }}" aria-labelledby="tab-{{ g.key }}" data-g="{{ g.key }}"{% if not loop.first %} hidden{% endif %}>
+    {% for tool in g.items %}<div class="tool"><b>{{ tool.title | safe }}</b><p>{{ tool.text | safe }}</p></div>
+    {% endfor %}
+  </div>
+  {% endfor %}
+</div></section>
+
+<section class="block" id="who"><div class="wrap">
+  <div class="eyebrow">למי פונים</div>
+  <h2>{{ t.contacts.title | safe }}</h2>
+  <div class="who">
+  {% for c in t.contacts.items %}
+    <div class="org"><b>{{ c.title | safe }}</b>{% if c.text %}<span>{{ c.text | safe }}</span>{% endif %}
+    {% if c.tel %}<a class="tel" href="tel:{{ c.tel }}">{{ c.phone | safe }}</a>{% elif c.phone %}<span class="tel">{{ c.phone | safe }}</span>{% endif %}</div>
+  {% endfor %}
+  </div>
+  {% if t.contacts.helpTitle or t.contacts.helpText %}<div class="card"><b>{{ t.contacts.helpTitle | safe }}</b><p>{{ t.contacts.helpText | safe }}</p></div>{% endif %}
+</div></section>
+
+</div>

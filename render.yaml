@@ -7,3 +7,35 @@ services:
     envVars:
       - key: NODE_VERSION
         value: 20
+
+  # פרה פרה: אתר סטטי נפרד, מהתיקייה parapara/. אין שרת, רק קבצים.
+  - type: web
+    name: parapara
+    runtime: static
+    rootDir: parapara
+    buildCommand: npm ci && npm test && npm run build
+    staticPublishPath: _site
+    envVars:
+      - key: NODE_VERSION
+        value: 22
+    headers:
+      # Privacy: the site loads nothing from other servers and sends no referrer.
+      - path: /*
+        name: Content-Security-Policy
+        value: "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; manifest-src 'self'; worker-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; object-src 'none'"
+      - path: /*
+        name: Referrer-Policy
+        value: no-referrer
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff
+      - path: /*
+        name: Permissions-Policy
+        value: "camera=(), microphone=(), geolocation=(), interest-cohort=(), browsing-topics=()"
+      # New versions reach phones quickly: the offline file is always re-checked.
+      - path: /sw.js
+        name: Cache-Control
+        value: no-cache
+      - path: /*/cal/*
+        name: Content-Type
+        value: text/calendar; charset=utf-8
