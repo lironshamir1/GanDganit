@@ -37,6 +37,16 @@
 
 export const ganUpdates = [
   {
+    id: '2026-12-06-chufshat-hanukkah',
+    title: 'חופשת חנוכה',
+    content:
+      'בתאריכים 6.12–12.12 הגן סגור לרגל חופשת חנוכה. נחזור לגן ביום ראשון, ה-13.12.',
+    type: 'general',
+    date: '24.11.2026',
+    time: '11:35',
+    pinned: true,
+  },
+  {
     id: '2026-12-04-mesibat-hanukkah',
     title: 'מסיבת חנוכה בגן',
     content:
