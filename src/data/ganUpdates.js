@@ -37,6 +37,16 @@
 
 export const ganUpdates = [
   {
+    id: '2026-11-24-sichot-horim',
+    title: 'שיחות הורים',
+    content:
+      'ביום שלישי, ה-24.11, נקיים שיחות הורים, ובהן צוות הגן יציג את הטיוטה לתוכנית העבודה.',
+    type: 'general',
+    date: '24.11.2026',
+    time: '11:40',
+    pinned: true,
+  },
+  {
     id: '2026-12-06-chufshat-hanukkah',
     title: 'חופשת חנוכה',
     content:
