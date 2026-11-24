@@ -96,4 +96,59 @@
   background: rgba(232, 144, 122, 0.24);
 }
 
+/* תוכן חיצוני שנפתח בתוך האפליקציה — מסך מלא עם כפתור סגירה */
+.link-viewer {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: flex;
+  flex-direction: column;
+  direction: rtl;
+  background: #2D2320;
+  animation: linkViewerIn 0.25s ease-out;
+}
+
+@keyframes linkViewerIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.link-viewer-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: max(12px, env(safe-area-inset-top)) 16px 12px;
+  flex-shrink: 0;
+}
+
+.link-viewer-close {
+  background: rgba(255, 255, 255, 0.95);
+  color: var(--text);
+  border-radius: 20px;
+  padding: 10px 20px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.link-viewer-close:active {
+  transform: scale(0.96);
+}
+
+.link-viewer-external {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: underline;
+  text-align: left;
+}
+
+.link-viewer-frame {
+  flex: 1;
+  width: 100%;
+  border: 0;
+  background: white;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
 

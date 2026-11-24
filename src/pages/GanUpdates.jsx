@@ -1,6 +1,50 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { ganUpdates, updateTypes, latestUpdateId, UPDATES_SEEN_KEY } from '../data/ganUpdates'
 import './GanUpdates.css'
+
+/* תוכן חיצוני (למשל ספרון דיגיטלי) נפתח בתוך האפליקציה ולא בחלון נפרד:
+   באפליקציה מותקנת אין כפתור "חזור" של הדפדפן, וכך ההורה תמיד יכול
+   לחזור לעדכונים בלחיצה על "סגירה". */
+function LinkViewer({ link, onClose }) {
+  useEffect(() => {
+    const onKey = (e) => { if (e.key === 'Escape') onClose() }
+    document.addEventListener('keydown', onKey)
+    const prevOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.removeEventListener('keydown', onKey)
+      document.body.style.overflow = prevOverflow
+    }
+  }, [onClose])
+
+  return createPortal(
+    <div className="link-viewer" role="dialog" aria-label={link.label}>
+      <div className="link-viewer-bar">
+        <button type="button" className="link-viewer-close" onClick={onClose}>
+          ✕ סגירה
+        </button>
+        {/* גיבוי: אם האתר לא נטען בתוך האפליקציה, אפשר לפתוח אותו בנפרד */}
+        <a
+          className="link-viewer-external"
+          href={link.href}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          לא נטען? פתיחה בחלון נפרד
+        </a>
+      </div>
+      <iframe
+        className="link-viewer-frame"
+        src={link.href}
+        title={link.label}
+        allow="fullscreen"
+        allowFullScreen
+      />
+    </div>,
+    document.body
+  )
+}
 
 /* עמוד לקריאה בלבד. העדכונים נכתבים ב-src/data/ganUpdates.js ומגיעים
    לכל ההורים דרך גרסה חדשה של האפליקציה — כך שרק הגן מפרסם אותם. */
@@ -15,6 +59,8 @@ export default function GanUpdates() {
       /* בלי גישה ל-localStorage פשוט לא מסמנים */
     }
   }, [])
+
+  const [openLink, setOpenLink] = useState(null)
 
   const getTypeConfig = (typeId) => updateTypes.find(t => t.id === typeId) || updateTypes[0]
 
@@ -49,22 +95,23 @@ export default function GanUpdates() {
                   {update.pinned && '📌 '}{update.title}
                 </h3>
                 {update.content && <p className="gan-update-content">{update.content}</p>}
-                {/* קישור חיצוני — נפתח בכרטיסייה חדשה */}
+                {/* קישור חיצוני — נפתח בתוך האפליקציה, עם כפתור סגירה */}
                 {update.link?.href && (
-                  <a
+                  <button
+                    type="button"
                     className="gan-update-link"
-                    href={update.link.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    onClick={() => setOpenLink(update.link)}
                   >
                     {update.link.label} ←
-                  </a>
+                  </button>
                 )}
               </div>
             )
           })}
         </div>
       )}
+
+      {openLink && <LinkViewer link={openLink} onClose={() => setOpenLink(null)} />}
     </div>
   )
 }
