@@ -22,6 +22,9 @@
           date: '22.8.2026',
           time: '09:00',
           pinned: true,             // אופציונלי — מצמיד לראש הרשימה
+          link: { href: 'https://...', label: 'טקסט הקישור' },
+                                    // אופציונלי — קישור חיצוני שנפתח
+                                    // בכרטיסייה חדשה
         }
 
    3. ערכים אפשריים ל-type:
@@ -45,6 +48,10 @@ export const ganUpdates = [
     date: '24.11.2026',
     time: '11:45',
     pinned: true,
+    link: {
+      href: 'https://heyzine.com/flip-book/e4dcd95e00.html',
+      label: 'לצפייה בספרון',
+    },
   },
   {
     id: '2026-11-24-sichot-horim',

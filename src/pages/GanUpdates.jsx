@@ -49,6 +49,17 @@ export default function GanUpdates() {
                   {update.pinned && '📌 '}{update.title}
                 </h3>
                 {update.content && <p className="gan-update-content">{update.content}</p>}
+                {/* קישור חיצוני — נפתח בכרטיסייה חדשה */}
+                {update.link?.href && (
+                  <a
+                    className="gan-update-link"
+                    href={update.link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {update.link.label} ←
+                  </a>
+                )}
               </div>
             )
           })}

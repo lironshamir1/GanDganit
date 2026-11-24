@@ -78,4 +78,22 @@
   margin-bottom: 10px;
 }
 
+/* קישור מתוך עדכון (למשל ספרון דיגיטלי) */
+.gan-update-link {
+  display: inline-block;
+  margin-bottom: 10px;
+  padding: 9px 18px;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #d97a63;
+  background: rgba(232, 144, 122, 0.12);
+  border: 1px solid rgba(232, 144, 122, 0.4);
+  transition: all var(--transition);
+}
+
+.gan-update-link:hover {
+  background: rgba(232, 144, 122, 0.24);
+}
+
 
