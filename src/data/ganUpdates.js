@@ -41,7 +41,7 @@ export const ganUpdates = [
     title: 'שיחות הורים',
     content:
       'ביום שלישי, ה-24.11, נקיים שיחות הורים, ובהן צוות הגן יציג את הטיוטה לתוכנית העבודה.',
-    type: 'event',
+    type: 'general',
     date: '24.11.2026',
     time: '11:40',
     pinned: true,
