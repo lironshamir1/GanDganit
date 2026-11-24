@@ -37,6 +37,16 @@
 
 export const ganUpdates = [
   {
+    id: '2026-11-25-yeled-chadash',
+    title: 'ילד חדש מצטרף לגן',
+    content:
+      'ביום רביעי, ה-25.11, מצטרף אלינו ילד חדש לגן. נשמח לקבל אותו בחום ובאהבה!',
+    type: 'general',
+    date: '24.11.2026',
+    time: '11:45',
+    pinned: true,
+  },
+  {
     id: '2026-11-24-sichot-horim',
     title: 'שיחות הורים',
     content:
