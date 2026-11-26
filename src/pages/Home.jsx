@@ -1,10 +1,12 @@
 import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { seasonalContent } from '../data/seasonalContent'
-import { latestUpdateId, UPDATES_SEEN_KEY } from '../data/ganUpdates'
+import { latestUpdateId, UPDATES_SEEN_KEY, homePopup } from '../data/ganUpdates'
 import { ganReminders } from '../data/ganReminders'
 import { projects } from '../data/projectsData'
 import TipSplash from '../components/TipSplash'
+import HomePopup from '../components/HomePopup'
+import { isHomePopupActive } from '../components/homePopupActive'
 import './Home.css'
 
 function hasNewUpdates() {
@@ -80,6 +82,8 @@ export default function Home() {
   const todayLabel = getTodayLabel()
   const [visible, setVisible] = useState(false)
   const [showNotification, setShowNotification] = useState(hasNewUpdates)
+  /* הזמנה קופצת (אם מוגדרת ועוד לא עבר התאריך שלה) — בכל כניסה למסך הבית */
+  const [showPopup, setShowPopup] = useState(() => isHomePopupActive(homePopup))
 
   useEffect(() => {
     setVisible(true)
@@ -91,8 +95,11 @@ export default function Home() {
 
   return (
     <div className="page home-page">
+      {/* ההזמנה קודמת לטיפ היומי; הטיפ מופיע אחריה, כשהיא נסגרת */}
+      {showPopup && <HomePopup popup={homePopup} onClose={() => setShowPopup(false)} />}
+
       {/* שכבת הטיפ היומי — נפרסת על כל המסך בפתיחת האפליקציה */}
-      <TipSplash tip={tip} />
+      {!showPopup && <TipSplash tip={tip} />}
 
       <div className={`home-header ${visible ? 'visible' : ''}`}>
         {todayLabel && <p className="home-date">{todayLabel}</p>}
