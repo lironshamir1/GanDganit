@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import './Home.css'
+import EventInvite from '../components/EventInvite'
 
 const GAN_UPDATES_STORAGE_KEY = 'gandganit-gan-updates'
 
@@ -80,6 +81,7 @@ export default function Home() {
 
   return (
     <div className="page home-page">
+      <EventInvite />
       <div className={`home-header ${visible ? 'visible' : ''}`}>
         <h1 className="home-title">{greeting}, גן דגנית</h1>
       </div>
