@@ -1,0 +1,50 @@
+.home-popup {
+  position: fixed;
+  inset: 0;
+  z-index: 250;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: max(20px, env(safe-area-inset-top)) 20px max(20px, env(safe-area-inset-bottom));
+  direction: rtl;
+  cursor: pointer;
+  background: rgba(20, 14, 12, 0.78);
+  animation: homePopupIn 0.3s ease-out;
+}
+
+.home-popup.leaving {
+  animation: homePopupOut 0.25s ease-in forwards;
+}
+
+@keyframes homePopupIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes homePopupOut {
+  from { opacity: 1; }
+  to { opacity: 0; visibility: hidden; }
+}
+
+.home-popup-image {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: calc(100% - 40px);
+  border-radius: 18px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+  animation: homePopupRise 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes homePopupRise {
+  from { opacity: 0; transform: translateY(14px) scale(0.97); }
+  to { opacity: 1; transform: none; }
+}
+
+.home-popup-hint {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.8);
+}

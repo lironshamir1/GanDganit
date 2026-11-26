@@ -78,6 +78,15 @@
   margin-bottom: 10px;
 }
 
+/* תמונה בתוך עדכון (הזמנה, צילום) — ברוחב מלא */
+.gan-update-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 4px 0 12px;
+  border-radius: var(--radius-sm);
+}
+
 /* קישור מתוך עדכון (למשל ספרון דיגיטלי) */
 .gan-update-link {
   display: inline-block;

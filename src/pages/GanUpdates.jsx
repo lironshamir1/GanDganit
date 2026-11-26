@@ -95,6 +95,14 @@ export default function GanUpdates() {
                   {update.pinned && '📌 '}{update.title}
                 </h3>
                 {update.content && <p className="gan-update-content">{update.content}</p>}
+                {update.image?.src && (
+                  <img
+                    className="gan-update-image"
+                    src={update.image.src}
+                    alt={update.image.alt || update.title}
+                    loading="lazy"
+                  />
+                )}
                 {/* קישור חיצוני — נפתח בתוך האפליקציה, עם כפתור סגירה */}
                 {update.link?.href && (
                   <button
