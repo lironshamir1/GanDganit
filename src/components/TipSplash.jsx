@@ -17,7 +17,7 @@ function alreadySeenThisSession() {
   }
 }
 
-export default function TipSplash({ tip }) {
+export default function TipSplash({ tip, onDone }) {
   const [phase, setPhase] = useState(() => (alreadySeenThisSession() ? 'done' : 'visible'))
 
   useEffect(() => {
@@ -41,7 +41,14 @@ export default function TipSplash({ tip }) {
     return () => clearTimeout(timer)
   }, [phase])
 
-  if (phase === 'done' || !tip) return null
+  /* מודיעים למסך הבית שהטיפ הסתיים (או שכבר נראה בפתיחה הזו),
+     כדי שמה שמחכה אחריו — למשל הזמנה קופצת — יוכל להופיע */
+  const finished = phase === 'done' || !tip
+  useEffect(() => {
+    if (finished) onDone?.()
+  }, [finished, onDone])
+
+  if (finished) return null
 
   /* דרך document.body: ל-.page יש אנימציה עם transform, והוא הופך
      containing block ל-position:fixed — מה שהיה ממקם את השכבה
